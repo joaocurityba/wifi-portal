@@ -1,21 +1,52 @@
 #!/usr/bin/env python3
 """
-Portal Cautivo Flask Simplificado - Wi-Fi Público Municipal
-Versão sem dependências externas complexas
+Portal Cautivo Flask - Wi-Fi Público Municipal
+Versão com segurança avançada e criptografia
 """
 
 import os
 import csv
 import smtplib
 import secrets
+import logging
 from datetime import datetime, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Flask, request, render_template, redirect, url_for, flash, session
+from dotenv import load_dotenv
+
+# Carrega variáveis de ambiente
+load_dotenv('.env.local')
+
+# Importa módulos de segurança
+from security import security_manager, require_admin, rate_limit_admin, generate_csrf_token, validate_csrf_token
+from data_manager import data_manager
+
+# Configuração de logging avançado
+os.makedirs('logs', exist_ok=True)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('logs/app.log'),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
 
 # Configuração da aplicação
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'portal-cautivo-municipal'
-app.config['CSV_FILE'] = 'data/access_log.csv'
+
+# Configurações a partir de variáveis de ambiente
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', secrets.token_urlsafe(64))
+app.config['DEBUG'] = os.getenv('DEBUG', 'False').lower() == 'true'
+app.config['CSV_FILE'] = os.getenv('CSV_FILE', 'data/access_log.csv')
+app.config['MAX_LOGIN_ATTEMPTS'] = int(os.getenv('MAX_LOGIN_ATTEMPTS', '5'))
+app.config['SESSION_TIMEOUT'] = int(os.getenv('SESSION_TIMEOUT', '1800'))
+app.config['ALLOWED_HOSTS'] = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+
+# Inicializa gerenciadores de segurança
+security_manager.init_app(app)
+data_manager.init_app(app)
 
 def sanitize_input(text):
     """Sanitiza input para prevenir XSS"""
@@ -222,23 +253,44 @@ def log_access(data):
 
 # Rotas de autenticação admin
 @app.route('/admin/login', methods=['GET', 'POST'])
+@rate_limit_admin
 def admin_login():
-    """Login do painel admin"""
+    """Login do painel admin com rate limiting"""
     create_default_user()  # Cria usuário padrão se não existir
     
     if request.method == 'POST':
-        username = request.form.get('username', '').strip()
+        username = security_manager.sanitize_input_advanced(request.form.get('username', '').strip())
         password = request.form.get('password', '')
+        
+        # Validação de força da senha para login (se for senha fraca, alerta)
+        if len(password) < 8:
+            security_manager.log_security_event('weak_password_attempt', {
+                'username': username,
+                'password_length': len(password)
+            })
         
         if verify_password(username, password):
             session['admin_logged_in'] = True
             session['username'] = username
+            session.permanent = True
+            app.permanent_session_lifetime = timedelta(seconds=app.config['SESSION_TIMEOUT'])
+            
+            security_manager.log_security_event('admin_login_success', {
+                'username': username
+            })
+            
             flash('Login realizado com sucesso!', 'success')
             return redirect(url_for('admin'))
         else:
+            security_manager.log_security_event('admin_login_failed', {
+                'username': username,
+                'ip': request.remote_addr
+            })
             flash('Usuário ou senha incorretos.', 'error')
     
-    return render_template('admin_login.html')
+    # Gera token CSRF para o formulário
+    csrf_token = generate_csrf_token()
+    return render_template('admin_login.html', csrf_token=csrf_token)
 
 @app.route('/admin/logout')
 def admin_logout():
@@ -318,30 +370,35 @@ def reset_password_form(token):
     return render_template('reset_form.html', token=token, username=username)
 
 @app.route('/login', methods=['GET', 'POST'])
+@security_manager.limiter.limit("20 per minute")
 def login():
-    """Rota principal do portal cativo"""
+    """Rota principal do portal cativo com criptografia"""
     
     # Captura parâmetros do MikroTik (GET ou POST)
-    ip = sanitize_input(request.args.get('ip', '')) or sanitize_input(request.form.get('ip', ''))
-    mac = sanitize_input(request.args.get('mac', '')) or sanitize_input(request.form.get('mac', ''))
-    link_orig = sanitize_input(request.args.get('link-orig', '')) or sanitize_input(request.form.get('link-orig', ''))
+    ip = security_manager.sanitize_input_advanced(request.args.get('ip', '')) or security_manager.sanitize_input_advanced(request.form.get('ip', ''))
+    mac = security_manager.sanitize_input_advanced(request.args.get('mac', '')) or security_manager.sanitize_input_advanced(request.form.get('mac', ''))
+    link_orig = security_manager.sanitize_input_advanced(request.args.get('link-orig', '')) or security_manager.sanitize_input_advanced(request.form.get('link-orig', ''))
     
     if request.method == 'POST':
-        nome = sanitize_input(request.form.get('nome', ''))
-        email = sanitize_input(request.form.get('email', ''))
-        data_nascimento = sanitize_input(request.form.get('data_nascimento', ''))
-        telefone = sanitize_input(request.form.get('telefone', ''))
+        nome = security_manager.sanitize_input_advanced(request.form.get('nome', ''))
+        email = security_manager.sanitize_input_advanced(request.form.get('email', ''))
+        data_nascimento = security_manager.sanitize_input_advanced(request.form.get('data_nascimento', ''))
+        telefone = security_manager.sanitize_input_advanced(request.form.get('telefone', ''))
         termos = request.form.get('termos', '')
 
         errors = []
 
         if not nome:
             errors.append('Por favor, informe seu nome completo.')
+        elif len(nome) < 3:
+            errors.append('O nome deve ter pelo menos 3 caracteres.')
 
         if not email:
             errors.append('Por favor, informe seu email.')
         elif not validate_email(email):
             errors.append('Por favor, informe um email válido.')
+        elif len(email) > 100:
+            errors.append('O email deve ter no máximo 100 caracteres.')
 
         if not data_nascimento:
             errors.append('Por favor, informe sua data de nascimento.')
@@ -352,9 +409,23 @@ def login():
             errors.append('Por favor, informe seu telefone celular.')
         elif not validate_phone(telefone):
             errors.append('Por favor, informe um telefone válido.')
+        elif len(telefone) > 20:
+            errors.append('O telefone deve ter no máximo 20 caracteres.')
 
         if not termos:
             errors.append('É necessário aceitar os Termos de Uso para continuar.')
+
+        # Validação anti-bot (verifica se o formulário foi preenchido rapidamente)
+        if len(nome) > 0 and len(email) > 0 and len(telefone) > 0:
+            # Verifica se os campos não são preenchidos com valores padrão
+            if nome.lower() in ['test', 'teste', 'admin', 'user'] or \
+               email.lower() in ['test@test.com', 'admin@admin.com'] or \
+               telefone in ['123456789', '987654321', '111111111']:
+                security_manager.log_security_event('suspicious_form_submission', {
+                    'ip': ip,
+                    'user_agent': request.headers.get('User-Agent', 'Unknown')
+                })
+                errors.append('Por favor, informe dados válidos.')
 
         if errors:
             for error in errors:
@@ -381,8 +452,20 @@ def login():
         }
         
         try:
+            # Registra no CSV tradicional (para compatibilidade)
             log_access(access_data)
+            
+            # Registra no sistema criptografado
+            data_manager.log_access_encrypted(access_data)
+            
+            security_manager.log_security_event('access_registered', {
+                'ip': ip,
+                'mac': mac,
+                'user_agent': user_agent[:100]  # Limita tamanho
+            })
+            
         except Exception as e:
+            logger.error(f"Erro ao registrar acesso: {e}")
             flash('Erro ao registrar acesso. Por favor, tente novamente.', 'error')
             return render_template('login.html', 
                                  ip=ip, mac=mac, link_orig=link_orig,
@@ -404,24 +487,51 @@ def index():
     return redirect(url_for('login'))
 
 @app.route('/admin')
+@require_admin
 def admin():
-    """Página de administração"""
-    # Verifica se o usuário está logado
-    if not session.get('admin_logged_in'):
-        return redirect(url_for('admin_login'))
-    
-    if not os.path.exists(app.config['CSV_FILE']):
-        return "Nenhum registro encontrado."
-    
-    registros = []
+    """Página de administração com criptografia"""
     try:
-        with open(app.config['CSV_FILE'], 'r', encoding='utf-8') as csvfile:
-            reader = csv.DictReader(csvfile)
-            registros = list(reader)
+        # Obtém logs criptografados
+        encrypted_logs = data_manager.get_access_logs(limit=1000)
+        
+        # Obtém estatísticas
+        stats = data_manager.get_user_stats()
+        
+        return render_template('admin.html', 
+                             registros=encrypted_logs, 
+                             stats=stats,
+                             total_registros=len(encrypted_logs))
     except Exception as e:
-        return f"Erro ao ler registros: {str(e)}"
+        logger.error(f"Erro ao carregar painel admin: {e}")
+        return f"Erro ao carregar painel administrativo: {str(e)}", 500
+
+@app.route('/admin/stats')
+@require_admin
+def admin_stats():
+    """Página de estatísticas detalhadas"""
+    try:
+        stats = data_manager.get_user_stats()
+        return render_template('admin_stats.html', stats=stats)
+    except Exception as e:
+        logger.error(f"Erro ao carregar estatísticas: {e}")
+        return f"Erro ao carregar estatísticas: {str(e)}", 500
+
+@app.route('/admin/search', methods=['GET', 'POST'])
+@require_admin
+def admin_search():
+    """Busca em logs de acesso"""
+    if request.method == 'POST':
+        search_term = security_manager.sanitize_input_advanced(request.form.get('search_term', ''))
+        search_field = request.form.get('search_field', 'nome')
+        
+        if search_term:
+            results = data_manager.search_access_logs(search_term, search_field)
+            return render_template('admin_search.html', 
+                                 results=results, 
+                                 search_term=search_term,
+                                 search_field=search_field)
     
-    return render_template('admin.html', registros=registros)
+    return render_template('admin_search.html', results=[], search_term='', search_field='nome')
 
 @app.route('/admin/profile', methods=['GET', 'POST'])
 def admin_profile():
