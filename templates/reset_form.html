@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redefinir Senha - Administração</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos específicos para formulário de redefinição */
+        .reset-form-container {
+            max-width: 450px;
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+        
+        .reset-form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .reset-form-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 0.5rem;
+        }
+        
+        .reset-form-header p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .reset-form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .reset-form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+        
+        .reset-form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #fafafa;
+        }
+        
+        .reset-form-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            background-color: white;
+        }
+        
+        .reset-form-actions {
+            margin-top: 2rem;
+        }
+        
+        .reset-form-info {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #166534;
+        }
+        
+        .reset-form-info strong {
+            color: #15803d;
+        }
+        
+        .username-display {
+            background-color: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #374151;
+            text-align: center;
+        }
+        
+        .username-display strong {
+            color: #1f2937;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="reset-form-container">
+            <div class="reset-form-header">
+                <div class="logo">
+                    <svg width="48" height="48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="32" cy="32" r="30" stroke="#2563eb" stroke-width="4"/>
+                        <path d="M16 32l8-8 16 16 8-8" stroke="#2563eb" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="32" cy="32" r="8" fill="#2563eb"/>
+                    </svg>
+                </div>
+                <h2>Redefinir Senha</h2>
+                <p>Crie uma nova senha segura</p>
+            </div>
+
+            <div class="username-display">
+                <strong>Usuário:</strong> {{ username }}
+            </div>
+
+            <div class="reset-form-info">
+                <strong>🔒 Segurança:</strong> Sua senha será redefinida imediatamente após confirmar. 
+                Certifique-se de escolher uma senha forte.
+            </div>
+
+            <form method="POST" action="{{ url_for('reset_password_form', token=token) }}" novalidate>
+                <!-- Mensagens de erro -->
+                {% with messages = get_flashed_messages(category_filter=['error']) %}
+                    {% if messages %}
+                        <div class="alert alert-error">
+                            {% for message in messages %}
+                                <p>{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                
+                <!-- Mensagens de sucesso -->
+                {% with messages = get_flashed_messages(category_filter=['success']) %}
+                    {% if messages %}
+                        <div class="alert alert-success">
+                            {% for message in messages %}
+                                <p>{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                <input type="hidden" name="username" value="{{ username }}">
+
+                <div class="reset-form-group">
+                    <label for="password">Nova senha</label>
+                    <input type="password" id="password" name="password" required 
+                           placeholder="Digite sua nova senha" minlength="6" class="reset-form-input">
+                </div>
+
+                <div class="reset-form-group">
+                    <label for="confirm_password">Confirmar nova senha</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required 
+                           placeholder="Confirme sua nova senha" minlength="6" class="reset-form-input">
+                </div>
+
+                <div class="reset-form-actions">
+                    <button type="submit" class="btn-primary">
+                        <span class="btn-text">Redefinir Senha</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                </div>
+            </form>
+
+            <div style="text-align: center; margin-top: 1rem;">
+                <a href="{{ url_for('admin_login') }}" style="color: #2563eb; text-decoration: none; font-size: 0.9rem; font-weight: 500;">Voltar ao login</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Validação de confirmação de senha
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirm_password');
+            
+            if (passwordInput && confirmPasswordInput) {
+                confirmPasswordInput.addEventListener('input', function() {
+                    if (this.value !== passwordInput.value) {
+                        this.setCustomValidity('As senhas não coincidem');
+                    } else {
+                        this.setCustomValidity('');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração - Portal Cautivo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 1rem;
+        }
+        
+        .admin-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #2563eb;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 0.875rem;
+        }
+        
+        th {
+            background-color: #f3f4f6;
+            font-weight: 600;
+            color: #374151;
+            position: sticky;
+            top: 0;
+        }
+        
+        tr:hover {
+            background-color: #f9fafb;
+        }
+        
+        .btn-export {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .btn-export:hover {
+            background: #059669;
+        }
+        
+        .search-box {
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            width: 100%;
+            max-width: 300px;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <h1 class="admin-title">Painel de Administração</h1>
+                <span style="background: #e0f2fe; color: #0369a1; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 600;">
+                    👤 {{ session.username or 'Administrador' }}
+                </span>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn-export" onclick="exportCSV()">Exportar CSV</button>
+                <a href="{{ url_for('admin_profile') }}" class="btn-secondary" style="background: #e0f2fe; color: #0369a1; border-color: #bfdbfe;">Perfil</a>
+                <a href="{{ url_for('login') }}" class="btn-secondary">Voltar ao Portal</a>
+                <a href="{{ url_for('admin_logout') }}" class="btn-secondary" style="background: #fee2e2; color: #dc2626; border-color: #fecaca;">Sair</a>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">{{ registros|length }}</div>
+                <div class="stat-label">Total de Acessos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ registros|length }}</div>
+                <div class="stat-label">Acessos Hoje</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ registros|length }}</div>
+                <div class="stat-label">Dispositivos Únicos</div>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+            <input type="text" id="searchInput" class="search-box" placeholder="Buscar por nome, telefone ou IP...">
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Data de Nascimento</th>
+                        <th>Telefone</th>
+                        <th>IP</th>
+                        <th>MAC</th>
+                        <th>Data</th>
+                        <th>Hora</th>
+                        <th>User Agent</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    {% for registro in registros %}
+                    <tr>
+                        <td>{{ registro.nome }}</td>
+                        <td>{{ registro.email }}</td>
+                        <td>{{ registro.data_nascimento }}</td>
+                        <td>{{ registro.telefone }}</td>
+                        <td>{{ registro.ip }}</td>
+                        <td>{{ registro.mac }}</td>
+                        <td>{{ registro.data }}</td>
+                        <td>{{ registro.hora }}</td>
+                        <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            {{ registro.user_agent }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Função de busca
+        document.getElementById('searchInput').addEventListener('keyup', function() {
+            const searchTerm = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#tableBody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        // Função de exportação
+        function exportCSV() {
+            const table = document.querySelector('table');
+            let csv = [];
+            const rows = table.querySelectorAll('tr');
+            
+            for (let i = 0; i < rows.length; i++) {
+                const row = [], cols = rows[i].querySelectorAll('td, th');
+                
+                for (let j = 0; j < cols.length; j++) {
+                    row.push(cols[j].innerText);
+                }
+                
+                csv.push(row.join(','));
+            }
+            
+            const csvContent = csv.join('\n');
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            
+            const date = new Date();
+            const filename = 'registros_acesso_' + date.toISOString().slice(0, 19).replace(/:/g, '-') + '.csv';
+            
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>

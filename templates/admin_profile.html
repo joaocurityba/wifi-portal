@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil Administrativo - Portal Cautivo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos específicos para perfil admin */
+        .profile-container {
+            max-width: 600px;
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+        
+        .profile-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 1rem;
+        }
+        
+        .profile-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 0.5rem;
+        }
+        
+        .profile-header p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .profile-info {
+            background-color: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .profile-info h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 1rem;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .info-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .info-label {
+            font-size: 0.8rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+        
+        .info-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        .profile-form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .profile-form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+        
+        .profile-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #fafafa;
+        }
+        
+        .profile-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            background-color: white;
+        }
+        
+        .profile-actions {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .profile-links {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .profile-links a {
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .profile-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .security-note {
+            background-color: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #92400e;
+        }
+        
+        .security-note strong {
+            color: #b45309;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="logo">
+                    <svg width="48" height="48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="32" cy="32" r="30" stroke="#2563eb" stroke-width="4"/>
+                        <path d="M16 32l8-8 16 16 8-8" stroke="#2563eb" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="32" cy="32" r="8" fill="#2563eb"/>
+                    </svg>
+                </div>
+                <h2>Perfil Administrativo</h2>
+                <p>Gerencie suas credenciais e informações de acesso</p>
+            </div>
+
+            <div class="profile-info">
+                <h3>Informações Atuais</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Usuário</div>
+                        <div class="info-value">{{ user.username }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Email</div>
+                        <div class="info-value">{{ user.email }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Criado em</div>
+                        <div class="info-value">{{ user.created_at[:19].replace('T', ' ') }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Status</div>
+                        <div class="info-value" style="color: #10b981;">Ativo</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="security-note">
+                <strong>🔒 Segurança:</strong> Para qualquer alteração, é necessário informar sua senha atual. 
+                Isso garante que apenas você possa modificar suas credenciais.
+            </div>
+
+            <form method="POST" action="{{ url_for('admin_profile') }}" novalidate>
+                <!-- Mensagens de erro -->
+                {% with messages = get_flashed_messages(category_filter=['error']) %}
+                    {% if messages %}
+                        <div class="alert alert-error">
+                            {% for message in messages %}
+                                <p>{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                
+                <!-- Mensagens de sucesso -->
+                {% with messages = get_flashed_messages(category_filter=['success']) %}
+                    {% if messages %}
+                        <div class="alert alert-success">
+                            {% for message in messages %}
+                                <p>{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                <div class="profile-form-group">
+                    <label for="email">Email de recuperação</label>
+                    <input type="email" id="email" name="email" required 
+                           value="{{ user.email }}" placeholder="seu@email.com">
+                </div>
+
+                <div class="profile-form-group">
+                    <label for="current_password">Senha atual</label>
+                    <input type="password" id="current_password" name="current_password" required 
+                           placeholder="Digite sua senha atual" class="profile-input">
+                </div>
+
+                <div class="profile-form-group">
+                    <label for="new_password">Nova senha (opcional)</label>
+                    <input type="password" id="new_password" name="new_password" 
+                           placeholder="Deixe em branco para manter a senha atual" minlength="6" class="profile-input">
+                </div>
+
+                <div class="profile-form-group">
+                    <label for="confirm_password">Confirmar nova senha</label>
+                    <input type="password" id="confirm_password" name="confirm_password" 
+                           placeholder="Confirme a nova senha" minlength="6" class="profile-input">
+                </div>
+
+                <div class="profile-actions">
+                    <button type="submit" class="btn-primary">
+                        <span class="btn-text">Salvar Alterações</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                    <a href="{{ url_for('admin') }}" class="btn-secondary">Cancelar</a>
+                </div>
+            </form>
+
+            <div class="profile-links">
+                <a href="{{ url_for('reset_password_request') }}">Esqueci minha senha</a> | 
+                <a href="{{ url_for('admin_logout') }}">Sair da conta</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Validação de confirmação de senha
+        document.addEventListener('DOMContentLoaded', function() {
+            const newPasswordInput = document.getElementById('new_password');
+            const confirmPasswordInput = document.getElementById('confirm_password');
+            
+            if (newPasswordInput && confirmPasswordInput) {
+                confirmPasswordInput.addEventListener('input', function() {
+                    if (this.value && this.value !== newPasswordInput.value) {
+                        this.setCustomValidity('As senhas não coincidem');
+                    } else {
+                        this.setCustomValidity('');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

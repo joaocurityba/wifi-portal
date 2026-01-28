@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wi-Fi Público Municipal - Portal Cautivo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="logo-section">
+            <div class="logo">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="32" cy="32" r="30" stroke="#2563eb" stroke-width="4"/>
+                    <path d="M16 32l8-8 16 16 8-8" stroke="#2563eb" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="32" cy="32" r="8" fill="#2563eb"/>
+                </svg>
+            </div>
+            <h1>Wi-Fi Público Municipal</h1>
+            <p class="subtitle">Conexão segura e gratuita nas praças da cidade</p>
+        </div>
+
+        <div class="form-section">
+            <form method="POST" action="{{ url_for('login') }}" novalidate>
+                <!-- Campos ocultos para parâmetros do MikroTik -->
+                <input type="hidden" name="ip" value="{{ ip }}">
+                <input type="hidden" name="mac" value="{{ mac }}">
+                <input type="hidden" name="link-orig" value="{{ link_orig }}">
+
+                <!-- Mensagens de erro -->
+                {% with messages = get_flashed_messages(category_filter=['error']) %}
+                    {% if messages %}
+                        <div class="alert alert-error">
+                            {% for message in messages %}
+                                <p>{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                <div class="form-group">
+                    <label for="nome">Nome Completo *</label>
+                    <input type="text" id="nome" name="nome" value="{{ nome }}" required 
+                           placeholder="Digite seu nome completo">
+                    <span class="error-message" id="nome-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" value="{{ email }}" required 
+                           placeholder="seu@email.com" maxlength="100">
+                    <span class="error-message" id="email-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="data_nascimento">Data de Nascimento *</label>
+                    <input type="date" id="data_nascimento" name="data_nascimento" value="{{ data_nascimento }}" required>
+                    <span class="error-message" id="data_nascimento-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="telefone">Telefone Celular *</label>
+                    <input type="tel" id="telefone" name="telefone" value="{{ telefone }}" required 
+                           placeholder="(XX) XXXXX-XXXX" maxlength="15">
+                    <span class="error-message" id="telefone-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="termos" name="termos" required>
+                        <span class="checkmark"></span>
+                        Li e aceito os <a href="{{ url_for('termos') }}" target="_blank">Termos de Uso</a> do Wi-Fi Público Municipal *
+                    </label>
+                    <span class="error-message" id="termos-error"></span>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">
+                        <span class="btn-text">Acessar Internet</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="info-section">
+            <div class="info-item">
+                <span class="info-icon">🔒</span>
+                <span class="info-text">Conexão segura e protegida</span>
+            </div>
+            <div class="info-item">
+                <span class="info-icon">📱</span>
+                <span class="info-text">Compatível com todos os dispositivos</span>
+            </div>
+            <div class="info-item">
+                <span class="info-icon">⚡</span>
+                <span class="info-text">Velocidade garantida</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
