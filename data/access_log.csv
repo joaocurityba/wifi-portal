@@ -1,0 +1,5 @@
+nome,telefone,ip,mac,user_agent,data,hora,email,data_nascimento
+Teste Data Hora,(21) 99999-8888,192.168.1.200,AA:BB:CC:DD:EE:FF,Mozilla/5.0 (Windows NT; Windows NT 10.0; pt-BR) WindowsPowerShell/5.1.26100.7462,2026-01-27,15:03:38,data@hora.com,1985-06-15
+João Pedro3,(24) 98162-5962,,,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0",2026-01-27,15:04:48,jcurityba@gmail.com,1998-04-14
+JOAO P S CURITYBA,(24) 98162-5962,,,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",2026-01-27,15:56:50,jotacurityba@gmail.com,1998-04-14
+claudinei,(24) 98170-7070,,,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",2026-01-27,15:58:24,claudinei@gmail.com,1998-04-14

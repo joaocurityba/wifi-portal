@@ -1,0 +1,18 @@
+nome,telefone,ip,mac,user_agent,data_hora
+"João Silva","(11) 98765-4321","192.168.88.100","AA:BB:CC:DD:EE:FF","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36","2024-01-26T23:12:00"
+"Maria Santos","(21) 91234-5678","192.168.88.101","11:22:33:44:55:66","Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X)","2024-01-26T23:12:30"Marcele Cristina da Silva,(24) 98162-6262,,,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0",2026-01-26T23:25:49.283514
+Marcele Cristina da Silva,(24) 98162-6262,,,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0",2026-01-26T23:26:14.628434
+SEVERINO RAMOS DA SILVA,(24) 98107-8850,,,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",2026-01-27T00:10:38.972201
+Teste Usuário,(11) 98765-4321,,,python-requests/2.32.5,2026-01-27T00:39:45.170806
+Teste Usuário,(11) 98765-4321,192.168.88.100,AA:BB:CC:DD:EE:FF,python-requests/2.32.5,2026-01-27T00:40:57.657274
+jota,(12) 12121-2121,,,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0",2026-01-27T00:43:19.931565
+zeze,(23) 23323-2323,192.168.88.100,AA:BB:CC:DD:EE:FF,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0",2026-01-27T00:45:24.896904
+jota,(12) 12121-2121,,,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0",2026-01-27T00:53:42.777467
+rai,(12) 12122-1212,,,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0",2026-01-27T09:32:46.613574
+igor,(11) 11111-1111,192.168.88.100,AA:BB:CC:DD:EE:FF,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0",2026-01-27T09:34:38.876706
+João Pedro,(12) 12222-2122,,,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0",2026-01-27T09:41:52.154281
+joao,(24) 98162-5962,,,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0",2026-01-27T14:28:09.623955
+joao1,jcurityba@gmail.com,1998-04-14,(24) 98162-5962,,,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0",2026-01-27T14:36:41.378103
+joao2,jcurityba@gmail.com,1998-04-14,(24) 98162-5962,,,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0",2026-01-27T14:38:54.137578
+Teste Correcao,(21) 99999-8888,192.168.1.200,AA:BB:CC:DD:EE:FF,Mozilla/5.0 (Windows NT; Windows NT 10.0; pt-BR) WindowsPowerShell/5.1.26100.7462,2026-01-27T14:42:28.271928,correcao@teste.com,1995-05-15
+joao3,(24) 98162-5962,,,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0",2026-01-27T14:44:35.193750,jcurityba@gmail.com,1998-04-14
