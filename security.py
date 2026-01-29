@@ -220,6 +220,20 @@ def validate_csrf_token():
         return False
     return True
 
+def require_csrf_token(f):
+    """Decorator para enforçar validação de CSRF token em POST requests"""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if request.method == 'POST':
+            if not validate_csrf_token():
+                security_manager.log_security_event('csrf_validation_failed', {
+                    'endpoint': request.endpoint,
+                    'method': request.method
+                })
+                return redirect(request.referrer or url_for('admin_login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
 def generate_csrf_token():
     """Gera token CSRF"""
     if 'csrf_token' not in session:

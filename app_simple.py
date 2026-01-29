@@ -18,7 +18,7 @@ from dotenv import load_dotenv
 load_dotenv('.env.local')
 
 # Importa módulos de segurança
-from security import security_manager, require_admin, rate_limit_admin, generate_csrf_token, validate_csrf_token
+from security import security_manager, require_admin, rate_limit_admin, generate_csrf_token, validate_csrf_token, require_csrf_token
 from data_manager import data_manager
 
 # Configuração de logging avançado
@@ -254,6 +254,7 @@ def log_access(data):
 # Rotas de autenticação admin
 @app.route('/admin/login', methods=['GET', 'POST'])
 @rate_limit_admin
+@require_csrf_token
 def admin_login():
     """Login do painel admin com rate limiting"""
     create_default_user()  # Cria usuário padrão se não existir
@@ -301,6 +302,7 @@ def admin_logout():
     return redirect(url_for('admin_login'))
 
 @app.route('/admin/reset-password', methods=['GET', 'POST'])
+@require_csrf_token
 def reset_password_request():
     """Solicitação de recuperação de senha"""
     if request.method == 'POST':
@@ -329,6 +331,7 @@ def reset_password_request():
     return render_template('reset_password.html')
 
 @app.route('/admin/reset/<token>', methods=['GET', 'POST'])
+@require_csrf_token
 def reset_password_form(token):
     """Formulário de redefinição de senha"""
     if request.method == 'POST':
@@ -371,6 +374,7 @@ def reset_password_form(token):
 
 @app.route('/login', methods=['GET', 'POST'])
 @security_manager.limiter.limit("20 per minute")
+@require_csrf_token
 def login():
     """Rota principal do portal cativo com criptografia"""
     
@@ -518,6 +522,7 @@ def admin_stats():
 
 @app.route('/admin/search', methods=['GET', 'POST'])
 @require_admin
+@require_csrf_token
 def admin_search():
     """Busca em logs de acesso"""
     if request.method == 'POST':
@@ -534,6 +539,7 @@ def admin_search():
     return render_template('admin_search.html', results=[], search_term='', search_field='nome')
 
 @app.route('/admin/profile', methods=['GET', 'POST'])
+@require_csrf_token
 def admin_profile():
     """Página de edição de perfil do administrador"""
     # Verifica se o usuário está logado

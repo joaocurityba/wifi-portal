@@ -6,15 +6,17 @@ Aplicação backend Flask para portal cativo integrado ao MikroTik Hotspot, dest
 
 - ✅ **Portal cativo** com formulário de cadastro
 - ✅ **Integração MikroTik** (captura de parâmetros IP, MAC, link-orig)
-- ✅ **Registro de acessos** em CSV (sem banco de dados)
-- ✅ **Validação de formulário** (nome, telefone, termos de uso)
-- ✅ **Proteção CSRF** e sanitização de inputs
+- ✅ **Registro de acessos** em CSV com criptografia de dados sensíveis
+- ✅ **Validação de formulário** (nome, telefone, termos de uso, validação de idade)
+- ✅ **Proteção CSRF** em painel admin e sanitização de inputs
 - ✅ **Design responsivo** para dispositivos móveis
-- ✅ **Painel administrativo** para visualização de registros
+- ✅ **Painel administrativo** seguro para visualização e busca de registros
 - ✅ **Termos de uso** integrados
-- ✅ **Login administrativo** seguro
-- ✅ **Recuperação de senha** por email
+- ✅ **Login administrativo** com rate limiting e proteção
 - ✅ **Edição de perfil** administrativo
+- ⚠️ **Recuperação de senha** (em desenvolvimento - imprime link no console)
+
+**Nota**: Ver [LIMITATIONS.md](LIMITATIONS.md) para features incompletas e [DEPLOY.md](DEPLOY.md) para deployment em produção.
 
 ## 📁 Estrutura de Arquivos
 
@@ -127,12 +129,17 @@ O MikroTik envia automaticamente os seguintes parâmetros:
 
 ## 🔒 Segurança
 
-- **Hash de senhas**: Utiliza Werkzeug para hash seguro de senhas
-- **Sessões seguras**: Chave secreta configurável
-- **CSRF Protection**: Proteção contra ataques CSRF
-- **Input Sanitization**: Todos os inputs são sanitizados para prevenir XSS
-- **Validação robusta**: Validação server-side de todos os campos
-- **Redirecionamento seguro**: Redirecionamento automático para login quando não autenticado
+- **Criptografia de PII**: Nome, email, telefone, data nascimento são criptografados com Fernet (PBKDF2)
+- **Hash de senhas**: Utiliza Werkzeug PBKDF2 para hash seguro de senhas
+- **Sessões seguras**: Chave secreta única por ambiente, cookies HTTP-only
+- **CSRF Protection**: Tokens CSRF em painel admin (em desenvolvimento para formulário público)
+- **Input Sanitization**: Sanitização de todos os inputs para prevenir XSS
+- **Rate Limiting**: Limite de 5 tentativas/hora para admin login, 100/min global
+- **Security Headers**: HSTS, X-Frame-Options, X-Content-Type-Options, CSP
+- **File Locking**: Atomic writes para integridade de dados em concurrent access
+- **Validação robusta**: Server-side validation de email, telefone, data de nascimento
+
+⚠️ **Veja [LIMITATIONS.md](LIMITATIONS.md)** para features incompletas (email, CSRF no formulário público, etc)
 
 ## 🎨 Personalização
 
@@ -152,39 +159,26 @@ Modifique as funções de validação em `app_simple.py`:
 - `validate_birth_date()` - Validação de data de nascimento
 - `sanitize_input()` - Sanitização de inputs
 
-## 🚀 Produção
+## 🚀 Deploy em Produção
 
-### HTTPS
+Para instruções detalhadas de deployment em Ubuntu 20.04+ com Gunicorn, Nginx, Systemd e Let's Encrypt, ver:
 
-Para uso em produção com HTTPS:
+👉 **[DEPLOY.md](DEPLOY.md)** - Guia completo de deploy manual (15 passos)
 
-1. Configure um proxy reverso (nginx, Apache)
-2. Configure certificado SSL/TLS
-3. Atualize a URL no MikroTik para usar HTTPS
+**Quick Summary:**
+- Python 3.9+ + venv
+- Gunicorn (4 workers) + Nginx reverse proxy
+- Systemd service com auto-restart
+- Let's Encrypt para SSL/TLS
+- Logrotate (90 dias de retenção)
+- File-locking atomático para integridade de dados
 
-### Variáveis de Ambiente
+**Pré-requisitos:**
+- Servidor Ubuntu 20.04+
+- Domínio ou IP público
+- Acesso SSH com sudo
 
-Configure variáveis de ambiente via `.env.local`:
-
-```bash
-SECRET_KEY=sua-secret-key-segura
-DEBUG=False
-CSV_FILE=data/access_log.csv
-```
-
-### Segurança em Produção
-
-1. **Altere credenciais padrão**:
-   - Modifique usuário e senha padrão
-   - Gere uma nova SECRET_KEY
-
-2. **Proteja arquivos sensíveis**:
-   - Configure permissões adequadas
-   - Não exponha diretório `data/`
-
-3. **Monitoramento**:
-   - Configure logs adequados
-   - Monitore acesso ao painel admin
+**Tempo estimado:** 45-60 minutos
 
 ## 📊 Dados e Registros
 
@@ -213,45 +207,31 @@ cp data/access_log.csv backup/access_log_$(date +%Y%m%d).csv
 cp data/users.csv backup/users_$(date +%Y%m%d).csv
 ```
 
-## 🐛 Troubleshooting
+## 🆘 Troubleshooting
 
-### Erro de permissão no CSV
+Para soluções de problemas comuns em deployment:
 
-Certifique-se que o diretório `data/` tem permissão de escrita:
+👉 **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** - Guia de diagnóstico e resolução
+
+**Problemas cobertos:**
+- Systemd service não inicia
+- Nginx retorna 502 Bad Gateway
+- SSL certificate errors
+- Permission denied em data/logs
+- Logs não são criados
+- Aplicação travando/lenta
+- E muito mais...
+
+**Desenvolvimento local:**
 
 ```bash
-chmod 755 data/
+# Teste rápido
+python3 -c "from wsgi import app; print(app)"
+
+# Rodar localmente (desenvolvimento apenas)
+python app_simple.py
+# Acessa http://localhost:5000
 ```
-
-### Conexão com MikroTik
-
-Verifique:
-1. O MikroTik pode acessar o servidor Flask
-2. A porta 5000 está aberta no firewall
-3. A URL de login está correta no profile do hotspot
-
-### Depuração
-
-Para habilitar modo debug:
-
-```python
-# Em app_simple.py, altere a última linha:
-app.run(host='0.0.0.0', port=5000, debug=True)
-```
-
-### Problemas comuns
-
-**"Nenhum registro encontrado"**
-- Verifique se o arquivo `data/access_log.csv` existe
-- Confira as permissões de escrita
-
-**"Usuário ou senha incorretos"**
-- Verifique credenciais padrão: admin/admin123
-- Confira se o arquivo `data/users.csv` foi criado
-
-**"Token inválido ou expirado"**
-- Tokens de recuperação expiram em 1 hora
-- Gere um novo token de recuperação
 
 ## 🧪 Testes
 

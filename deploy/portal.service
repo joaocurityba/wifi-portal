@@ -1,0 +1,35 @@
+[Unit]
+Description=Portal Cautivo Flask Application
+After=network.target
+
+[Service]
+Type=notify
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/wifi-portal
+
+# Environment variables
+Environment="PATH=/var/www/wifi-portal/.venv/bin"
+EnvironmentFile=-/var/www/wifi-portal/.env.local
+
+# Start the application with Gunicorn
+ExecStart=/var/www/wifi-portal/.venv/bin/gunicorn \
+    --config /var/www/wifi-portal/deploy/gunicorn.conf.py \
+    wsgi:app
+
+# Restart policy
+Restart=always
+RestartSec=3
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=portal-cautivo
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+
+# Resource limits (optional - adjust as needed)
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

@@ -8,9 +8,10 @@ import os
 import csv
 import json
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
 from security import security_manager
+from app.locks import file_lock, atomic_write_json, append_safe_json
 
 logger = logging.getLogger(__name__)
 
@@ -62,7 +63,7 @@ class EncryptedDataManager:
         return decrypted_data
         
     def log_access_encrypted(self, data: Dict[str, Any]) -> bool:
-        """Registra acesso com criptografia"""
+        """Registra acesso com criptografia (atomicamente)"""
         try:
             # Adiciona timestamp
             data['timestamp'] = datetime.now().isoformat()
@@ -71,24 +72,24 @@ class EncryptedDataManager:
             # Criptografa dados sensíveis
             encrypted_data = self.encrypt_sensitive_fields(data)
             
-            # Salva no arquivo JSON
+            # Salva no arquivo JSON com file-locking atomicamente
             file_path = os.path.join(self.data_dir, self.access_log_file)
             
-            # Lê dados existentes
-            existing_data = []
-            if os.path.exists(file_path):
-                try:
-                    with open(file_path, 'r', encoding='utf-8') as f:
-                        existing_data = json.load(f)
-                except json.JSONDecodeError:
-                    logger.warning("Arquivo de log corrompido, criando novo")
-                    
-            # Adiciona novo registro
-            existing_data.append(encrypted_data)
-            
-            # Salva arquivo
-            with open(file_path, 'w', encoding='utf-8') as f:
-                json.dump(existing_data, f, indent=2, ensure_ascii=False)
+            # Usa lock e append seguro para JSON
+            with file_lock(file_path):
+                existing_data = []
+                if os.path.exists(file_path):
+                    try:
+                        with open(file_path, 'r', encoding='utf-8') as f:
+                            existing_data = json.load(f)
+                    except json.JSONDecodeError:
+                        logger.warning("Arquivo de log corrompido, criando novo")
+                
+                # Adiciona novo registro
+                existing_data.append(encrypted_data)
+                
+                # Salva atomicamente
+                atomic_write_json(file_path, existing_data, indent=2)
                 
             logger.info(f"Acesso registrado: {data.get('access_id')}")
             return True

@@ -25,6 +25,8 @@
 
         <div class="form-section">
             <form method="POST" action="{{ url_for('login') }}" novalidate>
+                <!-- CSRF Token -->
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                 <!-- Campos ocultos para parâmetros do MikroTik -->
                 <input type="hidden" name="ip" value="{{ ip }}">
                 <input type="hidden" name="mac" value="{{ mac }}">

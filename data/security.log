@@ -52,3 +52,305 @@
 2026-01-28 15:55:27,384 - data_manager - ERROR - Erro ao gerar estatísticas: name 'timedelta' is not defined
 2026-01-28 15:55:27,384 - werkzeug - INFO - 127.0.0.1 - - [28/Jan/2026 15:55:27] "GET /admin HTTP/1.1" 200 -
 2026-01-28 15:55:27,398 - werkzeug - INFO - 127.0.0.1 - - [28/Jan/2026 15:55:27] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-01-28 17:47:55,850 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-01-28 17:47:55,852 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-28 17:48:37,673 - werkzeug - INFO - 127.0.0.1 - - [28/Jan/2026 17:48:37] "GET /admin/login HTTP/1.1" 200 -
+2026-01-28 17:48:50,917 - security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-01-28T17:48:50.917503', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; pt-BR) WindowsPowerShell/5.1.26100.7462', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-01-28 17:48:50,918 - werkzeug - INFO - 127.0.0.1 - - [28/Jan/2026 17:48:50] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-01-28 17:48:50,937 - werkzeug - INFO - 127.0.0.1 - - [28/Jan/2026 17:48:50] "GET /admin/login HTTP/1.1" 200 -
+2026-01-28 17:49:30,824 - security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-01-28T17:49:30.824685', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-01-28 17:49:45,191 - security - WARNING - SECURITY: admin_login_failed - {'timestamp': '2026-01-28T17:49:45.191870', 'event_type': 'admin_login_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin', 'ip': '127.0.0.1'}}
+2026-01-28 17:49:45,194 - security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-01-28T17:49:45.194639', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-01-28 17:49:59,508 - security - WARNING - SECURITY: admin_login_failed - {'timestamp': '2026-01-28T17:49:59.507319', 'event_type': 'admin_login_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin', 'ip': '127.0.0.1'}}
+2026-01-28 17:50:29,164 - security - WARNING - SECURITY: admin_login_failed - {'timestamp': '2026-01-28T17:50:29.164982', 'event_type': 'admin_login_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin', 'ip': '127.0.0.1'}}
+2026-01-28 17:50:44,021 - security - WARNING - SECURITY: admin_login_failed - {'timestamp': '2026-01-28T17:50:44.021929', 'event_type': 'admin_login_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin', 'ip': '127.0.0.1'}}
+2026-01-29 11:17:40,105 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-01-29 11:17:40,105 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-29 11:17:44,001 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:17:43] "[32mGET / HTTP/1.1[0m" 302 -
+2026-01-29 11:17:44,086 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:17:44] "GET /login HTTP/1.1" 200 -
+2026-01-29 11:17:44,293 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:17:44] "GET /static/js/main.js HTTP/1.1" 200 -
+2026-01-29 11:17:44,295 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:17:44] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-01-29 11:17:44,421 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:17:44] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-29 11:17:52,552 - security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-01-29T11:17:52.552909', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-01-29 11:17:52,567 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:17:52] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-01-29 11:17:52,587 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:17:52] "GET /admin/login HTTP/1.1" 200 -
+2026-01-29 11:17:52,602 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:17:52] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-01-29 11:17:59,022 - security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-01-29T11:17:59.022938', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'username': 'admin'}}
+2026-01-29 11:17:59,022 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:17:59] "[32mPOST /admin/login HTTP/1.1[0m" 302 -
+2026-01-29 11:17:59,047 - data_manager - ERROR - Erro ao gerar estatísticas: name 'timedelta' is not defined
+2026-01-29 11:17:59,052 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:17:59] "GET /admin HTTP/1.1" 200 -
+2026-01-29 11:17:59,072 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:17:59] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-01-29 11:18:45,077 - data_manager - ERROR - Erro ao gerar estatísticas: name 'timedelta' is not defined
+2026-01-29 11:18:45,077 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:18:45] "GET /admin HTTP/1.1" 200 -
+2026-01-29 11:18:45,089 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:18:45] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-01-29 11:18:47,098 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:18:47] "GET /admin/profile HTTP/1.1" 200 -
+2026-01-29 11:18:47,108 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:18:47] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-01-29 11:18:52,324 - data_manager - ERROR - Erro ao gerar estatísticas: name 'timedelta' is not defined
+2026-01-29 11:18:52,325 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:18:52] "GET /admin HTTP/1.1" 200 -
+2026-01-29 11:18:52,334 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:18:52] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-01-29 11:20:54,547 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:20:54] "GET /admin/profile HTTP/1.1" 200 -
+2026-01-29 11:20:54,558 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:20:54] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-01-29 11:29:24,800 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:29:24] "GET /login?next=/ HTTP/1.1" 200 -
+2026-01-29 11:29:24,829 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:29:24] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-01-29 11:29:24,829 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:29:24] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-01-29 11:37:05,578 - data_manager - INFO - Acesso registrado: 6ce2226a1d99c58d75680884a905890c38588f9b762bbdc9b4182b81d620557d
+2026-01-29 11:37:05,578 - security - WARNING - SECURITY: access_registered - {'timestamp': '2026-01-29T11:37:05.578045', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'ip': '', 'mac': '', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Sa'}}
+2026-01-29 11:37:05,578 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:37:05] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-29 11:37:18,770 - security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-01-29T11:37:18.770062', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-01-29 11:37:18,770 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:37:18] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-01-29 11:37:18,785 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:37:18] "GET /admin/login HTTP/1.1" 200 -
+2026-01-29 11:37:19,036 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:37:19] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-01-29 11:37:19,098 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:37:19] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-29 11:37:24,734 - security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-01-29T11:37:24.734394', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'username': 'admin'}}
+2026-01-29 11:37:24,734 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:37:24] "[32mPOST /admin/login HTTP/1.1[0m" 302 -
+2026-01-29 11:37:24,948 - data_manager - ERROR - Erro ao gerar estatísticas: name 'timedelta' is not defined
+2026-01-29 11:37:24,949 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:37:24] "GET /admin HTTP/1.1" 200 -
+2026-01-29 11:37:25,277 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 11:37:25] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-01-29 12:08:46,653 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-01-29 12:08:46,653 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-29 12:08:51,619 - security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-01-29T12:08:51.619200', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-01-29 12:08:51,623 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:08:51] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-01-29 12:08:51,646 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:08:51] "GET /admin/login HTTP/1.1" 200 -
+2026-01-29 12:08:51,927 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:08:51] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-01-29 12:09:00,397 - security - WARNING - SECURITY: csrf_token_invalid - {'timestamp': '2026-01-29T12:09:00.397946', 'event_type': 'csrf_token_invalid', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'session_token': True, 'form_token': False}}
+2026-01-29 12:09:00,397 - security - WARNING - SECURITY: csrf_validation_failed - {'timestamp': '2026-01-29T12:09:00.397946', 'event_type': 'csrf_validation_failed', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'endpoint': 'admin_login', 'method': 'POST'}}
+2026-01-29 12:09:00,405 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:09:00] "[32mPOST /admin/login HTTP/1.1[0m" 302 -
+2026-01-29 12:09:00,420 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:09:00] "GET /admin/login HTTP/1.1" 200 -
+2026-01-29 12:09:00,647 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:09:00] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-01-29 12:09:09,981 - security - WARNING - SECURITY: csrf_token_invalid - {'timestamp': '2026-01-29T12:09:09.981938', 'event_type': 'csrf_token_invalid', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'session_token': True, 'form_token': False}}
+2026-01-29 12:09:09,981 - security - WARNING - SECURITY: csrf_validation_failed - {'timestamp': '2026-01-29T12:09:09.981938', 'event_type': 'csrf_validation_failed', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'endpoint': 'admin_login', 'method': 'POST'}}
+2026-01-29 12:09:09,981 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:09:09] "[32mPOST /admin/login HTTP/1.1[0m" 302 -
+2026-01-29 12:09:10,004 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:09:10] "GET /admin/login HTTP/1.1" 200 -
+2026-01-29 12:09:10,238 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:09:10] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-01-29 12:10:32,632 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-01-29 12:10:32,632 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-29 12:11:06,182 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-01-29 12:11:06,183 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-29 12:11:19,714 - app_simple - ERROR - Exception on /admin/login [GET]
+Traceback (most recent call last):
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\security.py", line 206, in decorated_function
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\security.py", line 234, in decorated_function
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\app_simple.py", line 294, in admin_login
+    return render_template('admin_login.html', csrf_token=csrf_token)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\templates\admin_login.html", line 115, in top-level template code
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'str' object is not callable
+2026-01-29 12:11:19,729 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:11:19] "[35m[1mGET /admin/login HTTP/1.1[0m" 500 -
+2026-01-29 12:11:24,856 - app_simple - ERROR - Exception on /admin/login [GET]
+Traceback (most recent call last):
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\security.py", line 206, in decorated_function
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\security.py", line 234, in decorated_function
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\app_simple.py", line 294, in admin_login
+    return render_template('admin_login.html', csrf_token=csrf_token)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\templates\admin_login.html", line 115, in top-level template code
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'str' object is not callable
+2026-01-29 12:11:24,856 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:11:24] "[35m[1mGET /admin/login HTTP/1.1[0m" 500 -
+2026-01-29 12:11:25,513 - app_simple - ERROR - Exception on /admin/login [GET]
+Traceback (most recent call last):
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\security.py", line 206, in decorated_function
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\security.py", line 234, in decorated_function
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\app_simple.py", line 294, in admin_login
+    return render_template('admin_login.html', csrf_token=csrf_token)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\templates\admin_login.html", line 115, in top-level template code
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'str' object is not callable
+2026-01-29 12:11:25,513 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:11:25] "[35m[1mGET /admin/login HTTP/1.1[0m" 500 -
+2026-01-29 12:11:28,429 - app_simple - ERROR - Exception on /admin/login [GET]
+Traceback (most recent call last):
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\security.py", line 206, in decorated_function
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\security.py", line 234, in decorated_function
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\app_simple.py", line 294, in admin_login
+    return render_template('admin_login.html', csrf_token=csrf_token)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\templates\admin_login.html", line 115, in top-level template code
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'str' object is not callable
+2026-01-29 12:11:28,445 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:11:28] "[35m[1mGET /admin/login HTTP/1.1[0m" 500 -
+2026-01-29 12:11:31,613 - app_simple - ERROR - Exception on /login [GET]
+Traceback (most recent call last):
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask_limiter\_limits.py", line 326, in __inner
+    return cast(R, flask.current_app.ensure_sync(obj)(*a, **k))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\security.py", line 234, in decorated_function
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\app_simple.py", line 481, in login
+    return render_template('login.html', ip=ip, mac=mac, link_orig=link_orig)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\templates\login.html", line 29, in top-level template code
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal\venv\Lib\site-packages\jinja2\utils.py", line 92, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'csrf_token' is undefined
+2026-01-29 12:11:31,618 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:11:31] "[35m[1mGET /login HTTP/1.1[0m" 500 -
+2026-01-29 12:12:18,623 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-01-29 12:12:18,623 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-29 12:12:22,350 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:12:22] "GET /login HTTP/1.1" 200 -
+2026-01-29 12:12:22,416 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:12:22] "GET /static/js/main.js HTTP/1.1" 200 -
+2026-01-29 12:12:22,552 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:12:22] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-01-29 12:12:26,700 - security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-01-29T12:12:26.700765', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-01-29 12:12:26,703 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:12:26] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-01-29 12:12:26,763 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:12:26] "GET /admin/login HTTP/1.1" 200 -
+2026-01-29 12:12:26,980 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:12:26] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-01-29 12:12:32,261 - security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-01-29T12:12:32.261607', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'username': 'admin'}}
+2026-01-29 12:12:32,261 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:12:32] "[32mPOST /admin/login HTTP/1.1[0m" 302 -
+2026-01-29 12:12:32,470 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:12:32] "GET /admin HTTP/1.1" 200 -
+2026-01-29 12:12:32,804 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:12:32] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-01-29 12:13:11,695 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:13:11] "GET /admin/profile HTTP/1.1" 200 -
+2026-01-29 12:13:11,706 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:13:11] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-01-29 12:13:15,423 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:13:15] "GET /admin HTTP/1.1" 200 -
+2026-01-29 12:13:15,736 - werkzeug - INFO - 127.0.0.1 - - [29/Jan/2026 12:13:15] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
