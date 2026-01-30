@@ -14,10 +14,11 @@ Aplicação backend Flask para portal cativo integrado ao MikroTik Hotspot, dest
 - ✅ **Termos de uso** integrados
 - ✅ **Login administrativo** com rate limiting e proteção
 - ✅ **Edição de perfil** administrativo
-- ✅ **Recuperação de senha** via email SMTP
-- ✅ **Rate limiting** com Redis (opcional)
-- ✅ **Criptografia** de dados sensíveis
-- ✅ **Logs** avançados e segurança
+- ✅ **Recuperação de senha** com tokens de reset
+- ✅ **Rate limiting** integrado (com Redis opcional)
+- ✅ **Criptografia avançada** (Fernet + PBKDF2) de dados sensíveis
+- ✅ **Logs de segurança** e auditoria
+- ✅ **Docker Compose** para deployment rápido
 
 **Nota**: Ver [LIMITATIONS.md](LIMITATIONS.md) para limitações conhecidas e [DEPLOY.md](DEPLOY.md) para deployment em produção.
 
@@ -29,14 +30,15 @@ wifi-portal-teste/
 ├── requirements.txt        # Dependências Python
 ├── README.md              # Este arquivo
 ├── .gitignore             # Arquivos ignorados pelo Git
-├── .env.local             # Variáveis de ambiente (configurado)
-├── .env_example           # Exemplo de variáveis de ambiente
+├── .env.local             # Variáveis de ambiente (não commitar!)
+├── .env.template          # Template de variáveis de ambiente
+├── .env_example           # Exemplo antigo (não use)
 ├── LICENSE                # Licença MIT
 ├── CONTRIBUTING.md        # Diretrizes de contribuição
 ├── data/                  # Dados
-│   ├── access_log.csv     # Registros de acesso
-│   ├── access_log_encrypted.json # Registros criptografados
-│   └── users.csv          # Usuários administrativos
+│   ├── access_log.csv     # Registros de acesso (CSV legível)
+│   ├── access_log_encrypted.json # Registros com criptografia
+│   └── users.csv          # Usuários administrativos (hash de senha)
 ├── static/                # Arquivos estáticos
 │   ├── css/
 │   │   └── style.css      # Estilos responsivos
@@ -64,8 +66,14 @@ wifi-portal-teste/
 
 ### Requisitos
 
-- Python 3.8+
+#### Opção 1: Execução Direta (Linux/Mac/Windows)
+- Python 3.9+
 - pip
+- Redis (opcional, recomendado para produção)
+
+#### Opção 2: Docker Compose (Recomendado)
+- Docker 20.10+
+- Docker Compose 1.29+
 
 ### 1. Instalar dependências
 
@@ -76,12 +84,18 @@ pip install -r requirements.txt
 ### 2. Configurar ambiente
 
 ```bash
-# Copie o arquivo de exemplo
-cp .env .env.local
+# Copiar template de variáveis de ambiente
+cp .env.template .env.local
 
-# Edite as variáveis de ambiente conforme necessário
-# (opcional para desenvolvimento)
+# IMPORTANTE: Editar e configurar valores para seu ambiente
+nano .env.local
 ```
+
+**Variáveis essenciais em `.env.local`:**
+- `SECRET_KEY` - Chave secreta única (gerar com: `python -c "import secrets; print(secrets.token_hex(32))"`)
+- `ALLOWED_HOSTS` - Seu domínio ou IP (ex: `seu-dominio.com` ou `192.168.1.100`)
+- `DEBUG` - `False` em produção, `True` em desenvolvimento
+- `ADMIN_PASSWORD` - Senha do usuário admin padrão (alterar após primeiro login)
 
 ### 3. Executar a aplicação
 
@@ -140,19 +154,41 @@ O MikroTik envia automaticamente os seguintes parâmetros:
 - **Perfil**: `http://localhost:5000/admin/profile` - Edição de perfil
 - **Recuperação**: `http://localhost:5000/admin/reset-password` - Recuperação de senha
 
+## � Email e Recuperação de Senha
+
+A funcionalidade de recuperação de senha pode enviar emails via SMTP (opcional).
+
+**Se quiser ativar email SMTP, configure em `.env.local`:**
+
+```bash
+# Gmail (exemplo)
+SMTP_SERVER=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USERNAME=seu-email@gmail.com
+SMTP_PASSWORD=sua-senha-app  # Use "Senha de app" se 2FA ativado
+SMTP_USE_TLS=True
+FROM_EMAIL=seu-email@gmail.com
+FROM_NAME=Wi-Fi Portal Admin
+```
+
+**Obs:** Se não configurar SMTP, a recuperação de senha mostrará o link na tela (apenas para desenvolvimento).
+
+---
+
 ## 🔒 Segurança
 
-- **Criptografia de PII**: Nome, email, telefone, data nascimento são criptografados com Fernet (PBKDF2)
-- **Hash de senhas**: Utiliza Werkzeug PBKDF2 para hash seguro de senhas
-- **Sessões seguras**: Chave secreta única por ambiente, cookies HTTP-only
-- **CSRF Protection**: Tokens CSRF em painel admin (em desenvolvimento para formulário público)
-- **Input Sanitization**: Sanitização de todos os inputs para prevenir XSS
-- **Rate Limiting**: Limite de 5 tentativas/hora para admin login, 100/min global
-- **Security Headers**: HSTS, X-Frame-Options, X-Content-Type-Options, CSP
-- **File Locking**: Atomic writes para integridade de dados em concurrent access
-- **Validação robusta**: Server-side validation de email, telefone, data de nascimento
+**Features implementadas:**
+- ✅ **Criptografia Fernet** (PBKDF2-SHA256) para dados sensíveis (nome, email, telefone, data nascimento)
+- ✅ **Hash de senhas** com Werkzeug (PBKDF2) 
+- ✅ **Proteção CSRF** em todas as rotas POST
+- ✅ **Rate limiting** (5 tentativas/hora admin, 100/min global)
+- ✅ **Headers de segurança** (HSTS, CSP, X-Frame-Options, etc)
+- ✅ **Validação server-side** de todos os inputs
+- ✅ **Sanitização HTML** para prevenir XSS
+- ✅ **File-locking atômico** para integridade de dados (concurrent access)
+- ✅ **Logs de segurança** com audit trail
 
-⚠️ **Veja [LIMITATIONS.md](LIMITATIONS.md)** para features incompletas (email, CSRF no formulário público, etc)
+⚠️ **Veja [LIMITATIONS.md](LIMITATIONS.md)** para features não implementadas e recomendações de escala
 
 ## 🎨 Personalização
 
@@ -172,26 +208,92 @@ Modifique as funções de validação em `app_simple.py`:
 - `validate_birth_date()` - Validação de data de nascimento
 - `sanitize_input()` - Sanitização de inputs
 
-## 🚀 Deploy em Produção
+## � Quick Start com Docker Compose
 
-Para instruções detalhadas de deployment em Ubuntu 20.04+ com Gunicorn, Nginx, Systemd e Let's Encrypt, ver:
+Para rodar a aplicação rapidamente com Docker (inclui Redis):
 
-👉 **[DEPLOY.md](DEPLOY.md)** - Guia completo de deploy manual (15 passos)
+```bash
+# Buildar e iniciar
+docker-compose up -d
 
-**Quick Summary:**
-- Python 3.9+ + venv
-- Gunicorn (4 workers) + Nginx reverse proxy
-- Systemd service com auto-restart
-- Let's Encrypt para SSL/TLS
-- Logrotate (90 dias de retenção)
-- File-locking atomático para integridade de dados
+# A aplicação estará em http://localhost:5000
+# Redis estará em localhost:6379
+
+# Ver logs
+docker-compose logs -f app
+
+# Parar
+docker-compose down
+
+# Limpar volumes (dados)
+docker-compose down -v
+```
+
+**Credenciais padrão:**
+- Usuário: `admin`
+- Senha: `admin123`
+
+⚠️ **MUDE IMEDIATAMENTE após primeiro login!**
+
+---
+
+## 🚀 Deploy em Produção (Ubuntu Server)
+
+**LEIA COMPLETAMENTE**: Este é o guia essencial para deployar em produção seguro.
+
+### Opção 1: Deploy Manual (Recomendado)
+
+Para instruções detalhadas passo-a-passo:
+
+👉 **[DEPLOY.md](DEPLOY.md)** - Guia completo (15 passos, ~45-60 minutos)
+
+**O que será configurado:**
+- Python 3.9+ com virtual environment
+- Gunicorn (porta 8003) como WSGI application server
+- Nginx como reverse proxy + SSL/TLS termination
+- Let's Encrypt para certificados HTTPS automáticos
+- Systemd service para auto-restart
+- Logrotate para rotação de logs (90 dias)
+- Redis para rate limiting distribuído (opcional)
+- UFW firewall configurado
 
 **Pré-requisitos:**
-- Servidor Ubuntu 20.04+
-- Domínio ou IP público
-- Acesso SSH com sudo
+- Ubuntu 20.04 ou superior
+- Domínio DNS apontando para o servidor (ou IP público)
+- Acesso SSH com permissão `sudo`
+- ~2GB RAM mínimo
+- ~5GB disco mínimo
 
-**Tempo estimado:** 45-60 minutos
+### Opção 2: Deploy com Docker em Produção
+
+```bash
+# Build da imagem
+docker build -t wifi-portal:latest .
+
+# Push para registry (DockerHub, ECR, etc)
+docker push seu-registry/wifi-portal:latest
+
+# Deploy em seu orquestrador:
+# - Docker Swarm
+# - Kubernetes
+# - AWS ECS
+# - DigitalOcean App Platform
+# - etc
+```
+
+### Opção 3: Plataformas Gerenciadas
+
+- **Railway.app**, **Render**, **Heroku**: `git push` automático
+- **AWS EC2**: Usar manual deployment
+- **Azure App Service**: Suporta containers
+- **DigitalOcean**: App Platform com Docker
+
+**Qualquer que seja a opção:**
+1. ✅ Altere a senha admin padrão imediatamente
+2. ✅ Gere SECRET_KEY e ENCRYPTION_SALT únicos
+3. ✅ Configure HTTPS/SSL
+4. ✅ Ative rate limiting (com Redis se possível)
+5. ✅ Configure backups automáticos dos dados
 
 ## 📊 Dados e Registros
 
@@ -287,5 +389,6 @@ Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICE
 ---
 
 **Desenvolvido para Wi-Fi público municipal**  
-**Versão**: 1.0.0  
-**Última atualização**: Janeiro 2025
+**Versão**: 2.0 (Criptografia avançada, Docker, Rate limiting com Redis)  
+**Última atualização**: Janeiro 2026  
+**Status**: Pronto para produção

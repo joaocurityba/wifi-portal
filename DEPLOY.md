@@ -1,26 +1,74 @@
-# Portal Cautivo - Guia de Deploy em Produção
+# Portal Cativo - Guia de Deploy em Produção
 
-Guia completo para implantar o Portal Cautivo Flask com Gunicorn, Nginx, Systemd e SSL em **Ubuntu 20.04+**.
+Guia completo para implantar o Portal Cativo Flask em **Ubuntu 20.04+** com opções de **Docker Compose** ou **deployment manual**.
 
-## 📋 Visão Geral
+## 🚀 Opção Rápida: Docker Compose (Recomendado)
 
-Este guia cobre:
-- **WSGI entry point** via Gunicorn (4 workers)
-- **Systemd service** para orquestração e auto-restart
-- **Nginx** como reverse proxy + SSL termination + static files
+Se você tem **Docker e Docker Compose** instalados, a forma mais rápida é:
+
+```bash
+# 1. Clonar repositório
+git clone <seu-repositorio-github> wifi-portal-teste
+cd wifi-portal-teste
+
+# 2. Configurar variáveis de ambiente
+cp .env.template .env.local
+nano .env.local  # Editar SECRET_KEY, ALLOWED_HOSTS, etc
+
+# 3. Iniciar com Docker Compose
+docker-compose up -d
+
+# 4. Aplicação está rodando em http://localhost:5000
+# Para produção: configure Nginx como reverse proxy (veja seção "Configurar Nginx" abaixo)
+```
+
+✅ Instala Redis + App automaticamente  
+✅ Zero problemas de dependências  
+✅ Perfeito para desenvolvimento e pequena produção  
+
+**Quer deployment manual?** Siga para "Visão Geral" abaixo.
+
+---
+
+## 📋 Visão Geral (Deploy Manual)
+
+Este guia cobre deployment em **Ubuntu 20.04+** com:
+- **Gunicorn** WSGI server (porta 8003)
+- **Nginx** reverse proxy + SSL termination
+- **Systemd** service para orquestração e auto-restart
 - **Let's Encrypt** para certificados HTTPS
+- **Redis** (opcional) para rate limiting distribuído
 - **File-locking atômico** para integridade de dados
 - **Logrotate** com retenção de 90 dias
-- **Firewall** e segurança de rede
+- **Firewall UFW** configurado
+
+**Estrutura do deployment:**
+```
+Nginx (porta 443 HTTPS)
+  ↓
+Gunicorn (porta 8003, localhost apenas)
+  ↓
+Flask App (app_simple.py via wsgi.py)
+  ↓
+Dados (CSV/JSON criptografados em /var/www/wifi-portal-teste/data/)
+```
 
 **Tempo estimado:** 45-60 minutos em primeira vez.
 
 ---
 
-## 🚀 Pré-requisitos
+## 🚀 Pré-requisitos (Deploy Manual)
 
-No servidor Ubuntu 20.04+:
+Escolha UMA das opções abaixo:
 
+### Opção A: Docker Compose (Recomendado)
+```
+- Docker 20.10+
+- Docker Compose 1.29+
+- Git
+```
+
+### Opção B: Deploy Manual (Ubuntu 20.04+)
 ```bash
 # Verificar Python versão
 python3 --version  # deve ser 3.9+
@@ -37,14 +85,21 @@ python3 --version  # deve ser 3.9+
 ### Passo 1: Preparar Servidor e Clonar Repositório
 
 ```bash
-# Criar diretório de aplicação
+# Update sistema
+sudo apt update && sudo apt upgrade -y
+
+# Criar diretório da aplicação
 sudo mkdir -p /var/www
 sudo chown $USER:$USER /var/www
 cd /var/www
 
 # Clonar repositório
-git clone <seu-repositorio> wifi-portal-teste
+git clone <seu-repositorio-github> wifi-portal-teste
 cd wifi-portal-teste
+
+# Verificar estrutura
+ls -la
+# Deve mostrar: app_simple.py, wsgi.py, requirements.txt, deploy/, etc
 ```
 
 ### Passo 2: Criar Virtual Environment Python
@@ -61,11 +116,16 @@ pip install --upgrade pip setuptools wheel
 ### Passo 3: Instalar Dependências Python
 
 ```bash
-# Instalar requirements
+# Instalar dependências do requirements.txt
 pip install -r requirements.txt
 
+# Instalar Gunicorn (não está em requirements.txt)
+pip install gunicorn>=21.0.0
+
 # Verificar que importa sem erros
-python -c "from wsgi import app; print('✓ Aplicação importa OK')"
+python -c "from wsgi import app; print('✓ Aplicação carrega OK')"
+
+# Se erro acima falhar, verificar arquivo .env.local em Passo 4
 ```
 
 ### Passo 4: Configurar Variáveis de Ambiente
@@ -83,36 +143,70 @@ nano .env.local
 ```bash
 # Gerar SECRET_KEY único
 python -c "import secrets; print(secrets.token_hex(32))"
-# Copiar resultado e colar em SECRET_KEY=
+# Copiar resultado INTEIRO e colar em SECRET_KEY=
 
-# Gerar ENCRYPTION_SALT único
-python -c "import secrets; print(secrets.token_hex(16))"
-# Copiar resultado e colar em ENCRYPTION_SALT=
-
-# Alterar
+# DEBUG deve ser False em produção
 DEBUG=False
-ALLOWED_HOSTS=seu-dominio.com  # ou seu IP público
-ADMIN_PASSWORD=mude_na_primeira_acessao  # mude via painel admin!
+
+# Seu domínio ou IP público
+ALLOWED_HOSTS=seu-dominio.com,www.seu-dominio.com
+
+# Admin password (mude IMEDIATAMENTE após primeiro login!)
+ADMIN_PASSWORD=mude_na_primeira_acessao
+
+# RECOMENDADO: Redis para rate limiting distribuído  
+REDIS_URL=redis://localhost:6379/0
+
+# OPCIONAL: Email para recuperação de senha
+# SMTP_SERVER=smtp.gmail.com
+# SMTP_PORT=587
+# etc...
 ```
 
 **Proteger arquivo:**
 
 ```bash
 chmod 600 .env.local
+
+# Verificar que .env.local está em .gitignore
+grep "\.env\.local" .gitignore
 ```
+
+### Passo 4.5: Instalar e Configurar Redis (Recomendado)
+
+Redis é necessário para rate limiting distribuído e melhor performance:
+
+```bash
+# Instalar Redis
+sudo apt install redis-server -y
+
+# Iniciar e ativar no boot
+sudo systemctl enable redis-server
+sudo systemctl start redis-server
+
+# Testar que está rodando
+redis-cli ping  # deve responder: PONG
+
+# Verificar porta
+sudo ss -tulpn | grep 6379
+```
+
+Se Redis falhar, aplicação continua com rate limiting in-memory (fallback automático).
 
 ### Passo 5: Criar Estrutura de Diretórios
 
 ```bash
 # Criar diretórios de dados e logs
-mkdir -p logs data ssl
+mkdir -p /var/www/wifi-portal-teste/logs /var/www/wifi-portal-teste/data
+
+# Verificar
+ls -la /var/www/wifi-portal-teste/
 ```
 
 ### Passo 6: Instalar e Configurar Nginx
 
 ```bash
 # Instalar Nginx
-sudo apt update
 sudo apt install nginx -y
 
 # Copiar configuração exemplar
@@ -134,9 +228,13 @@ sudo rm -f /etc/nginx/sites-enabled/default
 
 # Testar configuração
 sudo nginx -t
+# Deve mostrar: "syntax is ok" e "test is successful"
 
 # Reiniciar Nginx
 sudo systemctl restart nginx
+
+# Verificar status
+sudo systemctl status nginx
 ```
 
 ### Passo 7: Obter Certificado SSL com Let's Encrypt
@@ -165,24 +263,25 @@ sudo certbot certificates
 ### Passo 8: Definir Permissões de Arquivos
 
 ```bash
-# Transferir propriedade para www-data (usuário de servidor web)
+# Transferir propriedade para www-data (usuário do Nginx/Gunicorn)
 sudo chown -R www-data:www-data /var/www/wifi-portal-teste
 
-# Definir permissões
+# Definir permissões corretas
 sudo chmod 750 /var/www/wifi-portal-teste
 sudo chmod 750 /var/www/wifi-portal-teste/data
 sudo chmod 750 /var/www/wifi-portal-teste/logs
-sudo chmod 640 /var/www/wifi-portal-teste/.env.local
+sudo chmod 600 /var/www/wifi-portal-teste/.env.local
 
-# Proteger chaves SSL (se existentes)
-sudo chmod 600 /var/www/wifi-portal-teste/ssl/*.key 2>/dev/null || true
+# Verificar
+ls -ld /var/www/wifi-portal-teste
+ls -la /var/www/wifi-portal-teste/.env.local
 ```
 
 ### Passo 9: Instalar Systemd Service
 
 ```bash
 # Copiar arquivo de serviço
-sudo cp deploy/portal.service /etc/systemd/system/
+sudo cp deploy/portal.service /etc/systemd/system/portal-cautivo.service
 
 # Recarregar systemd daemon
 sudo systemctl daemon-reload
@@ -193,20 +292,26 @@ sudo systemctl enable portal-cautivo
 # Iniciar serviço
 sudo systemctl start portal-cautivo
 
-# Verificar status
+# Verificar status (deve estar "active (running)")
 sudo systemctl status portal-cautivo
+```
+
+**Se tiver erro, verificar logs:**
+
+```bash
+sudo journalctl -u portal-cautivo -n 30
 ```
 
 ### Passo 10: Configurar Logrotate (90 dias)
 
 ```bash
 # Copiar configuração
-sudo cp deploy/logrotate.conf /etc/logrotate.d/wifi-portal-teste
+sudo cp deploy/logrotate.conf /etc/logrotate.d/wifi-portal
 
 # Testar (dry-run, não faz mudanças)
-sudo logrotate -d /etc/logrotate.d/wifi-portal-teste
+sudo logrotate -d /etc/logrotate.d/wifi-portal
 
-# Logrotate é executado automaticamente diariamente pelo sistema
+# Logrotate é executado automaticamente pelo system (cron diário)
 ```
 
 ### Passo 11: Configurar Firewall
@@ -227,52 +332,62 @@ sudo ufw status
 ### Passo 12: Testar Aplicação
 
 ```bash
-# Teste local (Gunicorn)
-curl -k http://127.0.0.1:8003/login
+# Teste 1: Gunicorn está respondendo?
+curl -s http://127.0.0.1:8003/login | head -20
 
-# Teste via Nginx (HTTPS) - aguarde alguns segundos para Nginx estar pronto
-sleep 5
-curl -k https://seu-dominio.com/login
+# Teste 2: Nginx está respondendo (aguarde alguns segundos)?
+sleep 3
+curl -s https://seu-dominio.com/login | head -20
 
-# Teste no navegador
+# Teste 3: No navegador
 # Abra: https://seu-dominio.com/login
-# Credenciais padrão:
-#   User: admin
-#   Senha: admin123 (MUDE IMEDIATAMENTE!)
+# Deve ver o formulário de login
+# Credenciais padrão: admin / admin123
 ```
 
 ### Passo 13: Mudar Credenciais Padrão (OBRIGATÓRIO)
 
 ```bash
+# CRÍTICO: Senha padrão é admin123, deve ser alterada IMEDIATAMENTE!
+
 # Acessar painel admin
 # https://seu-dominio.com/admin
 # Login com: admin / admin123
-# Clicar em "Perfil" e alterar senha para algo forte
-
-# Ou via linha de comando (alternativa):
-cd /var/www/wifi-portal-teste
-source .venv/bin/activate
-# (implementar script de alteração de senha)
+# Clicar em "Perfil"
+# Alterar senha para algo FORTE (mínimo 12 caracteres, misturado)
+# Clicar "Salvar"
+# Fazer logout e login novamente com nova senha
 ```
 
-### Passo 14: Executar Checklist Pré-Deploy
+### Passo 14: Verificar Logs e Status
 
 ```bash
-bash deploy/checklist.sh
-
-# Revisar todos os avisos e corrigir se necessário
-```
-
-### Passo 15: Testar Health Check
-
-```bash
-# Ver logs de acesso (últimas 20 linhas)
-sudo journalctl -u portal-cautivo -n 20
-
-# Monitorar em tempo real
+# Ver logs em tempo real
 sudo journalctl -u portal-cautivo -f
-# (Pressione Ctrl+C para sair)
+
+# Em outro terminal, fazer requisição
+curl https://seu-dominio.com/login
+
+# Deveria aparecer linha de log mostrando a requisição
 ```
+
+### Passo 15: Resumo de Verificação
+
+```bash
+# Verificar que tudo está rodando
+sudo systemctl status portal-cautivo
+sudo systemctl status nginx
+redis-cli ping  # se instalou redis
+
+# Verificar permissões
+ls -la /var/www/wifi-portal-teste/.env.local
+
+# Verificar dados
+ls -la /var/www/wifi-portal-teste/data/
+ls -la /var/www/wifi-portal-teste/logs/
+```
+
+Se tudo passou ✅, aplicação está pronta para produção!
 
 ---
 

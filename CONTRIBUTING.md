@@ -1,6 +1,6 @@
-# Contribuindo com o Portal Cautivo Municipal
+# Contribuindo com o Portal Cativo Municipal
 
-Agradecemos pelo interesse em contribuir com o Portal Cautivo Municipal! Este documento contém informações importantes para contribuidores.
+Agradecemos pelo interesse em contribuir com o Portal Cativo Municipal! Este documento contém informações importantes para contribuidores.
 
 ## Como Contribuir
 
@@ -9,25 +9,57 @@ Agradecemos pelo interesse em contribuir com o Portal Cautivo Municipal! Este do
 - Clone o fork para sua máquina local
 
 ```bash
-git clone https://github.com/seu-usuario/portal-cautivo-municipal.git
-cd portal-cautivo-municipal
+git clone https://github.com/seu-usuario/wifi-portal.git
+cd wifi-portal-teste
 ```
 
 ### 2. Configuração do Ambiente
 
 #### Requisitos
-- Python 3.8+
+**Opção 1: Desenvolvimento Local (Tradicional)**
+- Python 3.9+
 - pip
+- Git
+- Redis (opcional, para testes completos)
+
+**Opção 2: Desenvolvimento com Docker (Recomendado)**
+- Docker
+- Docker Compose
+- Git
 
 #### Instalação de Dependências
 ```bash
+# Clonar repositório
+git clone https://github.com/seu-usuario/wifi-portal.git
+cd wifi-portal-teste
+
+# Criar virtual environment
+python3 -m venv .venv
+source .venv/bin/activate  # Linux/Mac
+# ou
+.venv\Scripts\activate  # Windows
+
+# Instalar dependências
 pip install -r requirements.txt
+pip install -r requirements-dev.txt  # se existir
+
+# Instalar Gunicorn (não está em requirements.txt para dev)
+pip install gunicorn
 ```
 
 #### Configuração de Variáveis de Ambiente
 ```bash
-cp .env .env.local
-# Edite .env.local com suas configurações
+# Copiar template
+cp .env.template .env.local
+
+# Editar para desenvolvimento
+nano .env.local
+
+# Mínimo para desenvolvimento:
+DEBUG=True
+SECRET_KEY=dev-key-change-me
+ALLOWED_HOSTS=localhost,127.0.0.1
+ADMIN_PASSWORD=admin123
 ```
 
 ### 3. Diretrizes de Código
@@ -65,15 +97,32 @@ def validar_email(email: str) -> bool:
 
 ### 4. Testes
 
-#### Testes Unitários
-- Crie testes para novas funcionalidades
-- Use o módulo `unittest` do Python
-- Nomeie os arquivos de teste como `test_*.py`
-
-#### Execução de Testes
+#### Rodando Testes Localmente
 ```bash
-python -m unittest discover tests/
+# Verificar sintaxe
+python -m py_compile app_simple.py security.py data_manager.py
+
+# Rodar testes existentes
+python test_portal.py
+python test_redirect.py
+
+# Com pytest (se instalado)
+pip install pytest pytest-flask
+pytest -v
+
+# Ver cobertura
+pip install pytest-cov
+pytest --cov=. --cov-report=html
+# Abrir htmlcov/index.html no navegador
 ```
+
+#### Antes de Fazer Pull Request
+- [ ] Código foi testado localmente
+- [ ] `python -c "from wsgi import app; print(app)"` funciona
+- [ ] Sem imports não utilizados
+- [ ] Sem dados sensíveis em commits
+- [ ] Sem `.env.local` commitado
+- [ ] Documentação foi atualizada (se necessário)
 
 ### 5. Processo de Pull Request
 
@@ -122,22 +171,97 @@ Por que essa mudança foi necessária?
 - [ ] Documentação foi atualizada
 ```
 
-### 6. Segurança
+### 6. Segurança (MUITO IMPORTANTE)
 
-#### Boas Práticas
-- Nunca commite senhas ou chaves de API
-- Use variáveis de ambiente para configurações sensíveis
-- Sempre valide e sanitize inputs de usuários
-- Use HTTPS em produção
-
-#### Senhas e Chaves
-```python
-# ❌ NÃO FAÇA ISSO
-SECRET_KEY = "minha-senha-secreta"
-
-# ✅ FAÇA ISSO
-SECRET_KEY = os.environ.get('SECRET_KEY')
+#### Nunca Commitar Estes Arquivos
 ```
+.env.local                # CONTÉM SENHAS E CHAVES!
+*.key                     # Chaves privadas
+*.pem                     # Certificados
+data/users.csv           # Dados de usuários
+data/access_log*         # Logs com dados sensíveis
+.venv/                   # Virtual environment
+__pycache__/             # Cache
+```
+
+**Está em .gitignore?**
+```bash
+grep "\.env\.local" .gitignore  # Deve aparecer
+```
+
+#### Código Seguro
+
+**❌ Nunca faça:**
+```python
+password = "minha-senha"  # Hardcoded!
+SECRET_KEY = "minha-chave"  # Hardcoded!
+```
+
+**✅ Sempre faça:**
+```python
+import os
+password = os.environ.get('ADMIN_PASSWORD')
+secret = os.environ.get('SECRET_KEY')
+
+# Hash de senhas
+from werkzeug.security import generate_password_hash
+hash_seguro = generate_password_hash(user_password, method='pbkdf2')
+
+# Validação
+def validate_email(email: str) -> bool:
+    import re
+    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    return bool(re.match(pattern, email))
+
+def sanitize(input_str: str) -> str:
+    return re.sub(r'[<>\"\'%]', '', input_str).strip()
+```
+
+---
+
+### 7. Desenvolvimento Local (Rodando Localmente)
+
+#### Iniciar a Aplicação
+```bash
+# Ativar virtual environment
+source .venv/bin/activate  # Linux/Mac
+# ou
+.venv\Scripts\activate  # Windows
+
+# Executar em desenvolvimento (debug mode)
+python app_simple.py
+
+# Acessar em http://localhost:5000
+# Logs são mostrados no terminal
+```
+
+#### Com Docker (Alternativa)
+```bash
+# Buildar e iniciar (inclui Redis)
+docker-compose up -d
+
+# Acessar em http://localhost:5000
+docker-compose logs -f app  # Ver logs
+
+# Parar
+docker-compose down
+```
+
+#### Troubleshooting Desenvolvimento
+```bash
+# Erro de porta em uso
+lsof -i :5000  # ver quem está usando
+# Mudar em app_simple.py: app.run(port=5001)
+
+# Erro de imports
+python -c "from wsgi import app; print(app)"
+
+# Limpar cache
+find . -type d -name __pycache__ -exec rm -r {} +
+find . -type f -name "*.pyc" -delete
+```
+
+---
 
 ### 7. Relatórios de Bug
 

@@ -29,40 +29,136 @@ Se algum fail, vá para seção correspondente abaixo.
 
 ---
 
-## ❌ Erro: "Systemd Service Não Inicia"
+## ❌ Erro: "ModuleNotFoundError" ou Aplicação não inicia
 
 ### Sintomas
 ```
-● portal-cautivo.service - Portal Cautivo Flask
-   Loaded: loaded
-   Active: failed (result: exit-code)
+ModuleNotFoundError: No module named 'flask'
+ModuleNotFoundError: No module named 'app_simple'
+ImportError: cannot import name 'app'
 ```
 
 ### Diagnóstico
 
 ```bash
-# Ver mensagem de erro detalhada
-sudo journalctl -u portal-cautivo -n 50
+# 1. Virtual environment está ativado?
+echo $VIRTUAL_ENV
+# Deve mostrar: /var/www/wifi-portal-teste/.venv
 
-# Tentar rodar manualmente para ver traceback completo
+# 2. Arquivo .env.local existe?
+ls -la /var/www/wifi-portal-teste/.env.local
+
+# 3. Aplicação consegue ser importada?
 cd /var/www/wifi-portal-teste
 source .venv/bin/activate
-python -c "from wsgi import app; print(app)"
+python -c "from wsgi import app; print('✓ OK')"
 ```
 
 ### Causas Comuns e Soluções
 
-#### 1.1: ModuleNotFoundError ao importar
+#### Erro: `.env.local` não encontrado
 
-**Erro:**
-```
-ModuleNotFoundError: No module named 'flask'
-```
-
-**Solução:**
 ```bash
-# Checar se .venv está ativado no serviço
-sudo cat /etc/systemd/system/portal-cautivo.service | grep ExecStart
+# Criar .env.local
+cd /var/www/wifi-portal-teste
+cp .env.template .env.local
+
+# Editar e preencher valores obrigatórios
+nano .env.local
+
+# Permissões
+chmod 600 .env.local
+
+# Reiniciar
+sudo systemctl restart portal-cautivo
+```
+
+#### Erro: Dependências não instaladas
+
+```bash
+# Reinstalar dependências
+cd /var/www/wifi-portal-teste
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+pip install gunicorn>=21.0.0
+
+# Verificar
+pip list | grep -E "Flask|Werkzeug|gunicorn"
+```
+
+#### Erro: Virtual environment não criado
+
+```bash
+# Criar venv
+cd /var/www/wifi-portal-teste
+python3 -m venv .venv
+
+# Ativar e instalar
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# Reiniciar service
+sudo systemctl restart portal-cautivo
+```
+
+---
+
+## ❌ Erro: "Gunicorn não consegue ligar na porta 8003"
+
+### Sintomas
+```
+Address already in use: ('127.0.0.1', 8003)
+[Errno 98] Address already in use
+```
+
+### Solução
+
+```bash
+# Ver o que está usando porta 8003
+sudo lsof -i :8003
+# ou
+sudo ss -tulpn | grep 8003
+
+# Matar processo antigo (se necessário)
+sudo kill -9 <PID>
+
+# Aguardar 5 segundos e reiniciar
+sleep 5
+sudo systemctl restart portal-cautivo
+
+# Verificar que agora está rodando
+sudo systemctl status portal-cautivo
+```
+
+---
+
+## ❌ Erro: "Permission denied" ao escrever em data/ ou logs/
+
+### Sintomas
+```
+PermissionError: [Errno 13] Permission denied: 'data/access_log.csv'
+```
+
+### Solução
+
+```bash
+# Mudar ownership para www-data
+sudo chown -R www-data:www-data /var/www/wifi-portal-teste/data
+sudo chown -R www-data:www-data /var/www/wifi-portal-teste/logs
+
+# Definir permissões corretas
+sudo chmod 750 /var/www/wifi-portal-teste/data
+sudo chmod 750 /var/www/wifi-portal-teste/logs
+
+# Reiniciar
+sudo systemctl restart portal-cautivo
+
+# Verificar
+ls -la /var/www/wifi-portal-teste/data/
+```
+
+---
 
 # Deve ser:
 # ExecStart=/var/www/wifi-portal-teste/.venv/bin/python -m gunicorn -c deploy/gunicorn.conf.py wsgi:app
@@ -155,7 +251,91 @@ sudo chmod 750 /var/www/wifi-portal-teste/data
 
 ---
 
-## ❌ Erro: "Nginx Retorna 502 Bad Gateway"
+## ❌ Erro: "Redis Connection Refused"
+
+### Sintomas
+```
+ConnectionRefusedError: [Errno 111] Connection refused
+redis.exceptions.ConnectionError: Error -2 connecting to localhost:6379
+```
+
+### Diagnóstico
+
+```bash
+# Redis está rodando?
+sudo systemctl status redis-server
+
+# Redis responde?
+redis-cli ping
+# Deve responder: PONG
+
+# Ver porta
+sudo ss -tulpn | grep 6379
+```
+
+### Solução
+
+```bash
+# Se não está instalado:
+sudo apt install redis-server -y
+
+# Ativar e iniciar
+sudo systemctl enable redis-server
+sudo systemctl start redis-server
+
+# Testar
+redis-cli ping
+
+# Se ainda falhar:
+sudo journalctl -u redis-server -n 20
+
+# Ou simplesmente remover REDIS_URL do .env.local para usar fallback in-memory
+nano /var/www/wifi-portal-teste/.env.local
+# Comentar: # REDIS_URL=redis://localhost:6379/0
+
+sudo systemctl restart portal-cautivo
+```
+
+---
+
+## ❌ Erro: "Docker Compose não inicia"
+
+### Sintomas
+```
+ERROR: Service 'app' failed to build
+ERROR: The image for the service you're trying to recreate has been removed
+```
+
+### Solução
+
+```bash
+# Limpar imagens antigas
+docker-compose down -v
+
+# Rebuildar
+docker-compose build --no-cache
+
+# Iniciar
+docker-compose up -d
+
+# Ver logs
+docker-compose logs -f app
+```
+
+### Se a porta 5000 já estiver em uso
+
+```bash
+# Ver o que está usando
+sudo lsof -i :5000
+
+# Ou mudar porta em docker-compose.yml
+nano docker-compose.yml
+# Mudar: "5000:5000" para "5001:5000"
+
+docker-compose restart
+```
+
+---
 
 ### Sintomas
 ```

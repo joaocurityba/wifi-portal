@@ -8,7 +8,8 @@ bind = "127.0.0.1:8003"
 
 # Worker configuration
 workers = multiprocessing.cpu_count() + 1
-worker_class = "sync"  # Use "gevent" if you install gevent and need async
+worker_class = "sync"  # Use "gevent" if you
+install gevent and need async
 worker_connections = 1000
 threads = 2
 
