@@ -517,7 +517,7 @@ def login():
                                  ip=ip, mac=mac, link_orig=link_orig,
                                  nome=nome, telefone=telefone)
         
-        redirect_url = link_orig if link_orig else 'https://www.google.com'
+        redirect_url = 'https://www.patydoalferes.rj.gov.br'
         return redirect(redirect_url)
     
     csrf_token = generate_csrf_token()
