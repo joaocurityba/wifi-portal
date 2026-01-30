@@ -16,7 +16,6 @@ from flask import request, session, flash, redirect, url_for, current_app
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 try:
-    from flask_limiter.storage import RedisStorage
     import redis
     REDIS_AVAILABLE = True
 except ImportError:
@@ -60,7 +59,6 @@ class SecurityManager:
         
         if REDIS_AVAILABLE:
             try:
-                storage = RedisStorage(storage_uri)
                 self.limiter = Limiter(
                     app=self.app,
                     key_func=get_remote_address,
