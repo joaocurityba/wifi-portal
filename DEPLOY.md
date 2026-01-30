@@ -43,8 +43,8 @@ sudo chown $USER:$USER /var/www
 cd /var/www
 
 # Clonar repositório
-git clone <seu-repositorio> wifi-portal
-cd wifi-portal
+git clone <seu-repositorio> wifi-portal-teste
+cd wifi-portal-teste
 ```
 
 ### Passo 2: Criar Virtual Environment Python
@@ -116,10 +116,10 @@ sudo apt update
 sudo apt install nginx -y
 
 # Copiar configuração exemplar
-sudo cp deploy/nginx.portal_cautivo.conf /etc/nginx/sites-available/wifi-portal
+sudo cp deploy/nginx.portal_cautivo.conf /etc/nginx/sites-available/wifi-portal-teste
 
 # Editar para seu domínio
-sudo nano /etc/nginx/sites-available/wifi-portal
+sudo nano /etc/nginx/sites-available/wifi-portal-teste
 # Substituir "seu-dominio.com" pelo seu domínio real
 ```
 
@@ -127,7 +127,7 @@ sudo nano /etc/nginx/sites-available/wifi-portal
 
 ```bash
 # Criar symlink
-sudo ln -sf /etc/nginx/sites-available/wifi-portal /etc/nginx/sites-enabled/
+sudo ln -sf /etc/nginx/sites-available/wifi-portal-teste /etc/nginx/sites-enabled/
 
 # Desabilitar site padrão (se existir)
 sudo rm -f /etc/nginx/sites-enabled/default
@@ -166,16 +166,16 @@ sudo certbot certificates
 
 ```bash
 # Transferir propriedade para www-data (usuário de servidor web)
-sudo chown -R www-data:www-data /var/www/wifi-portal
+sudo chown -R www-data:www-data /var/www/wifi-portal-teste
 
 # Definir permissões
-sudo chmod 750 /var/www/wifi-portal
-sudo chmod 750 /var/www/wifi-portal/data
-sudo chmod 750 /var/www/wifi-portal/logs
-sudo chmod 640 /var/www/wifi-portal/.env.local
+sudo chmod 750 /var/www/wifi-portal-teste
+sudo chmod 750 /var/www/wifi-portal-teste/data
+sudo chmod 750 /var/www/wifi-portal-teste/logs
+sudo chmod 640 /var/www/wifi-portal-teste/.env.local
 
 # Proteger chaves SSL (se existentes)
-sudo chmod 600 /var/www/wifi-portal/ssl/*.key 2>/dev/null || true
+sudo chmod 600 /var/www/wifi-portal-teste/ssl/*.key 2>/dev/null || true
 ```
 
 ### Passo 9: Instalar Systemd Service
@@ -201,10 +201,10 @@ sudo systemctl status portal-cautivo
 
 ```bash
 # Copiar configuração
-sudo cp deploy/logrotate.conf /etc/logrotate.d/wifi-portal
+sudo cp deploy/logrotate.conf /etc/logrotate.d/wifi-portal-teste
 
 # Testar (dry-run, não faz mudanças)
-sudo logrotate -d /etc/logrotate.d/wifi-portal
+sudo logrotate -d /etc/logrotate.d/wifi-portal-teste
 
 # Logrotate é executado automaticamente diariamente pelo sistema
 ```
@@ -250,7 +250,7 @@ curl -k https://seu-dominio.com/login
 # Clicar em "Perfil" e alterar senha para algo forte
 
 # Ou via linha de comando (alternativa):
-cd /var/www/wifi-portal
+cd /var/www/wifi-portal-teste
 source .venv/bin/activate
 # (implementar script de alteração de senha)
 ```
@@ -292,11 +292,11 @@ Após o primeiro login, **IMEDIATAMENTE**:
 
 ```bash
 # Confirmar que está fora do repositório (não versionado)
-cd /var/www/wifi-portal
+cd /var/www/wifi-portal-teste
 cat .gitignore | grep env.local  # deve estar lá
 
 # Verificar que contém valores únicos
-sudo cat /var/www/wifi-portal/.env.local | grep -E "^(SECRET_KEY|ENCRYPTION_SALT)="
+sudo cat /var/www/wifi-portal-teste/.env.local | grep -E "^(SECRET_KEY|ENCRYPTION_SALT)="
 
 # Cada ambiente DEVE ter SECRET_KEY e ENCRYPTION_SALT diferentes
 ```
@@ -305,13 +305,13 @@ sudo cat /var/www/wifi-portal/.env.local | grep -E "^(SECRET_KEY|ENCRYPTION_SALT
 
 ```bash
 # .env.local deve ser -rw------- (600)
-ls -la /var/www/wifi-portal/.env.local
+ls -la /var/www/wifi-portal-teste/.env.local
 
 # data/ deve ser d-rwxr-x--- (750)
-ls -ld /var/www/wifi-portal/data
+ls -ld /var/www/wifi-portal-teste/data
 
 # Verificar owner
-ls -la /var/www/wifi-portal/ | grep -E "(data|logs|.env.local)"
+ls -la /var/www/wifi-portal-teste/ | grep -E "(data|logs|.env.local)"
 
 # Tudo deve ser www-data:www-data
 ```
@@ -362,8 +362,8 @@ sudo systemctl status portal-cautivo
 sudo journalctl -u portal-cautivo -f
 
 # Logs da aplicação
-tail -f /var/www/wifi-portal/logs/app.log
-tail -f /var/www/wifi-portal/logs/security_events.log
+tail -f /var/www/wifi-portal-teste/logs/app.log
+tail -f /var/www/wifi-portal-teste/logs/security_events.log
 ```
 
 ### Monitorar Performance
@@ -382,17 +382,17 @@ free -h
 top -b -n 1 | head -15
 
 # Espaço em disco (importante para data/logs)
-df -h /var/www/wifi-portal
+df -h /var/www/wifi-portal-teste
 ```
 
 ### Ver Estatísticas de Acesso
 
 ```bash
 # Últimas 10 conexões
-tail -10 /var/www/wifi-portal/data/access_log.csv
+tail -10 /var/www/wifi-portal-teste/data/access_log.csv
 
 # Contar acessos por dia (se tiver access_log)
-cut -d',' -f6 /var/www/wifi-portal/data/access_log.csv | sort | uniq -c
+cut -d',' -f6 /var/www/wifi-portal-teste/data/access_log.csv | sort | uniq -c
 ```
 
 ---
@@ -403,10 +403,10 @@ cut -d',' -f6 /var/www/wifi-portal/data/access_log.csv | sort | uniq -c
 
 ```bash
 # Verificar se .venv é activado
-which python  # deve mostrar /var/www/wifi-portal/.venv/bin/python
+which python  # deve mostrar /var/www/wifi-portal-teste/.venv/bin/python
 
 # Verificar que wsgi.py importa corretamente
-source /var/www/wifi-portal/.venv/bin/activate
+source /var/www/wifi-portal-teste/.venv/bin/activate
 python -c "from wsgi import app; print('OK')"
 
 # Se ainda falhar, reinstalar dependências
@@ -417,10 +417,10 @@ pip install -r requirements.txt --force-reinstall
 
 ```bash
 # Problema: dados/logs não podem ser criados
-sudo chown -R www-data:www-data /var/www/wifi-portal/data
-sudo chown -R www-data:www-data /var/www/wifi-portal/logs
-sudo chmod 750 /var/www/wifi-portal/data
-sudo chmod 750 /var/www/wifi-portal/logs
+sudo chown -R www-data:www-data /var/www/wifi-portal-teste/data
+sudo chown -R www-data:www-data /var/www/wifi-portal-teste/logs
+sudo chmod 750 /var/www/wifi-portal-teste/data
+sudo chmod 750 /var/www/wifi-portal-teste/logs
 
 # Reiniciar
 sudo systemctl restart portal-cautivo
@@ -483,13 +483,13 @@ sudo systemctl restart portal-cautivo
 
 ```bash
 # Testar configuração
-sudo logrotate -d /etc/logrotate.d/wifi-portal
+sudo logrotate -d /etc/logrotate.d/wifi-portal-teste
 
 # Forçar rotação (se necessário)
-sudo logrotate -f /etc/logrotate.d/wifi-portal
+sudo logrotate -f /etc/logrotate.d/wifi-portal-teste
 
 # Verificar que logs foram rotacionados
-ls -la /var/www/wifi-portal/logs/
+ls -la /var/www/wifi-portal-teste/logs/
 ```
 
 ---
@@ -513,7 +513,7 @@ cat > /home/ubuntu/backup-wifi-portal.sh << 'EOF'
 BACKUP_DIR="/mnt/backup"
 DATE=$(date +%Y%m%d_%H%M%S)
 mkdir -p $BACKUP_DIR
-tar -czf $BACKUP_DIR/wifi-portal_$DATE.tar.gz /var/www/wifi-portal/data /var/www/wifi-portal/ssl
+tar -czf $BACKUP_DIR/wifi-portal-teste_$DATE.tar.gz /var/www/wifi-portal-teste/data /var/www/wifi-portal-teste/ssl
 echo "Backup created: $BACKUP_DIR/wifi-portal_$DATE.tar.gz"
 EOF
 

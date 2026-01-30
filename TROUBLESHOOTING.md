@@ -45,7 +45,7 @@ Se algum fail, vá para seção correspondente abaixo.
 sudo journalctl -u portal-cautivo -n 50
 
 # Tentar rodar manualmente para ver traceback completo
-cd /var/www/wifi-portal
+cd /var/www/wifi-portal-teste
 source .venv/bin/activate
 python -c "from wsgi import app; print(app)"
 ```
@@ -65,10 +65,10 @@ ModuleNotFoundError: No module named 'flask'
 sudo cat /etc/systemd/system/portal-cautivo.service | grep ExecStart
 
 # Deve ser:
-# ExecStart=/var/www/wifi-portal/.venv/bin/python -m gunicorn -c deploy/gunicorn.conf.py wsgi:app
+# ExecStart=/var/www/wifi-portal-teste/.venv/bin/python -m gunicorn -c deploy/gunicorn.conf.py wsgi:app
 
 # Se não tiver .venv no path, reinstalar:
-cd /var/www/wifi-portal
+cd /var/www/wifi-portal-teste
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -88,7 +88,7 @@ FileNotFoundError: [Errno 2] No such file or directory: '.env.local'
 **Solução:**
 ```bash
 # Criar .env.local
-cd /var/www/wifi-portal
+cd /var/www/wifi-portal-teste
 cp .env.template .env.local
 nano .env.local  # preencher valores
 
@@ -119,7 +119,7 @@ sudo nano deploy/gunicorn.conf.py
 # bind = "127.0.0.1:8001"  # mudar para 8001
 
 # E atualizar nginx também
-sudo nano /etc/nginx/sites-available/wifi-portal
+sudo nano /etc/nginx/sites-available/wifi-portal-teste
 # proxy_pass http://127.0.0.1:8001;
 
 # Recarregar
@@ -138,19 +138,19 @@ PermissionError: [Errno 13] Permission denied: 'data/access_log.csv'
 **Solução:**
 ```bash
 # Mudar ownership para www-data
-sudo chown -R www-data:www-data /var/www/wifi-portal/data
-sudo chown -R www-data:www-data /var/www/wifi-portal/logs
+sudo chown -R www-data:www-data /var/www/wifi-portal-teste/data
+sudo chown -R www-data:www-data /var/www/wifi-portal-teste/logs
 
 # Verificar permissões
-ls -la /var/www/wifi-portal/data/
+ls -la /var/www/wifi-portal-teste/data/
 # Deve mostrar: drwxr-x--- www-data www-data
 
 # Se ainda não funcionar, expandir permissões temporariamente
-sudo chmod 777 /var/www/wifi-portal/data
+sudo chmod 777 /var/www/wifi-portal-teste/data
 sudo systemctl restart portal-cautivo
 
 # Depois restaurar segurança
-sudo chmod 750 /var/www/wifi-portal/data
+sudo chmod 750 /var/www/wifi-portal-teste/data
 ```
 
 ---
@@ -177,7 +177,7 @@ curl -v http://127.0.0.1:8003/login
 sudo nginx -t
 
 # 4. Ver erro no nginx
-sudo tail -30 /var/log/nginx/wifi-portal_error.log
+sudo tail -30 /var/log/nginx/wifi-portal-teste_error.log
 sudo tail -30 /var/log/nginx/error.log
 ```
 
@@ -210,7 +210,7 @@ upstream timed out (110: Connection timed out)
 **Solução:**
 ```bash
 # Verificar que proxy_pass no nginx está correto
-sudo cat /etc/nginx/sites-available/wifi-portal | grep proxy_pass
+sudo cat /etc/nginx/sites-available/wifi-portal-teste | grep proxy_pass
 # Deve ser: proxy_pass http://127.0.0.1:8003;
 
 # Testar conexão manualmente
@@ -231,7 +231,7 @@ upstream timed out (110: Connection timed out)
 **Solução:**
 ```bash
 # Aumentar timeout em nginx
-sudo nano /etc/nginx/sites-available/wifi-portal
+sudo nano /etc/nginx/sites-available/wifi-portal-teste
 
 # Adicionar ou atualizar:
 proxy_connect_timeout 30s;
@@ -329,14 +329,14 @@ sudo certbot certonly --standalone -d seu-dominio.com
 **Solução:**
 ```bash
 # Verificar configuração nginx
-sudo cat /etc/nginx/sites-available/wifi-portal | grep ssl_certificate
+sudo cat /etc/nginx/sites-available/wifi-portal-teste | grep ssl_certificate
 
 # Deve apontar para:
 # ssl_certificate /etc/letsencrypt/live/seu-dominio.com/fullchain.pem;
 # ssl_certificate_key /etc/letsencrypt/live/seu-dominio.com/privkey.key;
 
 # Se caminhos estiverem errados, editar
-sudo nano /etc/nginx/sites-available/wifi-portal
+sudo nano /etc/nginx/sites-available/wifi-portal-teste
 
 # Testar e recarregar
 sudo nginx -t
@@ -425,29 +425,29 @@ PermissionError: [Errno 13] Permission denied: 'logs/app.log'
 
 ```bash
 # Verificar owner
-ls -la /var/www/wifi-portal/data/
-ls -la /var/www/wifi-portal/logs/
+ls -la /var/www/wifi-portal-teste/data/
+ls -la /var/www/wifi-portal-teste/logs/
 
 # Deve ser: www-data www-data
 
 # Verificar permissões
-stat /var/www/wifi-portal/data/
+stat /var/www/wifi-portal-teste/data/
 ```
 
 ### Solução
 
 ```bash
 # Corrigir ownership
-sudo chown -R www-data:www-data /var/www/wifi-portal/data
-sudo chown -R www-data:www-data /var/www/wifi-portal/logs
+sudo chown -R www-data:www-data /var/www/wifi-portal-teste/data
+sudo chown -R www-data:www-data /var/www/wifi-portal-teste/logs
 
 # Corrigir permissões
-sudo chmod 750 /var/www/wifi-portal/data
-sudo chmod 750 /var/www/wifi-portal/logs
+sudo chmod 750 /var/www/wifi-portal-teste/data
+sudo chmod 750 /var/www/wifi-portal-teste/logs
 
 # Criar arquivos se não existirem
-sudo -u www-data touch /var/www/wifi-portal/data/access_log.csv
-sudo -u www-data touch /var/www/wifi-portal/logs/app.log
+sudo -u www-data touch /var/www/wifi-portal-teste/data/access_log.csv
+sudo -u www-data touch /var/www/wifi-portal-teste/logs/app.log
 
 # Restart
 sudo systemctl restart portal-cautivo

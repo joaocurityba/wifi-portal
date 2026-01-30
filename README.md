@@ -24,7 +24,7 @@ Aplicação backend Flask para portal cativo integrado ao MikroTik Hotspot, dest
 ## 📁 Estrutura de Arquivos
 
 ```
-wifi-portal/
+wifi-portal-teste/
 ├── app_simple.py           # Aplicação principal Flask
 ├── requirements.txt        # Dependências Python
 ├── README.md              # Este arquivo

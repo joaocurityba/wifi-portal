@@ -21,8 +21,8 @@ max_requests = 1000
 max_requests_jitter = 50
 
 # Logging
-accesslog = "/var/www/wifi-portal/logs/access.log"
-errorlog = "/var/www/wifi-portal/logs/error.log"
+accesslog = "/var/www/wifi-portal-teste/logs/access.log"
+errorlog = "/var/www/wifi-portal-teste/logs/error.log"
 loglevel = "info"
 
 # Process naming
@@ -30,7 +30,7 @@ proc_name = "portal-cautivo"
 
 # Server mechanics
 daemon = False
-pidfile = "/var/run/wifi-portal.pid"
+pidfile = "/var/run/wifi-portal-teste.pid"
 umask = 0o022
 
 # SSL (optional - use only if not behind Nginx with SSL)

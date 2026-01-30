@@ -259,7 +259,7 @@ def health_check():
 **Solução Recomendada:**
 ```bash
 # Implementar criptografia de disco inteiro:
-# 1. LUKS encryption no volume /var/www/wifi-portal
+# 1. LUKS encryption no volume /var/www/wifi-portal-teste
 # 2. Ou usar AWS EBS with encryption
 # 3. Ou implementar encryption at rest com aplicação (mais complexo)
 

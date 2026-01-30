@@ -6,15 +6,15 @@ After=network.target
 Type=notify
 User=www-data
 Group=www-data
-WorkingDirectory=/var/www/wifi-portal
+WorkingDirectory=/var/www/wifi-portal-teste
 
 # Environment variables
-Environment="PATH=/var/www/wifi-portal/.venv/bin"
-EnvironmentFile=-/var/www/wifi-portal/.env.local
+Environment="PATH=/var/www/wifi-portal-teste/.venv/bin"
+EnvironmentFile=-/var/www/wifi-portal-teste/.env.local
 
 # Start the application with Gunicorn
-ExecStart=/var/www/wifi-portal/.venv/bin/gunicorn \
-    --config /var/www/wifi-portal/deploy/gunicorn.conf.py \
+ExecStart=/var/www/wifi-portal-teste/.venv/bin/gunicorn \
+    --config /var/www/wifi-portal-teste/deploy/gunicorn.conf.py \
     wsgi:app
 
 # Restart policy
