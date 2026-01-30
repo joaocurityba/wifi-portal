@@ -442,3 +442,32 @@ jinja2.exceptions.UndefinedError: 'csrf_token' is undefined
 2026-01-30 10:37:43,186 - data_manager - INFO - Acesso registrado: d85238449ab281e6c9c2d635a4e77dee7f6bf60b1a5f03f678a08865d0832a0a
 2026-01-30 10:37:43,186 - security - WARNING - SECURITY: access_registered - {'timestamp': '2026-01-30T10:37:43.186666', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'ip': '', 'mac': '', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Sa'}}
 2026-01-30 10:37:43,186 - werkzeug - INFO - 127.0.0.1 - - [30/Jan/2026 10:37:43] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-30 11:11:49,941 - security - WARNING - Redis not available, using in-memory storage
+2026-01-30 11:11:50,084 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-01-30 11:11:50,085 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-30 11:11:56,852 - werkzeug - INFO - 127.0.0.1 - - [30/Jan/2026 11:11:56] "[32mGET / HTTP/1.1[0m" 302 -
+2026-01-30 11:11:56,964 - werkzeug - INFO - 127.0.0.1 - - [30/Jan/2026 11:11:56] "GET /login HTTP/1.1" 200 -
+2026-01-30 11:11:57,200 - werkzeug - INFO - 127.0.0.1 - - [30/Jan/2026 11:11:57] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-01-30 11:11:57,330 - werkzeug - INFO - 127.0.0.1 - - [30/Jan/2026 11:11:57] "GET /static/js/main.js HTTP/1.1" 200 -
+2026-01-30 11:11:57,358 - werkzeug - INFO - 127.0.0.1 - - [30/Jan/2026 11:11:57] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-30 14:18:00,587 - security - WARNING - Redis not available, using in-memory storage
+2026-01-30 14:18:00,662 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-01-30 14:18:00,662 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-30 14:18:27,306 - werkzeug - INFO - 127.0.0.1 - - [30/Jan/2026 14:18:27] "[32mGET / HTTP/1.1[0m" 302 -
+2026-01-30 14:18:27,404 - werkzeug - INFO - 127.0.0.1 - - [30/Jan/2026 14:18:27] "GET /login HTTP/1.1" 200 -
+2026-01-30 14:18:27,612 - werkzeug - INFO - 127.0.0.1 - - [30/Jan/2026 14:18:27] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-01-30 14:18:27,612 - werkzeug - INFO - 127.0.0.1 - - [30/Jan/2026 14:18:27] "GET /static/js/main.js HTTP/1.1" 200 -
+2026-01-30 14:18:27,671 - werkzeug - INFO - 127.0.0.1 - - [30/Jan/2026 14:18:27] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-30 14:21:57,480 - security - WARNING - Redis not available, using in-memory storage
+2026-01-30 14:21:57,563 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-01-30 14:21:57,563 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-30 14:24:41,711 - security - WARNING - Redis not available, using in-memory storage
+2026-01-30 14:24:41,793 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-01-30 14:24:41,793 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-30 14:24:57,506 - werkzeug - INFO - 127.0.0.1 - - [30/Jan/2026 14:24:57] "GET /login HTTP/1.1" 200 -
+2026-01-30 14:24:57,603 - werkzeug - INFO - 127.0.0.1 - - [30/Jan/2026 14:24:57] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-01-30 14:24:57,605 - werkzeug - INFO - 127.0.0.1 - - [30/Jan/2026 14:24:57] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
