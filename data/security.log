@@ -500,3 +500,60 @@ jinja2.exceptions.UndefinedError: 'csrf_token' is undefined
 2026-01-30 16:00:14,503 - werkzeug - INFO - 127.0.0.1 - - [30/Jan/2026 16:00:14] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
 2026-01-30 16:00:14,505 - werkzeug - INFO - 127.0.0.1 - - [30/Jan/2026 16:00:14] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
 2026-01-30 16:00:14,581 - werkzeug - INFO - 127.0.0.1 - - [30/Jan/2026 16:00:14] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-30 19:20:04,348 - security - INFO - Rate limiting configured with Redis
+2026-01-30 19:20:04,427 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-01-30 19:20:04,427 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-30 19:26:07,907 - security - INFO - Rate limiting configured with Redis
+2026-01-30 19:26:07,966 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-01-30 19:26:07,966 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-30 19:29:49,298 - security - INFO - Rate limiting configured with Redis
+2026-01-30 19:29:49,357 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-01-30 19:29:49,357 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-30 19:34:22,487 - security - INFO - Rate limiting configured with Redis
+2026-01-30 19:34:22,549 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-01-30 19:34:22,549 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-30 19:35:52,952 - security - INFO - Rate limiting configured with Redis
+2026-01-30 19:35:53,015 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-01-30 19:35:53,015 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-30 19:37:37,016 - security - INFO - Rate limiting configured with Redis
+2026-01-30 19:37:37,079 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-01-30 19:37:37,080 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-30 19:38:37,847 - security - INFO - Rate limiting configured with Redis
+2026-01-30 19:38:37,913 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-01-30 19:38:37,914 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-30 19:44:00,038 - security - INFO - Rate limiting configured with Redis
+2026-01-30 19:44:00,098 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-01-30 19:44:00,099 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-30 19:48:14,615 - security - INFO - Rate limiting configured with Redis
+2026-01-30 19:48:14,682 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.18.0.3:5000
+2026-01-30 19:48:14,682 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-30 19:48:19,824 - werkzeug - INFO - 172.18.0.1 - - [30/Jan/2026 19:48:19] "GET /login HTTP/1.1" 200 -
+2026-01-30 19:48:19,898 - werkzeug - INFO - 172.18.0.1 - - [30/Jan/2026 19:48:19] "GET /static/js/main.js HTTP/1.1" 200 -
+2026-01-30 19:48:19,902 - werkzeug - INFO - 172.18.0.1 - - [30/Jan/2026 19:48:19] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-01-30 19:48:19,957 - werkzeug - INFO - 172.18.0.1 - - [30/Jan/2026 19:48:19] "[32mGET / HTTP/1.1[0m" 302 -
+2026-01-30 19:48:19,985 - werkzeug - INFO - 172.18.0.1 - - [30/Jan/2026 19:48:19] "GET /login HTTP/1.1" 200 -
+2026-01-30 19:48:20,058 - werkzeug - INFO - 172.18.0.1 - - [30/Jan/2026 19:48:20] "GET /static/js/main.js HTTP/1.1" 200 -
+2026-01-30 19:48:20,060 - werkzeug - INFO - 172.18.0.1 - - [30/Jan/2026 19:48:20] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-01-30 19:48:20,171 - werkzeug - INFO - 172.18.0.1 - - [30/Jan/2026 19:48:20] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-30 19:48:28,607 - security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-01-30T19:48:28.607035', 'event_type': 'unauthorized_admin_access', 'ip': '172.18.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-01-30 19:48:28,609 - werkzeug - INFO - 172.18.0.1 - - [30/Jan/2026 19:48:28] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-01-30 19:48:28,647 - werkzeug - INFO - 172.18.0.1 - - [30/Jan/2026 19:48:28] "GET /admin/login HTTP/1.1" 200 -
+2026-01-30 19:48:28,705 - werkzeug - INFO - 172.18.0.1 - - [30/Jan/2026 19:48:28] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-01-30 19:49:16,184 - security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-01-30T19:49:16.184859', 'event_type': 'admin_login_success', 'ip': '172.18.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'username': 'admin'}}
+2026-01-30 19:49:16,186 - werkzeug - INFO - 172.18.0.1 - - [30/Jan/2026 19:49:16] "[32mPOST /admin/login HTTP/1.1[0m" 302 -
+2026-01-30 19:49:16,224 - werkzeug - INFO - 172.18.0.1 - - [30/Jan/2026 19:49:16] "GET /admin HTTP/1.1" 200 -
+2026-01-30 19:49:16,249 - werkzeug - INFO - 172.18.0.1 - - [30/Jan/2026 19:49:16] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-01-30 19:49:21,466 - werkzeug - INFO - 172.18.0.1 - - [30/Jan/2026 19:49:21] "GET /login HTTP/1.1" 200 -
+2026-01-30 19:49:21,505 - werkzeug - INFO - 172.18.0.1 - - [30/Jan/2026 19:49:21] "GET /static/js/main.js HTTP/1.1" 200 -
+2026-01-30 19:49:21,509 - werkzeug - INFO - 172.18.0.1 - - [30/Jan/2026 19:49:21] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
