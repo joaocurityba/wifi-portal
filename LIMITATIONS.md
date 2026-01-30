@@ -6,47 +6,45 @@ Este documento lista as limitações conhecidas, features incompletas, e recomen
 
 ## ⚠️ Limitações Críticas (Resolvem em Curto Prazo)
 
-### 1. Email de Recuperação de Senha (NÃO IMPLEMENTADO)
+### 1. Email de Recuperação de Senha (AGORA IMPLEMENTADO)
 
-**Status:** ❌ Incompleto
+**Status:** ✅ Implementado
 
 **Descrição:**
-- Recurso de "Esqueci minha senha" está no código, mas **não envia emails reais**
-- Ao solicitar recuperação, apenas **imprime a URL de reset no console** do servidor
-- Em produção, usuários NÃO receberão o email de recuperação
+- Recurso de "Esqueci minha senha" **envia emails reais via SMTP**
+- Suporte a Gmail, SendGrid, AWS SES e outros provedores SMTP
+- Template de email HTML personalizado
+- Validação de delivery e retry automático
 
 **Código Afetado:**
-- `app_simple.py` → função `send_reset_email()` (linha ~235)
-- Imprime para stdout em vez de enviar SMTP
+- `app_simple.py` → função `send_reset_email()` (linha ~224) - **AGORA IMPLEMENTA SMTP REAL**
+- Configurações SMTP em `.env.local`
 
-**Solução:**
-```python
-# Implementar depois com suporte a:
-# - Provedor SMTP (Gmail, SendGrid, AWS SES)
-# - Template de email HTML
-# - Validação de delivery
-# - Retry automático se falhar
+**Configuração Necessária:**
+```bash
+# Em .env.local
+SMTP_SERVER=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USERNAME=seu-email@gmail.com
+SMTP_PASSWORD=sua-senha-app
+SMTP_USE_TLS=True
+FROM_EMAIL=seu-email@gmail.com
+FROM_NAME=Wi-Fi Portal Admin
 ```
-
-**Workaround Atual:**
-- Administrador reseta senha diretamente no arquivo `data/users.csv`
-- Ou implementa feature de "Admin Reset" para usuários
-
-**Prioridade:** Alta (afeta experiência do usuário)
 
 ---
 
 ### 2. CSRF Token Parcialmente Implementado
 
-**Status:** ⚠️ Parcial
+**Status:** ✅ Implementado
 
 **Descrição:**
 - Tokens CSRF são **gerados** para formulários
 - Tokens são **validados** em endpoints administrativos (login, profile, search, reset)
-- Rota `/login` (portal público) **NÃO valida CSRF** (apenas aceita GET/POST simples)
+- Rota `/login` (portal público) **AGORA valida CSRF** com token no template
 
 **Impacto:**
-- Portal público (`/login`) é vulnerável a CSRF attacks
+- Portal público (`/login`) está **PROTEGIDO** contra ataques CSRF
 - Painel admin (`/admin/*`) está protegido
 
 **Código Afetado:**
@@ -384,6 +382,32 @@ Se encontrar limitações não documentadas:
    - Sugestão de solução (se houver)
 
 2. Ou envie PR com atualizações neste arquivo
+
+---
+
+### 3. Rate Limiting com Redis (OPCIONAL)
+
+**Status:** ✅ Implementado com fallback
+
+**Descrição:**
+- Rate limiting configurado para usar Redis quando disponível
+- Fallback automático para storage in-memory se Redis não estiver disponível
+- Configuração via variável `REDIS_URL` no ambiente
+
+**Configuração:**
+```bash
+# Instalar Redis (opcional)
+sudo apt install redis-server
+sudo systemctl enable redis-server
+
+# Em .env.local
+REDIS_URL=redis://localhost:6379/0
+```
+
+**Benefícios:**
+- Rate limiting persistente entre restarts
+- Melhor performance em produção com múltiplos workers
+- Escalabilidade horizontal
 
 ---
 

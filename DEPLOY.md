@@ -228,7 +228,7 @@ sudo ufw status
 
 ```bash
 # Teste local (Gunicorn)
-curl -k http://127.0.0.1:8000/login
+curl -k http://127.0.0.1:8003/login
 
 # Teste via Nginx (HTTPS) - aguarde alguns segundos para Nginx estar pronto
 sleep 5
@@ -370,10 +370,10 @@ tail -f /var/www/wifi-portal/logs/security_events.log
 
 ```bash
 # Conexões ativas na porta 8000 (Gunicorn)
-netstat -tulpn 2>/dev/null | grep 8000
+netstat -tulpn 2>/dev/null | grep 8003
 
 # Ou com ss
-ss -tulpn | grep 8000
+ss -tulpn | grep 8003
 
 # Uso de memória
 free -h

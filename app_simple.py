@@ -103,9 +103,7 @@ def create_default_user():
                 'username': 'admin',
                 'password_hash': generate_password_hash('admin123'),
                 'email': 'admin@prefeitura.com',
-                'created_at': datetime.now().isoformat(),
-                'reset_token': '',
-                'reset_expires': ''
+                'created_at': datetime.now().isoformat()
             }
             writer.writerow(default_user)
 
@@ -158,12 +156,10 @@ def reset_password(username, new_password):
         for row in reader:
             if row['username'] == username:
                 row['password_hash'] = generate_password_hash(new_password)
-                row['reset_token'] = ''
-                row['reset_expires'] = ''
             users.append(row)
     
     with open(users_file, 'w', newline='', encoding='utf-8') as csvfile:
-        fieldnames = ['username', 'password_hash', 'email', 'created_at', 'reset_token', 'reset_expires']
+        fieldnames = ['username', 'password_hash', 'email', 'created_at']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(users)
@@ -226,15 +222,61 @@ def validate_current_password(username, password):
     return verify_password(username, password)
 
 def send_reset_email(email, username, token):
-    """Envia email de recuperação de senha (simulação)"""
-    # Em produção, configure SMTP real aqui
-    reset_url = f"http://localhost:5000/admin/reset/{token}"
-    print(f"Email para {email}:")
-    print(f"Olá {username},")
-    print(f"Para redefinir sua senha, acesse: {reset_url}")
-    print(f"Este link expira em 1 hora.")
-    print("---")
-    return True
+    """Envia email de recuperação de senha"""
+    try:
+        smtp_server = os.getenv('SMTP_SERVER', 'smtp.gmail.com')
+        smtp_port = int(os.getenv('SMTP_PORT', '587'))
+        smtp_username = os.getenv('SMTP_USERNAME')
+        smtp_password = os.getenv('SMTP_PASSWORD')
+        use_tls = os.getenv('SMTP_USE_TLS', 'True').lower() == 'true'
+        from_email = os.getenv('FROM_EMAIL', smtp_username)
+        from_name = os.getenv('FROM_NAME', 'Wi-Fi Portal Admin')
+
+        if not smtp_username or not smtp_password:
+            logger.error("SMTP credentials not configured")
+            return False
+
+        reset_url = f"{request.host_url.rstrip('/')}/admin/reset/{token}"
+
+        msg = smtplib.SMTP(smtp_server, smtp_port)
+        msg.ehlo()
+
+        if use_tls:
+            msg.starttls()
+            msg.ehlo()
+
+        msg.login(smtp_username, smtp_password)
+
+        subject = "Recuperação de Senha - Portal Wi-Fi"
+        body = f"""Olá {username},
+
+Você solicitou a recuperação de senha para o painel administrativo do Portal Wi-Fi.
+
+Para redefinir sua senha, acesse o link abaixo:
+{reset_url}
+
+Este link expira em 1 hora.
+
+Se você não solicitou esta recuperação, ignore este email.
+
+Atenciosamente,
+{from_name}
+"""
+
+        message = f"From: {from_name} <{from_email}>\n"
+        message += f"To: {email}\n"
+        message += f"Subject: {subject}\n\n"
+        message += body
+
+        msg.sendmail(from_email, email, message.encode('utf-8'))
+        msg.quit()
+
+        logger.info(f"Reset email sent to {email}")
+        return True
+
+    except Exception as e:
+        logger.error(f"Failed to send reset email: {e}")
+        return False
 
 def log_access(data):
     """Registra acesso no arquivo CSV"""
@@ -478,7 +520,8 @@ def login():
         redirect_url = link_orig if link_orig else 'https://www.google.com'
         return redirect(redirect_url)
     
-    return render_template('login.html', ip=ip, mac=mac, link_orig=link_orig)
+    csrf_token = generate_csrf_token()
+    return render_template('login.html', ip=ip, mac=mac, link_orig=link_orig, csrf_token=csrf_token)
 
 @app.route('/termos')
 def termos():
@@ -607,4 +650,4 @@ def admin_profile():
 
 if __name__ == '__main__':
     os.makedirs('data', exist_ok=True)
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    app.run(debug=False)

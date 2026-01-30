@@ -8,43 +8,56 @@ Aplicação backend Flask para portal cativo integrado ao MikroTik Hotspot, dest
 - ✅ **Integração MikroTik** (captura de parâmetros IP, MAC, link-orig)
 - ✅ **Registro de acessos** em CSV com criptografia de dados sensíveis
 - ✅ **Validação de formulário** (nome, telefone, termos de uso, validação de idade)
-- ✅ **Proteção CSRF** em painel admin e sanitização de inputs
+- ✅ **Proteção CSRF** em painel admin e portal público
 - ✅ **Design responsivo** para dispositivos móveis
 - ✅ **Painel administrativo** seguro para visualização e busca de registros
 - ✅ **Termos de uso** integrados
 - ✅ **Login administrativo** com rate limiting e proteção
 - ✅ **Edição de perfil** administrativo
-- ⚠️ **Recuperação de senha** (em desenvolvimento - imprime link no console)
+- ✅ **Recuperação de senha** via email SMTP
+- ✅ **Rate limiting** com Redis (opcional)
+- ✅ **Criptografia** de dados sensíveis
+- ✅ **Logs** avançados e segurança
 
-**Nota**: Ver [LIMITATIONS.md](LIMITATIONS.md) para features incompletas e [DEPLOY.md](DEPLOY.md) para deployment em produção.
+**Nota**: Ver [LIMITATIONS.md](LIMITATIONS.md) para limitações conhecidas e [DEPLOY.md](DEPLOY.md) para deployment em produção.
 
 ## 📁 Estrutura de Arquivos
 
 ```
-loginwifi/
+wifi-portal/
 ├── app_simple.py           # Aplicação principal Flask
 ├── requirements.txt        # Dependências Python
 ├── README.md              # Este arquivo
 ├── .gitignore             # Arquivos ignorados pelo Git
-├── .env                   # Variáveis de ambiente (exemplo)
+├── .env.local             # Variáveis de ambiente (configurado)
+├── .env_example           # Exemplo de variáveis de ambiente
 ├── LICENSE                # Licença MIT
 ├── CONTRIBUTING.md        # Diretrizes de contribuição
 ├── data/                  # Dados
 │   ├── access_log.csv     # Registros de acesso
+│   ├── access_log_encrypted.json # Registros criptografados
 │   └── users.csv          # Usuários administrativos
 ├── static/                # Arquivos estáticos
 │   ├── css/
 │   │   └── style.css      # Estilos responsivos
 │   └── js/
 │       └── main.js        # Scripts principais
-└── templates/             # Templates HTML
-    ├── login.html         # Página principal do portal
-    ├── termos.html        # Página de termos de uso
-    ├── admin.html         # Página de administração
-    ├── admin_login.html   # Login administrativo
-    ├── admin_profile.html # Perfil administrativo
-    ├── reset_password.html # Recuperação de senha
-    └── reset_form.html    # Formulário de redefinição
+├── templates/             # Templates HTML
+│   ├── login.html         # Página principal do portal
+│   ├── termos.html        # Página de termos de uso
+│   ├── admin.html         # Página de administração
+│   ├── admin_login.html   # Login administrativo
+│   ├── admin_profile.html # Perfil administrativo
+│   ├── reset_password.html # Recuperação de senha
+│   └── reset_form.html    # Formulário de redefinição
+├── deploy/                # Arquivos de deploy
+│   ├── gunicorn.conf.py   # Configuração Gunicorn
+│   ├── nginx.portal_cautivo.conf # Configuração Nginx
+│   ├── portal.service     # Systemd service
+│   ├── logrotate.conf     # Rotação de logs
+│   └── checklist.sh       # Script de verificação
+├── logs/                  # Logs da aplicação
+└── security.py            # Módulo de segurança
 ```
 
 ## 🛠️ Instalação e Configuração

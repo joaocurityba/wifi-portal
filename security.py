@@ -15,6 +15,12 @@ from typing import Optional, Dict, Any
 from flask import request, session, flash, redirect, url_for, current_app
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+try:
+    from flask_limiter.storage import RedisStorage
+    import redis
+    REDIS_AVAILABLE = True
+except ImportError:
+    REDIS_AVAILABLE = False
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
@@ -50,11 +56,32 @@ class SecurityManager:
         
     def setup_limiter(self):
         """Configura o rate limiting"""
-        self.limiter = Limiter(
-            app=self.app,
-            key_func=get_remote_address,
-            default_limits=["1000 per hour", "100 per minute"]
-        )
+        storage_uri = os.getenv('REDIS_URL', 'redis://localhost:6379/0')
+        
+        if REDIS_AVAILABLE:
+            try:
+                storage = RedisStorage(storage_uri)
+                self.limiter = Limiter(
+                    app=self.app,
+                    key_func=get_remote_address,
+                    storage_uri=storage_uri,
+                    default_limits=["1000 per hour", "100 per minute"]
+                )
+                logger.info("Rate limiting configured with Redis")
+            except Exception as e:
+                logger.warning(f"Redis not available, falling back to in-memory: {e}")
+                self.limiter = Limiter(
+                    app=self.app,
+                    key_func=get_remote_address,
+                    default_limits=["1000 per hour", "100 per minute"]
+                )
+        else:
+            logger.warning("Redis not available, using in-memory storage")
+            self.limiter = Limiter(
+                app=self.app,
+                key_func=get_remote_address,
+                default_limits=["1000 per hour", "100 per minute"]
+            )
         
     def setup_encryption(self):
         """Configura a criptografia para dados sensíveis"""

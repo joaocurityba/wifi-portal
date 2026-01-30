@@ -13,7 +13,7 @@ Guia de diagnóstico e resolução dos problemas mais comuns em deploy.
 sudo systemctl status portal-cautivo
 
 # 2. Gunicorn está respondendo localmente?
-curl -s http://127.0.0.1:8000/login | head -20
+curl -s http://127.0.0.1:8003/login | head -20
 
 # 3. Nginx está rodando?
 sudo systemctl status nginx
@@ -103,13 +103,13 @@ sudo systemctl restart portal-cautivo
 
 **Erro:**
 ```
-Address already in use: ('127.0.0.1', 8000)
+Address already in use: ('127.0.0.1', 8003)
 ```
 
 **Solução:**
 ```bash
-# Ver o que está usando porta 8000
-sudo lsof -i :8000
+# Ver o que está usando porta 8003
+sudo lsof -i :8003
 
 # Matar processo antigo
 sudo kill -9 <PID>
@@ -171,7 +171,7 @@ sudo systemctl status portal-cautivo
 ps aux | grep gunicorn
 
 # 2. Gunicorn está respondendo localmente?
-curl -v http://127.0.0.1:8000/login
+curl -v http://127.0.0.1:8003/login
 
 # 3. Nginx config está ok?
 sudo nginx -t
@@ -193,7 +193,7 @@ sleep 3
 
 # Verificar se levantou
 sudo systemctl status portal-cautivo
-curl -v http://127.0.0.1:8000/login
+curl -v http://127.0.0.1:8003/login
 
 # Se continuar caindo, ver logs
 sudo journalctl -u portal-cautivo -f
@@ -211,10 +211,10 @@ upstream timed out (110: Connection timed out)
 ```bash
 # Verificar que proxy_pass no nginx está correto
 sudo cat /etc/nginx/sites-available/wifi-portal | grep proxy_pass
-# Deve ser: proxy_pass http://127.0.0.1:8000;
+# Deve ser: proxy_pass http://127.0.0.1:8003;
 
 # Testar conexão manualmente
-curl -v http://127.0.0.1:8000/
+curl -v http://127.0.0.1:8003/
 
 # Se não funciona, porta pode estar errada
 # Verificar gunicorn.conf.py
@@ -654,7 +654,7 @@ top -p $(pgrep -f gunicorn | tr '\n' ',' | sed 's/,$//')
 top -b -n 1 | head -10
 
 # 3. Ver conexões ativas
-ss -tulpn | grep 8000
+ss -tulpn | grep 8003
 
 # 4. Ver acessos/segundo nos logs
 tail -100 /var/www/wifi-portal/logs/app.log | grep "POST\|GET" | wc -l

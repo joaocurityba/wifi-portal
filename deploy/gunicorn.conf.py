@@ -4,7 +4,7 @@
 import multiprocessing
 
 # Bind to localhost only (Nginx will proxy from outside)
-bind = "127.0.0.1:8000"
+bind = "127.0.0.1:8003"
 
 # Worker configuration
 workers = multiprocessing.cpu_count() + 1
