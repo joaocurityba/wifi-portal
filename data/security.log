@@ -580,3 +580,72 @@ jinja2.exceptions.UndefinedError: 'csrf_token' is undefined
  * Running on http://127.0.0.1:5000
  * Running on http://172.18.0.3:5000
 2026-01-30 20:46:59,108 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-01 16:50:15,123 - security - INFO - Rate limiting configured with Redis
+2026-02-01 16:50:15,238 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.18.0.3:5000
+2026-02-01 16:50:15,239 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-01 16:50:32,457 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:50:32] "[32mGET / HTTP/1.1[0m" 302 -
+2026-02-01 16:50:32,676 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:50:32] "GET /login HTTP/1.1" 200 -
+2026-02-01 16:50:32,779 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:50:32] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-02-01 16:50:32,784 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:50:32] "GET /static/js/main.js HTTP/1.1" 200 -
+2026-02-01 16:50:33,177 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:50:33] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-02-01 16:50:55,738 - security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-01T16:50:55.737560', 'event_type': 'unauthorized_admin_access', 'ip': '172.18.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-02-01 16:50:55,744 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:50:55] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-02-01 16:50:55,881 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:50:55] "GET /admin/login HTTP/1.1" 200 -
+2026-02-01 16:50:55,937 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:50:55] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-01 16:51:01,635 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:51:01] "GET /termos HTTP/1.1" 200 -
+2026-02-01 16:51:01,692 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:51:01] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-01 16:51:14,724 - security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-01T16:51:14.724278', 'event_type': 'unauthorized_admin_access', 'ip': '172.18.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-02-01 16:51:14,727 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:51:14] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-02-01 16:51:14,759 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:51:14] "GET /admin/login HTTP/1.1" 200 -
+2026-02-01 16:51:14,822 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:51:14] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-01 16:51:20,565 - security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-01T16:51:20.564913', 'event_type': 'admin_login_success', 'ip': '172.18.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'username': 'admin'}}
+2026-02-01 16:51:20,568 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:51:20] "[32mPOST /admin/login HTTP/1.1[0m" 302 -
+2026-02-01 16:51:20,654 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:51:20] "GET /admin HTTP/1.1" 200 -
+2026-02-01 16:51:20,755 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:51:20] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-01 16:51:50,678 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:51:50] "GET /login HTTP/1.1" 200 -
+2026-02-01 16:51:50,763 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:51:50] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-02-01 16:51:50,769 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:51:50] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-01 16:51:54,652 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:51:54] "GET /admin HTTP/1.1" 200 -
+2026-02-01 16:51:56,680 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:51:56] "[32mGET /admin/logout HTTP/1.1[0m" 302 -
+2026-02-01 16:51:56,734 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:51:56] "GET /admin/login HTTP/1.1" 200 -
+2026-02-01 16:51:56,795 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 16:51:56] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-01 17:03:29,232 - security - INFO - Rate limiting configured with Redis
+2026-02-01 17:03:29,365 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.18.0.3:5000
+2026-02-01 17:03:29,368 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-01 17:03:44,067 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:03:44] "GET /login HTTP/1.1" 200 -
+2026-02-01 17:03:44,154 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:03:44] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-02-01 17:03:44,299 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:03:44] "GET /static/js/main.js HTTP/1.1" 200 -
+2026-02-01 17:03:44,338 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:03:44] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-02-01 17:03:51,053 - security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-01T17:03:51.053803', 'event_type': 'unauthorized_admin_access', 'ip': '172.18.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-02-01 17:03:51,056 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:03:51] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-02-01 17:03:51,149 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:03:51] "GET /admin/login HTTP/1.1" 200 -
+2026-02-01 17:03:51,186 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:03:51] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-01 17:03:59,165 - security - WARNING - SECURITY: admin_login_failed - {'timestamp': '2026-02-01T17:03:59.165013', 'event_type': 'admin_login_failed', 'ip': '172.18.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'username': 'admin', 'ip': '172.18.0.1'}}
+2026-02-01 17:03:59,168 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:03:59] "POST /admin/login HTTP/1.1" 200 -
+2026-02-01 17:03:59,202 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:03:59] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-01 17:04:09,877 - security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-01T17:04:09.877775', 'event_type': 'admin_login_success', 'ip': '172.18.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'username': 'admin'}}
+2026-02-01 17:04:09,879 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:04:09] "[32mPOST /admin/login HTTP/1.1[0m" 302 -
+2026-02-01 17:04:10,110 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:04:10] "GET /admin HTTP/1.1" 200 -
+2026-02-01 17:04:10,156 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:04:10] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-01 17:04:15,063 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:04:15] "[32mGET / HTTP/1.1[0m" 302 -
+2026-02-01 17:04:15,087 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:04:15] "GET /login HTTP/1.1" 200 -
+2026-02-01 17:04:15,134 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:04:15] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-01 17:04:15,139 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:04:15] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-02-01 17:04:26,204 - data_manager - INFO - Acesso registrado: 4b3b8708f0588ec2a8d2fdbbe81eed54799de3111535511a6f0235ff0aced0cb
+2026-02-01 17:04:26,205 - security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-01T17:04:26.205611', 'event_type': 'access_registered', 'ip': '172.18.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'ip': '', 'mac': '', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Sa'}}
+2026-02-01 17:04:26,208 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:04:26] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-02-01 17:04:37,380 - security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-01T17:04:37.380317', 'event_type': 'unauthorized_admin_access', 'ip': '172.18.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-02-01 17:04:37,383 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:04:37] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-02-01 17:04:37,415 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:04:37] "GET /admin/login HTTP/1.1" 200 -
+2026-02-01 17:04:37,471 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:04:37] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-01 17:04:37,660 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:04:37] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-02-01 17:04:42,941 - security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-01T17:04:42.941447', 'event_type': 'admin_login_success', 'ip': '172.18.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'username': 'admin'}}
+2026-02-01 17:04:42,943 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:04:42] "[32mPOST /admin/login HTTP/1.1[0m" 302 -
+2026-02-01 17:04:42,974 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:04:42] "GET /admin HTTP/1.1" 200 -
+2026-02-01 17:04:43,050 - werkzeug - INFO - 172.18.0.1 - - [01/Feb/2026 17:04:43] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
