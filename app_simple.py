@@ -18,8 +18,8 @@ from dotenv import load_dotenv
 load_dotenv('.env.local')
 
 # Importa módulos de segurança
-from security import security_manager, require_admin, rate_limit_admin, generate_csrf_token, validate_csrf_token, require_csrf_token
-from data_manager import data_manager
+from app.security import security_manager, require_admin, rate_limit_admin, generate_csrf_token, validate_csrf_token, require_csrf_token
+from app.data_manager import data_manager
 
 # Configuração de logging avançado
 os.makedirs('logs', exist_ok=True)
