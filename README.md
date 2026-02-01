@@ -1,4 +1,4 @@
-# Portal Cautivo Flask - Wi-Fi Público Municipal
+# Portal Cativo Flask - Wi-Fi Público Municipal
 
 Aplicação backend Flask para portal cativo integrado ao MikroTik Hotspot, destinada a Wi-Fi público municipal.
 

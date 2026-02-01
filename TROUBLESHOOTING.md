@@ -1,4 +1,4 @@
-# Portal Cautivo - Troubleshooting Guide
+# Portal Cativo - Troubleshooting Guide
 
 Guia de diagnóstico e resolução dos problemas mais comuns em deploy.
 

@@ -1,4 +1,4 @@
-# Portal Cautivo - Limitações Atuais
+# Portal Cativo - Limitações Atuais
 
 **Data:** Janeiro 2026  
 **Versão:** 2.0
