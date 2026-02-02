@@ -1,2 +1,2 @@
 username,password_hash,email,created_at,reset_token,reset_expires
-admin,scrypt:32768:8:1$sl36KcoxARtQCEvj$19c45ad84b124453c6de5f5034320d66b74f46e9560ee64f35846f04e1e5a2d2f2c9ff62a68bf1d8ccbd6b23df25f96db8e5bb99064ee9c4b83181a02bb380fa,jcurityba@gmail.com,2026-01-27T15:14:59.865083,,
+admin,scrypt:32768:8:1$B8OlgW8G7xMJNK5x$30f660e497335d0663ed380df4e2ea27f99f6c3d2518a09bb61d2ae72f135e74d353395dd34ca18ccd4801dc1d41958b5c059eb24722fbf6d6ea4b831add0818,admin@prefeitura.com,2026-02-02T15:41:02.255241,,
