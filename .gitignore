@@ -63,6 +63,9 @@ logs/
 *.log
 *.log.*
 
+# Uploads (user-generated content)
+uploads/
+
 # Data files (sensitive, should be backed up separately)
 data/*.csv
 data/*.json
