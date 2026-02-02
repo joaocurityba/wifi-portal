@@ -204,7 +204,6 @@ docker-compose down
 | [CONTRIBUTING.md](CONTRIBUTING-NEW.md) | Como contribuir com o projeto |
 | [LIMITATIONS.md](LIMITATIONS-NEW.md) | Limitações conhecidas e roadmap |
 | [TROUBLESHOOTING.md](TROUBLESHOOTING-NEW.md) | Solução de problemas comuns |
-| [README-PRODUCTION.md](README-PRODUCTION.md) | Deploy rápido com SSL |
 
 ---
 
