@@ -1,958 +1,1118 @@
-# Portal Cativo - Troubleshooting Guide
+# 🔧 Guia de Troubleshooting
 
-Guia de diagnóstico e resolução dos problemas mais comuns em deploy.
-
----
-
-## 🔍 Diagnóstico Rápido
-
-### Checklist de 5 Passos
-
-```bash
-# 1. Aplicação está rodando?
-sudo systemctl status portal-cautivo
-
-# 2. Gunicorn está respondendo localmente?
-curl -s http://127.0.0.1:8003/login | head -20
-
-# 3. Nginx está rodando?
-sudo systemctl status nginx
-
-# 4. Https está funcionando?
-curl -s -k https://seu-dominio.com/login | head -20
-
-# 5. Certificado SSL está válido?
-sudo certbot certificates | grep seu-dominio.com
-```
-
-Se algum fail, vá para seção correspondente abaixo.
+Soluções para problemas comuns no Portal Cativo WiFi. Use este guia para diagnosticar e resolver issues rapidamente.
 
 ---
 
-## ❌ Erro: "ModuleNotFoundError" ou Aplicação não inicia
+## 📋 Índice
 
-### Sintomas
-```
-ModuleNotFoundError: No module named 'flask'
-ModuleNotFoundError: No module named 'app_simple'
-ImportError: cannot import name 'app'
-```
+1. [Quick Diagnostic](#quick-diagnostic)
+2. [Problemas de Containers](#problemas-de-containers)
+3. [Problemas de SSL](#problemas-de-ssl)
+4. [Problemas de Health Check](#problemas-de-health-check)
+5. [Problemas de Autenticação](#problemas-de-autenticação)
+6. [Problemas de Rede](#problemas-de-rede)
+7. [Problemas de Performance](#problemas-de-performance)
+8. [Problemas de Armazenamento](#problemas-de-armazenamento)
+9. [Problemas de Redis](#problemas-de-redis)
+10. [Análise de Logs](#análise-de-logs)
+11. [Comandos Úteis](#comandos-úteis)
 
-### Diagnóstico
+---
 
-```bash
-# 1. Virtual environment está ativado?
-echo $VIRTUAL_ENV
-# Deve mostrar: /var/www/wifi-portal-teste/.venv
+## 🚨 Quick Diagnostic
 
-# 2. Arquivo .env.local existe?
-ls -la /var/www/wifi-portal-teste/.env.local
+### **Checklist Rápido**
 
-# 3. Aplicação consegue ser importada?
-cd /var/www/wifi-portal-teste
-source .venv/bin/activate
-python -c "from wsgi import app; print('✓ OK')"
-```
-
-### Causas Comuns e Soluções
-
-#### Erro: `.env.local` não encontrado
+Execute estes comandos para diagnóstico inicial:
 
 ```bash
-# Criar .env.local
-cd /var/www/wifi-portal-teste
-cp .env.template .env.local
+# 1. Status dos containers
+docker-compose -f docker-compose.prod.yml ps
 
-# Editar e preencher valores obrigatórios
+# 2. Health checks
+curl -I https://wifi.prefeitura.com.br/healthz
+
+# 3. Logs recentes
+docker-compose -f docker-compose.prod.yml logs --tail=50
+
+# 4. Uso de recursos
+docker stats --no-stream
+
+# 5. Espaço em disco
+df -h
+
+# 6. Processos
+ps aux | grep gunicorn
+```
+
+**O que verificar:**
+
+| Check | Esperado | Se falhar |
+|-------|----------|-----------|
+| Containers | All "Up (healthy)" | Ver [Problemas de Containers](#problemas-de-containers) |
+| Health check | HTTP 200 | Ver [Problemas de Health Check](#problemas-de-health-check) |
+| Logs | Sem "ERROR" | Ver [Análise de Logs](#análise-de-logs) |
+| CPU | < 70% | Ver [Performance](#problemas-de-performance) |
+| Disco | < 80% | Ver [Armazenamento](#problemas-de-armazenamento) |
+
+---
+
+## 🐳 Problemas de Containers
+
+### **Containers não sobem**
+
+**Sintoma:**
+```bash
+docker-compose -f docker-compose.prod.yml ps
+# Mostra: Exit 1 ou Restarting
+```
+
+**Diagnóstico:**
+
+```bash
+# Ver logs do container com problema
+docker-compose -f docker-compose.prod.yml logs app
+docker-compose -f docker-compose.prod.yml logs nginx
+docker-compose -f docker-compose.prod.yml logs redis
+```
+
+**Soluções:**
+
+#### **1. Porta já em uso**
+
+**Erro:**
+```
+Error starting userland proxy: listen tcp 0.0.0.0:443: bind: address already in use
+```
+
+**Solução:**
+```bash
+# Identificar processo usando porta 443
+sudo lsof -i :443
+
+# Parar processo
+sudo kill -9 PID
+
+# Ou parar serviço
+sudo systemctl stop nginx  # Se nginx instalado no host
+sudo systemctl stop apache2  # Se Apache instalado
+
+# Subir containers novamente
+docker-compose -f docker-compose.prod.yml up -d
+```
+
+#### **2. .env.local faltando**
+
+**Erro:**
+```
+KeyError: 'SECRET_KEY'
+```
+
+**Solução:**
+```bash
+# Verificar se .env.local existe
+ls -la .env.local
+
+# Se não existir, criar
+cp .env.prod .env.local
+
+# Gerar SECRET_KEY
+python3 -c "import secrets; print(secrets.token_urlsafe(64))"
+
+# Editar .env.local e colar a chave
 nano .env.local
 
-# Permissões
-chmod 600 .env.local
-
 # Reiniciar
-sudo systemctl restart portal-cautivo
+docker-compose -f docker-compose.prod.yml up -d --build
 ```
 
-#### Erro: Dependências não instaladas
+#### **3. Permissões de arquivos**
+
+**Erro:**
+```
+PermissionError: [Errno 13] Permission denied: 'data/users.csv'
+```
+
+**Solução:**
+```bash
+# Corrigir permissões
+sudo chown -R $USER:$USER data/ uploads/ logs/
+chmod -R 755 data/ uploads/ logs/
+
+# Reiniciar
+docker-compose -f docker-compose.prod.yml restart app
+```
+
+#### **4. Erro de build**
+
+**Erro:**
+```
+ERROR: failed to solve: error from sender: open Dockerfile: no such file or directory
+```
+
+**Solução:**
+```bash
+# Verificar se está no diretório correto
+pwd
+# Deve ser: /var/www/wifi-portal
+
+# Verificar se Dockerfile existe
+ls -la Dockerfile
+
+# Se estiver em lugar errado
+cd /var/www/wifi-portal
+
+# Rebuild
+docker-compose -f docker-compose.prod.yml up -d --build
+```
+
+---
+
+### **Container em restart loop**
+
+**Sintoma:**
+```bash
+docker-compose -f docker-compose.prod.yml ps
+# STATUS: Restarting (1) 3 seconds ago
+```
+
+**Diagnóstico:**
 
 ```bash
-# Reinstalar dependências
-cd /var/www/wifi-portal-teste
-source .venv/bin/activate
-pip install --upgrade pip
-pip install -r requirements.txt
-pip install gunicorn>=21.0.0
+# Ver últimas 100 linhas de log
+docker-compose -f docker-compose.prod.yml logs --tail=100 app
+
+# Ver tentativas de restart
+docker events --filter 'container=wifi-portal-app'
+```
+
+**Causas Comuns:**
+
+1. **App crashando na inicialização**
+   ```bash
+   # Ver traceback completo
+   docker-compose -f docker-compose.prod.yml logs app | grep -A 50 "Traceback"
+   ```
+
+2. **Health check falhando**
+   ```bash
+   # Testar health check manualmente
+   docker-compose -f docker-compose.prod.yml exec app curl localhost:5000/healthz
+   ```
+
+3. **Dependência não disponível (Redis)**
+   ```bash
+   # Verificar Redis
+   docker-compose -f docker-compose.prod.yml exec redis redis-cli ping
+   # Deve retornar: PONG
+   ```
+
+**Solução:**
+```bash
+# Parar todos os containers
+docker-compose -f docker-compose.prod.yml down
+
+# Limpar volumes (CUIDADO: perde dados)
+docker volume prune
+
+# Subir novamente
+docker-compose -f docker-compose.prod.yml up -d --build
+
+# Acompanhar logs
+docker-compose -f docker-compose.prod.yml logs -f
+```
+
+---
+
+## 🔐 Problemas de SSL
+
+### **Certificado SSL não funciona**
+
+**Sintoma:**
+```
+Your connection is not private
+NET::ERR_CERT_DATE_INVALID
+```
+
+**Diagnóstico:**
+
+```bash
+# Verificar certificado
+openssl s_client -connect wifi.prefeitura.com.br:443 -servername wifi.prefeitura.com.br < /dev/null 2>/dev/null | openssl x509 -noout -dates
+
+# Deve mostrar:
+# notBefore=...
+# notAfter=...
+```
+
+**Soluções:**
+
+#### **1. Certificado expirado**
+
+**Solução:**
+```bash
+# Renovar certificado
+docker-compose -f docker-compose.prod.yml exec certbot certbot renew --force-renewal
+
+# Reiniciar nginx
+docker-compose -f docker-compose.prod.yml restart nginx
 
 # Verificar
-pip list | grep -E "Flask|Werkzeug|gunicorn"
+curl -I https://wifi.prefeitura.com.br/healthz
 ```
 
-#### Erro: Virtual environment não criado
-
-```bash
-# Criar venv
-cd /var/www/wifi-portal-teste
-python3 -m venv .venv
-
-# Ativar e instalar
-source .venv/bin/activate
-pip install -r requirements.txt
-
-# Reiniciar service
-sudo systemctl restart portal-cautivo
-```
-
----
-
-## ❌ Erro: "Gunicorn não consegue ligar na porta 8003"
-
-### Sintomas
-```
-Address already in use: ('127.0.0.1', 8003)
-[Errno 98] Address already in use
-```
-
-### Solução
-
-```bash
-# Ver o que está usando porta 8003
-sudo lsof -i :8003
-# ou
-sudo ss -tulpn | grep 8003
-
-# Matar processo antigo (se necessário)
-sudo kill -9 <PID>
-
-# Aguardar 5 segundos e reiniciar
-sleep 5
-sudo systemctl restart portal-cautivo
-
-# Verificar que agora está rodando
-sudo systemctl status portal-cautivo
-```
-
----
-
-## ❌ Erro: "Permission denied" ao escrever em data/ ou logs/
-
-### Sintomas
-```
-PermissionError: [Errno 13] Permission denied: 'data/access_log.csv'
-```
-
-### Solução
-
-```bash
-# Mudar ownership para www-data
-sudo chown -R www-data:www-data /var/www/wifi-portal-teste/data
-sudo chown -R www-data:www-data /var/www/wifi-portal-teste/logs
-
-# Definir permissões corretas
-sudo chmod 750 /var/www/wifi-portal-teste/data
-sudo chmod 750 /var/www/wifi-portal-teste/logs
-
-# Reiniciar
-sudo systemctl restart portal-cautivo
-
-# Verificar
-ls -la /var/www/wifi-portal-teste/data/
-```
-
----
-
-# Deve ser:
-# ExecStart=/var/www/wifi-portal-teste/.venv/bin/python -m gunicorn -c deploy/gunicorn.conf.py wsgi:app
-
-# Se não tiver .venv no path, reinstalar:
-cd /var/www/wifi-portal-teste
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-
-# Recarregar systemd
-sudo systemctl daemon-reload
-sudo systemctl restart portal-cautivo
-```
-
-#### 1.2: .env.local não encontrado
+#### **2. Certificado não foi criado**
 
 **Erro:**
 ```
-FileNotFoundError: [Errno 2] No such file or directory: '.env.local'
+ssl_certificate "/etc/letsencrypt/live/wifi.prefeitura.com.br/fullchain.pem" failed
 ```
 
 **Solução:**
 ```bash
-# Criar .env.local
-cd /var/www/wifi-portal-teste
-cp .env.template .env.local
-nano .env.local  # preencher valores
+# Executar script de SSL novamente
+sudo bash deploy/setup-ssl.sh wifi.prefeitura.com.br admin@prefeitura.com.br
 
-# Permissões corretas
-chmod 600 .env.local
-
-# Reiniciar
-sudo systemctl restart portal-cautivo
+# Ou manualmente
+docker-compose -f docker-compose.prod.yml up -d certbot
+docker-compose -f docker-compose.prod.yml exec certbot certbot certonly \
+  --webroot \
+  --webroot-path=/var/www/certbot \
+  --email admin@prefeitura.com.br \
+  --agree-tos \
+  --no-eff-email \
+  -d wifi.prefeitura.com.br
 ```
 
-#### 1.3: Gunicorn não pode ligar na porta
-
-**Erro:**
-```
-Address already in use: ('127.0.0.1', 8003)
-```
-
-**Solução:**
-```bash
-# Ver o que está usando porta 8003
-sudo lsof -i :8003
-
-# Matar processo antigo
-sudo kill -9 <PID>
-
-# Ou mudar porta em deploy/gunicorn.conf.py
-sudo nano deploy/gunicorn.conf.py
-# bind = "127.0.0.1:8001"  # mudar para 8001
-
-# E atualizar nginx também
-sudo nano /etc/nginx/sites-available/wifi-portal-teste
-# proxy_pass http://127.0.0.1:8001;
-
-# Recarregar
-sudo nginx -t
-sudo systemctl restart nginx
-sudo systemctl restart portal-cautivo
-```
-
-#### 1.4: Permissão negada ao escrever em data/
-
-**Erro:**
-```
-PermissionError: [Errno 13] Permission denied: 'data/access_log.csv'
-```
-
-**Solução:**
-```bash
-# Mudar ownership para www-data
-sudo chown -R www-data:www-data /var/www/wifi-portal-teste/data
-sudo chown -R www-data:www-data /var/www/wifi-portal-teste/logs
-
-# Verificar permissões
-ls -la /var/www/wifi-portal-teste/data/
-# Deve mostrar: drwxr-x--- www-data www-data
-
-# Se ainda não funcionar, expandir permissões temporariamente
-sudo chmod 777 /var/www/wifi-portal-teste/data
-sudo systemctl restart portal-cautivo
-
-# Depois restaurar segurança
-sudo chmod 750 /var/www/wifi-portal-teste/data
-```
-
----
-
-## ❌ Erro: "Redis Connection Refused"
-
-### Sintomas
-```
-ConnectionRefusedError: [Errno 111] Connection refused
-redis.exceptions.ConnectionError: Error -2 connecting to localhost:6379
-```
-
-### Diagnóstico
-
-```bash
-# Redis está rodando?
-sudo systemctl status redis-server
-
-# Redis responde?
-redis-cli ping
-# Deve responder: PONG
-
-# Ver porta
-sudo ss -tulpn | grep 6379
-```
-
-### Solução
-
-```bash
-# Se não está instalado:
-sudo apt install redis-server -y
-
-# Ativar e iniciar
-sudo systemctl enable redis-server
-sudo systemctl start redis-server
-
-# Testar
-redis-cli ping
-
-# Se ainda falhar:
-sudo journalctl -u redis-server -n 20
-
-# Ou simplesmente remover REDIS_URL do .env.local para usar fallback in-memory
-nano /var/www/wifi-portal-teste/.env.local
-# Comentar: # REDIS_URL=redis://localhost:6379/0
-
-sudo systemctl restart portal-cautivo
-```
-
----
-
-## ❌ Erro: "Docker Compose não inicia"
-
-### Sintomas
-```
-ERROR: Service 'app' failed to build
-ERROR: The image for the service you're trying to recreate has been removed
-```
-
-### Solução
-
-```bash
-# Limpar imagens antigas
-docker-compose down -v
-
-# Rebuildar
-docker-compose build --no-cache
-
-# Iniciar
-docker-compose up -d
-
-# Ver logs
-docker-compose logs -f app
-```
-
-### Se a porta 5000 já estiver em uso
-
-```bash
-# Ver o que está usando
-sudo lsof -i :5000
-
-# Ou mudar porta em docker-compose.yml
-nano docker-compose.yml
-# Mudar: "5000:5000" para "5001:5000"
-
-docker-compose restart
-```
-
----
-
-### Sintomas
-```
-502 Bad Gateway
-nginx/1.18.0
-```
-
-### Diagnóstico
-
-```bash
-# 1. Gunicorn está rodando?
-sudo systemctl status portal-cautivo
-ps aux | grep gunicorn
-
-# 2. Gunicorn está respondendo localmente?
-curl -v http://127.0.0.1:8003/login
-
-# 3. Nginx config está ok?
-sudo nginx -t
-
-# 4. Ver erro no nginx
-sudo tail -30 /var/log/nginx/wifi-portal-teste_error.log
-sudo tail -30 /var/log/nginx/error.log
-```
-
-### Causas Comuns e Soluções
-
-#### 2.1: Gunicorn caiu ou não está respondendo
-
-**Solução:**
-```bash
-# Reiniciar
-sudo systemctl restart portal-cautivo
-sleep 3
-
-# Verificar se levantou
-sudo systemctl status portal-cautivo
-curl -v http://127.0.0.1:8003/login
-
-# Se continuar caindo, ver logs
-sudo journalctl -u portal-cautivo -f
-```
-
-#### 2.2: Nginx não consegue conectar em Gunicorn
-
-**Erro em nginx error.log:**
-```
-connect() failed (111: Connection refused)
-upstream timed out (110: Connection timed out)
-```
-
-**Solução:**
-```bash
-# Verificar que proxy_pass no nginx está correto
-sudo cat /etc/nginx/sites-available/wifi-portal-teste | grep proxy_pass
-# Deve ser: proxy_pass http://127.0.0.1:8003;
-
-# Testar conexão manualmente
-curl -v http://127.0.0.1:8003/
-
-# Se não funciona, porta pode estar errada
-# Verificar gunicorn.conf.py
-cat deploy/gunicorn.conf.py | grep bind
-```
-
-#### 2.3: Timeout entre Nginx e Gunicorn
-
-**Erro em nginx error.log:**
-```
-upstream timed out (110: Connection timed out)
-```
-
-**Solução:**
-```bash
-# Aumentar timeout em nginx
-sudo nano /etc/nginx/sites-available/wifi-portal-teste
-
-# Adicionar ou atualizar:
-proxy_connect_timeout 30s;
-proxy_send_timeout 30s;
-proxy_read_timeout 30s;
-
-# Testar
-sudo nginx -t
-sudo systemctl restart nginx
-```
-
-#### 2.4: Gunicorn workers travando
-
-**Solução:**
-```bash
-# Ver workers
-ps aux | grep gunicorn | grep -v grep
-
-# Se há muitos processos ou alguns "defunct", reiniciar
-sudo systemctl restart portal-cautivo
-
-# Se continua travando:
-# 1. Aumentar workers em deploy/gunicorn.conf.py
-# 2. Aumentar timeout
-# 3. Ver logs para identif memory leak
-
-# Ver uso de memória
-top -p $(pgrep -f gunicorn | tr '\n' ',' | sed 's/,$//')
-```
-
----
-
-## ❌ Erro: "SSL Certificate Error"
-
-### Sintomas
-```
-NET::ERR_CERT_AUTHORITY_INVALID
-SSL certificate problem
-```
-
-### Diagnóstico
-
-```bash
-# Checar certificado
-sudo certbot certificates
-
-# Testar SSL
-openssl s_client -connect seu-dominio.com:443
-
-# Ver data de expiração
-echo | openssl s_client -servername seu-dominio.com -connect seu-dominio.com:443 2>/dev/null | openssl x509 -noout -dates
-```
-
-### Causas Comuns e Soluções
-
-#### 3.1: Certificado expirado
-
-**Solução:**
-```bash
-# Renovar manualmente
-sudo certbot renew --force-renewal
-
-# Testar renovação automática
-sudo certbot renew --dry-run
-
-# Verificar que certbot.timer está ativo
-sudo systemctl status certbot.timer
-```
-
-#### 3.2: Domínio não aponta para este servidor
-
-**Erro ao obter certificado:**
-```
-Certbot failed to authenticate
-```
+#### **3. DNS não aponta para servidor**
 
 **Solução:**
 ```bash
 # Verificar DNS
-nslookup seu-dominio.com
-dig seu-dominio.com
+dig +short wifi.prefeitura.com.br
 
-# Deve retornar IP deste servidor
+# Deve retornar o IP do servidor
+# Se não retornar, configurar DNS e aguardar propagação
 
-# Se não, atualizar DNS no registrador:
-# A seu-dominio.com -> seu-ip-publico
-
-# Aguardar propagação (até 48h)
-# Depois tentar novamente
-sudo certbot certonly --standalone -d seu-dominio.com
+# Verificar propagação em: https://dnschecker.org
 ```
 
-#### 3.3: Nginx não está usando certificado correto
+---
+
+### **Renovação automática não funciona**
+
+**Problema:**
+Certificado expira e não renova automaticamente.
+
+**Diagnóstico:**
+
+```bash
+# Verificar cron do certbot
+docker-compose -f docker-compose.prod.yml exec certbot cat /etc/cron.d/certbot
+
+# Ver logs de renovação
+docker-compose -f docker-compose.prod.yml logs certbot | grep renew
+```
+
+**Solução:**
+
+```bash
+# Testar renovação dry-run
+docker-compose -f docker-compose.prod.yml exec certbot certbot renew --dry-run
+
+# Se funcionar, configurar cron no host
+sudo crontab -e
+# Adicionar:
+0 3 * * * cd /var/www/wifi-portal && docker-compose -f docker-compose.prod.yml exec certbot certbot renew --quiet && docker-compose -f docker-compose.prod.yml restart nginx
+```
+
+---
+
+## ❤️ Problemas de Health Check
+
+### **Health check falha constantemente**
+
+**Sintoma:**
+```bash
+docker-compose -f docker-compose.prod.yml ps
+# STATUS: Up (unhealthy)
+```
+
+**Diagnóstico:**
+
+```bash
+# Testar health check manualmente
+curl http://localhost/healthz
+
+# Dentro do container
+docker-compose -f docker-compose.prod.yml exec app curl localhost:5000/healthz
+
+# Ver logs do health check
+docker inspect wifi-portal-app --format='{{json .State.Health}}' | jq
+```
+
+**Soluções:**
+
+#### **1. Endpoint /healthz não existe**
+
+**Erro:**
+```
+404 Not Found
+```
 
 **Solução:**
 ```bash
-# Verificar configuração nginx
-sudo cat /etc/nginx/sites-available/wifi-portal-teste | grep ssl_certificate
+# Verificar se rota existe no código
+docker-compose -f docker-compose.prod.yml exec app grep -n "healthz" app_simple.py
 
-# Deve apontar para:
-# ssl_certificate /etc/letsencrypt/live/seu-dominio.com/fullchain.pem;
-# ssl_certificate_key /etc/letsencrypt/live/seu-dominio.com/privkey.key;
+# Se não existir, adicionar no app_simple.py:
+@app.route('/healthz')
+def healthz():
+    return jsonify({"status": "healthy", "service": "wifi-portal"}), 200
 
-# Se caminhos estiverem errados, editar
-sudo nano /etc/nginx/sites-available/wifi-portal-teste
-
-# Testar e recarregar
-sudo nginx -t
-sudo systemctl restart nginx
+# Rebuild
+docker-compose -f docker-compose.prod.yml up -d --build
 ```
 
----
+#### **2. App não está respondendo**
 
-## ❌ Erro: "Connection Refused / Cannot Connect"
-
-### Sintomas
+**Erro:**
 ```
-curl: (7) Failed to connect
-Connection refused
+curl: (7) Failed to connect to localhost port 5000
 ```
-
-### Diagnóstico
-
-```bash
-# 1. Servidor web está rodando?
-sudo systemctl status nginx
-sudo systemctl status portal-cautivo
-
-# 2. Porta 443 está aberta?
-sudo ufw status
-ss -tulpn | grep 443
-
-# 3. Firewall permite?
-sudo iptables -L -n | grep 443
-```
-
-### Causas Comuns e Soluções
-
-#### 4.1: Nginx não está rodando
 
 **Solução:**
 ```bash
-sudo systemctl start nginx
-sudo systemctl status nginx
+# Ver se gunicorn está rodando
+docker-compose -f docker-compose.prod.yml exec app ps aux | grep gunicorn
 
-# Se der erro, verificar configuração
-sudo nginx -t
+# Ver logs do app
+docker-compose -f docker-compose.prod.yml logs app
+
+# Reiniciar
+docker-compose -f docker-compose.prod.yml restart app
 ```
 
-#### 4.2: Porta bloqueada por firewall
+#### **3. Timeout muito curto**
+
+**Problema:**
+Health check timeout antes da resposta.
+
+**Solução:**
+
+Editar `docker-compose.prod.yml`:
+
+```yaml
+healthcheck:
+  test: ["CMD", "curl", "-f", "http://localhost:5000/healthz"]
+  interval: 30s
+  timeout: 10s  # Aumentar de 3s para 10s
+  retries: 3
+  start_period: 40s  # Aumentar período inicial
+```
+
+```bash
+# Aplicar mudanças
+docker-compose -f docker-compose.prod.yml up -d
+```
+
+---
+
+## 🔑 Problemas de Autenticação
+
+### **Não consegue fazer login (credenciais corretas)**
+
+**Sintoma:**
+```
+Login falha mesmo com senha correta
+```
+
+**Diagnóstico:**
+
+```bash
+# Verificar se users.csv existe
+docker-compose -f docker-compose.prod.yml exec app ls -la data/users.csv
+
+# Ver conteúdo (sem revelar senhas completas)
+docker-compose -f docker-compose.prod.yml exec app head data/users.csv
+```
+
+**Soluções:**
+
+#### **1. Arquivo users.csv corrompido**
 
 **Solução:**
 ```bash
-# Verificar regras
-sudo ufw status
-sudo ufw status numbered
+# Fazer backup
+docker-compose -f docker-compose.prod.yml exec app cp data/users.csv data/users.csv.bak
 
-# Se 443 não está permitida, adicionar
-sudo ufw allow 443/tcp
-sudo ufw allow 80/tcp
+# Verificar integridade
+docker-compose -f docker-compose.prod.yml exec app cat data/users.csv
 
-# Recarregar
-sudo ufw reload
-```
-
-#### 4.3: Domínio não aponta para servidor
-
-**Solução:**
-```bash
-# Testar DNS
-nslookup seu-dominio.com
-dig seu-dominio.com A
-
-# Se não retornar seu IP, atualizar DNS no registrador
-# Aguardar propagação (até 48h)
-# Testar com:
-curl -I https://seu-dominio.com
-```
-
----
-
-## ❌ Erro: "Permission Denied" ao Escrever Dados
-
-### Sintomas
-```
-PermissionError: [Errno 13] Permission denied: 'data/access_log.csv'
-PermissionError: [Errno 13] Permission denied: 'logs/app.log'
-```
-
-### Diagnóstico
-
-```bash
-# Verificar owner
-ls -la /var/www/wifi-portal-teste/data/
-ls -la /var/www/wifi-portal-teste/logs/
-
-# Deve ser: www-data www-data
-
-# Verificar permissões
-stat /var/www/wifi-portal-teste/data/
-```
-
-### Solução
-
-```bash
-# Corrigir ownership
-sudo chown -R www-data:www-data /var/www/wifi-portal-teste/data
-sudo chown -R www-data:www-data /var/www/wifi-portal-teste/logs
-
-# Corrigir permissões
-sudo chmod 750 /var/www/wifi-portal-teste/data
-sudo chmod 750 /var/www/wifi-portal-teste/logs
-
-# Criar arquivos se não existirem
-sudo -u www-data touch /var/www/wifi-portal-teste/data/access_log.csv
-sudo -u www-data touch /var/www/wifi-portal-teste/logs/app.log
-
-# Restart
-sudo systemctl restart portal-cautivo
-
-# Verificar
-curl -s -k https://seu-dominio.com/login  # deve funcionar
-tail -f /var/www/wifi-portal/logs/app.log  # deve ter novos logs
-```
-
----
-
-## ❌ Erro: "Too Many Login Attempts"
-
-### Sintomas
-```
-Muitas tentativas de login. Tente novamente mais tarde.
-```
-
-### Causa
-
-Rate limiting foi acionado após 5 tentativas de login em 1 hora.
-
-### Solução
-
-```bash
-# Aguardar 1 hora (limite reseta)
-# Ou
-
-# Reiniciar aplicação (reseta memória de tentativas)
-sudo systemctl restart portal-cautivo
-
-# Ou
-
-# Aumentar limite em security.py
-# rate_limit_admin decorator (linha ~190)
-# Aumentar "5" para número maior
-
-# E redeploy
-```
-
----
-
-## ❌ Erro: "Logs Não São Criados"
-
-### Sintomas
-```
-tail: cannot open 'logs/app.log' for reading: No such file or directory
-```
-
-### Diagnóstico
-
-```bash
-# Verificar se diretório logs existe
-ls -la /var/www/wifi-portal/ | grep logs
-
-# Se não existe, criar
-mkdir -p /var/www/wifi-portal/logs
-sudo chown www-data:www-data /var/www/wifi-portal/logs
-sudo chmod 750 /var/www/wifi-portal/logs
-```
-
-### Solução
-
-```bash
-# Se logs estão em outro lugar
-find /var/www/wifi-portal -name "*.log" 2>/dev/null
-
-# Ou ver onde logging está configurado
-grep -r "FileHandler" /var/www/wifi-portal/*.py
-
-# Criar arquivo de log manualmente
-sudo -u www-data touch /var/www/wifi-portal/logs/app.log
-
-# Restart
-sudo systemctl restart portal-cautivo
-```
-
----
-
-## ❌ Erro: "Logrotate Não Está Funcionando"
-
-### Sintomas
-```
-/var/www/wifi-portal/logs/app.log
-/var/www/wifi-portal/logs/app.log.1
-/var/www/wifi-portal/logs/app.log.2
-... não aparecem após 1+ dias
-```
-
-### Diagnóstico
-
-```bash
-# Testar configuração (dry-run)
-sudo logrotate -d /etc/logrotate.d/wifi-portal
-
-# Ver se arquivo existe
-ls -la /etc/logrotate.d/wifi-portal
-
-# Ver logs do logrotate
-grep logrotate /var/log/syslog  # Ubuntu
-grep logrotate /var/log/messages  # CentOS
-```
-
-### Solução
-
-```bash
-# Forçar rotação (se necessário para teste)
-sudo logrotate -f /etc/logrotate.d/wifi-portal
-
-# Verificar resultado
-ls -la /var/www/wifi-portal/logs/
-
-# Se arquivo de config está errado, corrigir
-sudo nano /etc/logrotate.d/wifi-portal
-
-# Exemplo correto:
-# /var/www/wifi-portal/logs/*.log {
-#     daily
-#     rotate 90
-#     compress
-#     missingok
-#     notifempty
-#     create 0640 www-data www-data
-# }
-
-# Recarregar
-sudo systemctl restart logrotate  # ou restart cron
-```
-
----
-
-## ❌ Erro: "Admin Password Não Funciona"
-
-### Sintomas
-```
-Login: admin
-Senha: admin123
-→ "Usuário ou senha incorretos"
-```
-
-### Solução
-
-```bash
-# 1. Verificar que users.csv existe
-ls -la /var/www/wifi-portal/data/users.csv
-
-# 2. Se não existe, será criado automaticamente na primeira acessão
-#    Aguarde e tente novamente
-
-# 3. Se exists, resetar password manualmente
-cd /var/www/wifi-portal
-source .venv/bin/activate
-
-python3 << 'EOF'
-import csv
+# Se corrompido, recriar
+docker-compose -f docker-compose.prod.yml exec app python3 << 'EOF'
 from werkzeug.security import generate_password_hash
+import csv
+from datetime import datetime
 
-users_file = 'data/users.csv'
-users = []
+users = [
+    ['admin', generate_password_hash('admin123'), 'admin', datetime.now().isoformat()]
+]
 
-# Ler users
-with open(users_file, 'r') as f:
-    reader = csv.DictReader(f)
-    users = list(reader)
-
-# Encontrar admin e resetar
-for user in users:
-    if user['username'] == 'admin':
-        user['password_hash'] = generate_password_hash('admin123')
-        print(f"Admin password reset para admin123")
-
-# Escrever
-with open(users_file, 'w', newline='') as f:
-    writer = csv.DictWriter(f, fieldnames=['username', 'password_hash', 'email', 'created_at', 'reset_token', 'reset_expires'])
-    writer.writeheader()
+with open('data/users.csv', 'w', newline='') as f:
+    writer = csv.writer(f)
+    writer.writerow(['username', 'password_hash', 'role', 'created_at'])
     writer.writerows(users)
-
-print("✓ Password resetado")
 EOF
 
-# 4. Restart
-sudo systemctl restart portal-cautivo
+# Reiniciar app
+docker-compose -f docker-compose.prod.yml restart app
+```
 
-# 5. Tentar login novamente
+#### **2. CSRF token inválido**
+
+**Erro no log:**
+```
+The CSRF token is missing
+```
+
+**Solução:**
+```bash
+# Limpar cookies do navegador
+# Ou modo anônimo
+
+# Verificar SECRET_KEY está configurada
+docker-compose -f docker-compose.prod.yml exec app env | grep SECRET_KEY
+
+# Se vazia, configurar em .env.local
+nano .env.local
+# SECRET_KEY=sua-chave-aqui
+
+# Reiniciar
+docker-compose -f docker-compose.prod.yml restart app
 ```
 
 ---
 
-## ❌ Erro: "Aplicação Muito Lenta"
+### **Rate limit bloqueando admin**
 
-### Sintomas
+**Sintoma:**
 ```
-Respostas demoram >5s
-Timeouts frequentes
+429 Too Many Requests
+Muitas tentativas. Tente novamente em X segundos.
 ```
 
-### Diagnóstico
+**Solução:**
 
 ```bash
-# 1. Ver uso de memória
-top -p $(pgrep -f gunicorn | tr '\n' ',' | sed 's/,$//')
+# Opção 1: Limpar rate limit no Redis
+docker-compose -f docker-compose.prod.yml exec redis redis-cli
 
-# 2. Ver uso de CPU
-top -b -n 1 | head -10
+# Dentro do redis-cli:
+KEYS *192.168.1.100*  # Substitua pelo IP do admin
+DEL rate_limit:192.168.1.100
+exit
 
-# 3. Ver conexões ativas
-ss -tulpn | grep 8003
+# Opção 2: Aguardar 1 hora (timeout padrão)
 
-# 4. Ver acessos/segundo nos logs
-tail -100 /var/www/wifi-portal/logs/app.log | grep "POST\|GET" | wc -l
-```
+# Opção 3: Desabilitar rate limit temporariamente
+# Editar .env.local:
+RATE_LIMIT_ENABLED=False
 
-### Soluções
-
-```bash
-# 1. Aumentar workers (se CPU < 80%)
-sudo nano deploy/gunicorn.conf.py
-# workers = 8  # aumentar de 4
-
-# 2. Aumentar timeout (se conexão lenta)
-# timeout = 60  # aumentar de 30
-
-# 3. Implementar Redis cache (futuro)
-
-# 4. Revisar queries em CSV (se dataset grande)
-# Considerar PostgreSQL
-
-# 5. Restart
-sudo systemctl daemon-reload
-sudo systemctl restart portal-cautivo
+# Reiniciar app
+docker-compose -f docker-compose.prod.yml restart app
 ```
 
 ---
 
-## ❌ Erro: "Dados Corrompidos / CSV Inválido"
+## 🌐 Problemas de Rede
 
-### Sintomas
+### **502 Bad Gateway**
+
+**Sintoma:**
 ```
-Error reading CSV: _csv.Error: unexpected end of data
+nginx/1.25.0 502 Bad Gateway
 ```
 
-### Diagnóstico
+**Diagnóstico:**
 
 ```bash
-# Verificar arquivo
-file /var/www/wifi-portal/data/access_log.csv
+# Ver logs nginx
+docker-compose -f docker-compose.prod.yml logs nginx | tail -50
 
-# Tentar ler
-head -5 /var/www/wifi-portal/data/access_log.csv
+# Ver logs app
+docker-compose -f docker-compose.prod.yml logs app | tail -50
 
-# Verificar com Python
-python3 -c "import csv; list(csv.DictReader(open('data/access_log.csv')))"
+# Testar conexão nginx → app
+docker-compose -f docker-compose.prod.yml exec nginx curl http://app:5000/healthz
 ```
 
-### Solução
+**Soluções:**
+
+#### **1. App não está respondendo**
+
+**Solução:**
+```bash
+# Reiniciar app
+docker-compose -f docker-compose.prod.yml restart app
+
+# Aguardar 10 segundos
+sleep 10
+
+# Testar
+curl https://wifi.prefeitura.com.br/healthz
+```
+
+#### **2. Timeout nginx → app**
+
+**Solução:**
+
+Editar `deploy/nginx.docker.prod.conf`:
+
+```nginx
+location / {
+    proxy_pass http://app:5000;
+    proxy_connect_timeout 60s;  # Aumentar
+    proxy_read_timeout 60s;     # Aumentar
+    proxy_send_timeout 60s;     # Aumentar
+}
+```
 
 ```bash
-# 1. Backup do arquivo corrompido
-sudo cp /var/www/wifi-portal/data/access_log.csv /var/www/wifi-portal/data/access_log.csv.bak
-
-# 2. Criar novo arquivo vazio (vai reconstruir headers)
-sudo -u www-data touch /var/www/wifi-portal/data/access_log.csv
-
-# 3. Se had dados válidos em .bak, recuperar
-# (manual: grep e import)
-
-# 4. Reiniciar
-sudo systemctl restart portal-cautivo
-
-# 5. Em futuro, usar app/locks.py para evitar corrupção
+# Reiniciar nginx
+docker-compose -f docker-compose.prod.yml restart nginx
 ```
 
 ---
 
-## 📞 Quando Nada Funciona
+### **Redirecionamento não funciona (MikroTik)**
 
-### Passo 1: Coletar Informações
+**Problema:**
+Usuário não é redirecionado para o portal.
+
+**Diagnóstico:**
 
 ```bash
-# Versão do SO
-uname -a
+# Testar DNS do portal
+dig +short wifi.prefeitura.com.br
 
-# Versão Python
-python3 --version
+# Testar HTTP (deve redirecionar para HTTPS)
+curl -I http://wifi.prefeitura.com.br
 
-# Status dos serviços
-sudo systemctl status portal-cautivo
-sudo systemctl status nginx
-
-# Últimos 50 linhas de logs
-sudo journalctl -u portal-cautivo -n 50
-sudo tail -50 /var/log/nginx/wifi-portal_error.log
-
-# Testar conectividade
-curl -v https://seu-dominio.com/login 2>&1 | head -30
+# Verificar configuração MikroTik (via SSH)
+ssh admin@IP_MIKROTIK
+/ip hotspot profile print detail
 ```
 
-### Passo 2: Abrir Issue no Repositório
+**Solução:**
 
-Criar issue com:
+No MikroTik:
+
+```
+/ip hotspot profile
+set [find] login-by=http-chap,http-pap,cookie
+set [find] http-proxy=0.0.0.0:0
+set [find] use-radius=no
+
+/ip hotspot
+set [find] address-pool=hs-pool
+set [find] profile=hsprof1
+set [find] idle-timeout=5m
+
+# IMPORTANTE: Configurar Login URL
+/ip hotspot profile
+set [find] html-directory=hotspot
+set [find] login-by=http-chap
+set [find] http-proxy=0.0.0.0:0
+set [find] login-by=cookie,http-chap
+
+# Mudar URL de login
+set [find] use-radius=no
+set [find] http-cookie-lifetime=1d
+```
+
+---
+
+## ⚡ Problemas de Performance
+
+### **Aplicação muito lenta**
+
+**Sintoma:**
+Páginas demoram >5 segundos para carregar.
+
+**Diagnóstico:**
+
+```bash
+# Ver uso de recursos
+docker stats --no-stream
+
+# Ver processos dentro do container
+docker-compose -f docker-compose.prod.yml exec app top
+
+# Testar latência
+curl -w "@-" -o /dev/null -s https://wifi.prefeitura.com.br/login << 'EOF'
+time_namelookup:  %{time_namelookup}\n
+time_connect:  %{time_connect}\n
+time_starttransfer:  %{time_starttransfer}\n
+time_total:  %{time_total}\n
+EOF
+```
+
+**Soluções:**
+
+#### **1. CPU em 100%**
+
+**Solução:**
+```bash
+# Aumentar workers do Gunicorn
+# Editar wsgi.py ou docker-compose.prod.yml
+
+# Calcular workers ideais
+python3 -c "import multiprocessing; print((multiprocessing.cpu_count() * 2) + 1)"
+
+# Aplicar (exemplo: 9 workers para 4 CPUs)
+docker-compose -f docker-compose.prod.yml exec app gunicorn wsgi:app \
+  --workers 9 \
+  --bind 0.0.0.0:5000 \
+  --reload
+```
+
+#### **2. Memória esgotada**
+
+**Solução:**
+```bash
+# Ver uso de memória
+free -h
+
+# Limpar cache
+sudo sync; echo 3 | sudo tee /proc/sys/vm/drop_caches
+
+# Adicionar swap (se não tiver)
+sudo fallocate -l 2G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+
+# Permanente
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+```
+
+#### **3. I/O de disco lento**
+
+**Problema:**
+CSV muito grande.
+
+**Solução:**
+```bash
+# Ver tamanho dos arquivos
+du -sh data/*
+
+# Se access_log.csv > 100MB, rotacionar
+cd data
+timestamp=$(date +%Y%m%d_%H%M%S)
+mv access_log.csv access_log_${timestamp}.csv
+touch access_log.csv
+
+# Comprimir antigos
+gzip access_log_*.csv
+
+# Reiniciar app
+docker-compose -f docker-compose.prod.yml restart app
+```
+
+---
+
+### **Redis lento**
+
+**Diagnóstico:**
+
+```bash
+# Conectar ao Redis
+docker-compose -f docker-compose.prod.yml exec redis redis-cli
+
+# Ver estatísticas
+INFO stats
+
+# Ver latência
+PING
+# Deve retornar PONG instantaneamente
+
+# Ver memória
+INFO memory
+```
+
+**Soluções:**
+
+#### **1. Redis com muitas keys**
+
+```bash
+# Dentro do redis-cli
+DBSIZE
+# Se > 1 milhão, considerar flush
+
+# Flush (CUIDADO: perde todos os dados)
+FLUSHDB
+
+# Ou configurar expiração automática
+CONFIG SET maxmemory 256mb
+CONFIG SET maxmemory-policy allkeys-lru
+```
+
+---
+
+## 💾 Problemas de Armazenamento
+
+### **Disco cheio**
+
+**Sintoma:**
+```
+OSError: [Errno 28] No space left on device
+```
+
+**Diagnóstico:**
+
+```bash
+# Ver uso de disco
+df -h
+
+# Ver maiores diretórios
+du -h /var/www/wifi-portal | sort -hr | head -20
+
+# Ver maiores arquivos
+find /var/www/wifi-portal -type f -size +100M -exec ls -lh {} \;
+```
+
+**Soluções:**
+
+```bash
+# Limpar logs do Docker
+docker system prune -a --volumes -f
+
+# Limpar logs da aplicação
+cd /var/www/wifi-portal
+find logs/ -name "*.log" -mtime +7 -delete
+
+# Rotacionar access_log.csv
+cd data
+for file in access_log_*.csv; do
+    gzip "$file"
+done
+
+# Mover backups antigos
+find /backup -name "*.tar.gz" -mtime +30 -delete
+
+# Se necessário, aumentar disco
+# (depende do provedor de cloud)
+```
+
+---
+
+### **Arquivo corrompido**
+
+**Sintoma:**
+```
+csv.Error: line contains NULL byte
+```
+
+**Solução:**
+
+```bash
+# Fazer backup
+cp data/users.csv data/users.csv.corrupt
+
+# Tentar recuperar
+strings data/users.csv.corrupt > data/users.csv
+
+# Verificar
+cat data/users.csv
+
+# Se não funcionar, restaurar do backup
+cp /backup/wifi-portal_LATEST.tar.gz .
+tar -xzf wifi-portal_LATEST.tar.gz
+cp backup/data/users.csv data/
+
+# Reiniciar
+docker-compose -f docker-compose.prod.yml restart app
+```
+
+---
+
+## 🔴 Problemas de Redis
+
+### **Redis não conecta**
+
+**Erro:**
+```
+redis.exceptions.ConnectionError: Error connecting to Redis
+```
+
+**Diagnóstico:**
+
+```bash
+# Ver se Redis está rodando
+docker-compose -f docker-compose.prod.yml ps redis
+
+# Testar conexão
+docker-compose -f docker-compose.prod.yml exec redis redis-cli ping
+
+# Ver porta
+docker-compose -f docker-compose.prod.yml exec redis netstat -tuln | grep 6379
+```
+
+**Soluções:**
+
+#### **1. Redis parado**
+
+```bash
+# Iniciar Redis
+docker-compose -f docker-compose.prod.yml up -d redis
+
+# Verificar logs
+docker-compose -f docker-compose.prod.yml logs redis
+```
+
+#### **2. Senha incorreta**
+
+**Erro:**
+```
+NOAUTH Authentication required
+```
+
+**Solução:**
+```bash
+# Verificar senha em .env.local
+grep REDIS_PASSWORD .env.local
+
+# Verificar senha em docker-compose.prod.yml
+grep REDIS_PASSWORD docker-compose.prod.yml
+
+# Se diferentes, corrigir e reiniciar
+docker-compose -f docker-compose.prod.yml down
+docker-compose -f docker-compose.prod.yml up -d
+```
+
+---
+
+## 📊 Análise de Logs
+
+### **Encontrar erros nos logs**
+
+```bash
+# Erros de todas as aplicações
+docker-compose -f docker-compose.prod.yml logs | grep -i error
+
+# Erros apenas do app
+docker-compose -f docker-compose.prod.yml logs app | grep -i error
+
+# Últimas 100 linhas com erro
+docker-compose -f docker-compose.prod.yml logs --tail=100 | grep -i "error\|exception\|failed"
+
+# Exportar logs para análise
+docker-compose -f docker-compose.prod.yml logs > /tmp/portal-logs.txt
+```
+
+### **Logs em tempo real**
+
+```bash
+# Todos os containers
+docker-compose -f docker-compose.prod.yml logs -f
+
+# Apenas app
+docker-compose -f docker-compose.prod.yml logs -f app
+
+# Com timestamp
+docker-compose -f docker-compose.prod.yml logs -f -t
+
+# Filtrar por padrão
+docker-compose -f docker-compose.prod.yml logs -f | grep "192.168.1.100"
+```
+
+### **Analisar logs do Nginx**
+
+```bash
+# Access log
+docker-compose -f docker-compose.prod.yml exec nginx cat /var/log/nginx/access.log | tail -100
+
+# Error log
+docker-compose -f docker-compose.prod.yml exec nginx cat /var/log/nginx/error.log | tail -100
+
+# Top 10 IPs
+docker-compose -f docker-compose.prod.yml exec nginx awk '{print $1}' /var/log/nginx/access.log | sort | uniq -c | sort -nr | head -10
+
+# Top 10 URLs
+docker-compose -f docker-compose.prod.yml exec nginx awk '{print $7}' /var/log/nginx/access.log | sort | uniq -c | sort -nr | head -10
+```
+
+---
+
+## 🛠️ Comandos Úteis
+
+### **Restart Completo**
+
+```bash
+# Parar tudo
+docker-compose -f docker-compose.prod.yml down
+
+# Limpar (CUIDADO: perde dados não persistidos)
+docker system prune -f
+
+# Subir novamente
+docker-compose -f docker-compose.prod.yml up -d --build
+
+# Verificar
+docker-compose -f docker-compose.prod.yml ps
+curl https://wifi.prefeitura.com.br/healthz
+```
+
+### **Resetar Aplicação (Factory Reset)**
+
+**⚠️ ATENÇÃO: Isso apaga TODOS OS DADOS!**
+
+```bash
+# Backup primeiro!
+sudo /usr/local/bin/backup-wifi-portal.sh
+
+# Parar containers
+docker-compose -f docker-compose.prod.yml down -v
+
+# Remover dados
+rm -rf data/* uploads/* logs/nginx/*
+
+# Recriar estrutura
+mkdir -p data uploads logs/nginx
+touch data/users.csv data/access_log.csv
+
+# Criar usuário admin
+docker-compose -f docker-compose.prod.yml run --rm app python3 << 'EOF'
+from werkzeug.security import generate_password_hash
+import csv
+from datetime import datetime
+
+users = [['admin', generate_password_hash('admin123'), 'admin', datetime.now().isoformat()]]
+with open('data/users.csv', 'w', newline='') as f:
+    writer = csv.writer(f)
+    writer.writerow(['username', 'password_hash', 'role', 'created_at'])
+    writer.writerows(users)
+EOF
+
+# Subir
+docker-compose -f docker-compose.prod.yml up -d --build
+```
+
+### **Backup Manual**
+
+```bash
+# Criar backup
+timestamp=$(date +%Y%m%d_%H%M%S)
+tar -czf wifi-portal-backup-${timestamp}.tar.gz \
+    data/ \
+    uploads/ \
+    .env.local \
+    logs/nginx/
+
+# Verificar
+ls -lh wifi-portal-backup-*.tar.gz
+
+# Restaurar
+tar -xzf wifi-portal-backup-TIMESTAMP.tar.gz
+docker-compose -f docker-compose.prod.yml restart
+```
+
+### **Ver Métricas**
+
+```bash
+# Requisições por segundo
+docker-compose -f docker-compose.prod.yml logs nginx | grep -oP '\d{2}\/\w{3}\/\d{4}:\d{2}:\d{2}:\d{2}' | uniq -c
+
+# Tempo médio de resposta
+docker-compose -f docker-compose.prod.yml logs app | grep -oP 'response_time=\K[\d.]+' | awk '{sum+=$1; count++} END {print "Média:", sum/count, "ms"}'
+
+# Erros 5xx
+docker-compose -f docker-compose.prod.yml logs nginx | grep ' 5[0-9][0-9] ' | wc -l
+```
+
+---
+
+## 🆘 Quando Pedir Ajuda
+
+Se após tentar as soluções acima o problema persistir:
+
+### **1. Coletar Informações**
+
+```bash
+# Script de diagnóstico completo
+cat > /tmp/diagnostic.sh << 'EOF'
+#!/bin/bash
+echo "=== DIAGNÓSTICO COMPLETO ==="
+echo
+echo "Data/Hora: $(date)"
+echo "Hostname: $(hostname)"
+echo "OS: $(cat /etc/os-release | grep PRETTY_NAME)"
+echo
+echo "=== DOCKER ==="
+docker --version
+docker-compose --version
+echo
+echo "=== CONTAINERS ==="
+docker-compose -f docker-compose.prod.yml ps
+echo
+echo "=== RECURSOS ==="
+free -h
+df -h
+docker stats --no-stream
+echo
+echo "=== LOGS (últimas 50 linhas) ==="
+docker-compose -f docker-compose.prod.yml logs --tail=50
+echo
+echo "=== HEALTH CHECKS ==="
+curl -I http://localhost/healthz 2>&1
+curl -I https://wifi.prefeitura.com.br/healthz 2>&1
+EOF
+
+chmod +x /tmp/diagnostic.sh
+bash /tmp/diagnostic.sh > /tmp/diagnostic-output.txt 2>&1
+
+# Enviar diagnostic-output.txt para o suporte
+```
+
+### **2. Abrir Issue no GitHub**
+
+Template:
 
 ```markdown
-## Erro: [Descrever o erro]
+## Descrição do Problema
+[Descreva claramente]
 
-### Ambiente
-- SO: ubuntu 20.04
-- Python: 3.9.2
-- Stack: Gunicorn 21.0 + Nginx 1.18
+## Comportamento Esperado
+[O que deveria acontecer]
 
-### Passo para Reproduzir
+## Comportamento Observado
+[O que está acontecendo]
+
+## Passos para Reproduzir
 1. ...
 2. ...
+3. ...
 
-### Logs
+## Ambiente
+- OS: Ubuntu 22.04
+- Docker: 24.0.7
+- Compose: 2.21.0
+
+## Logs
 ```
-<colar saída de journalctl -u portal-cautivo>
+[Cole o conteúdo de diagnostic-output.txt]
 ```
 
-### Resultado Esperado
-...
-
-### Resultado Atual
-...
+## Já Tentei
+- [x] Reiniciar containers
+- [x] Verificar logs
+- [ ] ...
 ```
 
 ---
 
-**Última atualização:** Janeiro 2026
+<p align="center">
+  <strong>Se nada funcionar, pode ser um bug! Reporte em GitHub Issues. 🐛</strong>
+</p>

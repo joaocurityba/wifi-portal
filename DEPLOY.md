@@ -1,754 +1,797 @@
-# Portal Cativo - Guia de Deploy em Produção
+# 🚀 Guia Completo de Deploy em Produção
 
-Guia completo para implantar o Portal Cativo Flask em **Ubuntu 20.04+** com opções de **Docker Compose** ou **deployment manual**.
-
-## 🚀 Opção Rápida: Docker Compose (Recomendado)
-
-Se você tem **Docker e Docker Compose** instalados, a forma mais rápida é:
-
-```bash
-# 1. Clonar repositório
-git clone <seu-repositorio-github> wifi-portal-teste
-cd wifi-portal-teste
-
-# 2. Configurar variáveis de ambiente
-cp .env.template .env.local
-nano .env.local  # Editar SECRET_KEY, ALLOWED_HOSTS, etc
-
-# 3. Iniciar com Docker Compose
-docker-compose up -d
-
-# 4. Aplicação está rodando em http://localhost:5000
-# Para produção: configure Nginx como reverse proxy (veja seção "Configurar Nginx" abaixo)
-```
-
-✅ Instala Redis + App automaticamente  
-✅ Zero problemas de dependências  
-✅ Perfeito para desenvolvimento e pequena produção  
-
-**Quer deployment manual?** Siga para "Visão Geral" abaixo.
+Guia passo a passo para implantar o Portal Cativo em **Ubuntu Server 20.04+** com Docker, SSL e alta disponibilidade.
 
 ---
 
-## 📋 Visão Geral (Deploy Manual)
+## 📋 Índice
 
-Este guia cobre deployment em **Ubuntu 20.04+** com:
-- **Gunicorn** WSGI server (porta 8003)
-- **Nginx** reverse proxy + SSL termination
-- **Systemd** service para orquestração e auto-restart
-- **Let's Encrypt** para certificados HTTPS
-- **Redis** (opcional) para rate limiting distribuído
-- **File-locking atômico** para integridade de dados
-- **Logrotate** com retenção de 90 dias
-- **Firewall UFW** configurado
-
-**Estrutura do deployment:**
-```
-Nginx (porta 443 HTTPS)
-  ↓
-Gunicorn (porta 8003, localhost apenas)
-  ↓
-Flask App (app_simple.py via wsgi.py)
-  ↓
-Dados (CSV/JSON criptografados em /var/www/wifi-portal-teste/data/)
-```
-
-**Tempo estimado:** 45-60 minutos em primeira vez.
+1. [Pré-requisitos](#pré-requisitos)
+2. [Preparação do Servidor](#preparação-do-servidor)
+3. [Instalação do Docker](#instalação-do-docker)
+4. [Clone e Configuração](#clone-e-configuração)
+5. [Configuração de Variáveis](#configuração-de-variáveis)
+6. [Setup SSL (Let's Encrypt)](#setup-ssl-lets-encrypt)
+7. [Deploy da Aplicação](#deploy-da-aplicação)
+8. [Configuração de Firewall](#configuração-de-firewall)
+9. [Verificação e Testes](#verificação-e-testes)
+10. [Backup Automático](#backup-automático)
+11. [Monitoramento](#monitoramento)
+12. [Manutenção](#manutenção)
 
 ---
 
-## 🚀 Pré-requisitos (Deploy Manual)
+## 📌 Pré-requisitos
 
-Escolha UMA das opções abaixo:
+### **Hardware Recomendado**
+- **CPU:** 2 cores (mínimo 1 core)
+- **RAM:** 4GB (mínimo 2GB)
+- **Disco:** 20GB SSD
+- **Rede:** 100Mbps
 
-### Opção A: Docker Compose (Recomendado)
-```
-- Docker 20.10+
-- Docker Compose 1.29+
-- Git
-```
+### **Software**
+- Ubuntu Server 20.04 LTS ou 22.04 LTS
+- Acesso SSH com sudo
+- Domínio configurado (ex: wifi.prefeitura.com.br)
+- DNS apontando para IP do servidor
 
-### Opção B: Deploy Manual (Ubuntu 20.04+)
-```bash
-# Verificar Python versão
-python3 --version  # deve ser 3.9+
-
-# Ter acesso SSH com sudo
-# Domínio configurado ou IP público
-# Apenas isso é necessário - vamos instalar o resto
-```
+### **Portas Necessárias**
+- `22` - SSH
+- `80` - HTTP (redirect para HTTPS)
+- `443` - HTTPS
 
 ---
 
-## 🔧 Passo a Passo de Deploy (15 passos)
+## 1️⃣ Preparação do Servidor
 
-### Passo 1: Preparar Servidor e Clonar Repositório
+### **Conectar via SSH**
 
 ```bash
-# Update sistema
+ssh usuario@IP_DO_SERVIDOR
+```
+
+### **Atualizar Sistema**
+
+```bash
+# Atualizar pacotes
 sudo apt update && sudo apt upgrade -y
 
-# Criar diretório da aplicação
+# Instalar utilitários básicos
+sudo apt install -y curl wget git nano htop ufw
+```
+
+### **Configurar Timezone**
+
+```bash
+# Listar timezones
+timedatectl list-timezones | grep Sao_Paulo
+
+# Configurar timezone (exemplo: São Paulo)
+sudo timedatectl set-timezone America/Sao_Paulo
+
+# Verificar
+timedatectl
+```
+
+### **Configurar Hostname (Opcional)**
+
+```bash
+# Definir hostname
+sudo hostnamectl set-hostname wifi-portal
+
+# Editar /etc/hosts
+sudo nano /etc/hosts
+# Adicionar:
+# 127.0.0.1 wifi-portal
+```
+
+---
+
+## 2️⃣ Instalação do Docker
+
+### **Remover Versões Antigas (se existir)**
+
+```bash
+sudo apt remove docker docker-engine docker.io containerd runc -y
+```
+
+### **Instalar Docker (Método Oficial)**
+
+```bash
+# Baixar script de instalação
+curl -fsSL https://get.docker.com -o get-docker.sh
+
+# Executar instalação
+sudo sh get-docker.sh
+
+# Adicionar usuário ao grupo docker
+sudo usermod -aG docker $USER
+
+# Habilitar docker no boot
+sudo systemctl enable docker
+sudo systemctl start docker
+```
+
+### **Instalar Docker Compose**
+
+```bash
+# Método 1: Via apt (Ubuntu 22.04+)
+sudo apt install docker-compose-plugin -y
+
+# Método 2: Via curl (Ubuntu 20.04)
+sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+```
+
+### **Verificar Instalação**
+
+```bash
+# Verificar Docker
+docker --version
+# Saída esperada: Docker version 24.0.x
+
+# Verificar Docker Compose
+docker-compose --version
+# Saída esperada: Docker Compose version v2.x.x
+
+# Testar Docker (sem sudo)
+# IMPORTANTE: Relogar ou executar: newgrp docker
+docker run hello-world
+```
+
+---
+
+## 3️⃣ Clone e Configuração
+
+### **Criar Diretório de Trabalho**
+
+```bash
+# Criar diretório para aplicação
 sudo mkdir -p /var/www
-sudo chown $USER:$USER /var/www
+sudo chown -R $USER:$USER /var/www
 cd /var/www
+```
 
-# Clonar repositório
-git clone <seu-repositorio-github> wifi-portal-teste
-cd wifi-portal-teste
+### **Clonar Repositório**
 
-# Verificar estrutura
+```bash
+# Opção 1: HTTPS
+git clone https://github.com/seu-usuario/wifi-portal.git wifi-portal
+
+# Opção 2: SSH (se configurou chave SSH)
+git clone git@github.com:seu-usuario/wifi-portal.git wifi-portal
+
+# Entrar no diretório
+cd wifi-portal
+```
+
+### **Verificar Estrutura**
+
+```bash
 ls -la
-# Deve mostrar: app_simple.py, wsgi.py, requirements.txt, deploy/, etc
+# Deve mostrar: docker-compose.prod.yml, deploy/, app_simple.py, etc.
 ```
 
-### Passo 2: Criar Virtual Environment Python
+---
+
+## 4️⃣ Configuração de Variáveis
+
+### **Copiar Template**
 
 ```bash
-# Criar venv
-python3 -m venv .venv
-source .venv/bin/activate
-
-# Atualizar pip
-pip install --upgrade pip setuptools wheel
+cp .env.prod .env.local
 ```
 
-### Passo 3: Instalar Dependências Python
+### **Gerar SECRET_KEY**
 
 ```bash
-# Instalar dependências do requirements.txt
-pip install -r requirements.txt
+# Gerar chave segura
+python3 -c "import secrets; print(secrets.token_urlsafe(64))"
 
-# Instalar Gunicorn (não está em requirements.txt)
-pip install gunicorn>=21.0.0
-
-# Verificar que importa sem erros
-python -c "from wsgi import app; print('✓ Aplicação carrega OK')"
-
-# Se erro acima falhar, verificar arquivo .env.local em Passo 4
+# Saída (exemplo):
+# nci7Rts0gViQn9h56H7v_P25BTJhTrQcSDmJMQYjhCSjT4Hw-eA4RWn_ZldsDYbg0_o0XcJ8IST5Eb3FbBHM5g
 ```
 
-### Passo 4: Configurar Variáveis de Ambiente
+### **Gerar Senha do Redis**
 
 ```bash
-# Copiar template
-cp .env.template .env.local
+# Gerar senha forte
+openssl rand -base64 32
 
-# Editar com seus valores
+# Saída (exemplo):
+# 8K+mZ5nQ7rY3pL6wN2vX9tH4jC1sD8fE
+```
+
+### **Editar .env.local**
+
+```bash
 nano .env.local
 ```
 
-**Valores críticos a alterar em `.env.local`:**
+**Preencher com seus dados:**
 
 ```bash
-# Gerar SECRET_KEY único
-python -c "import secrets; print(secrets.token_hex(32))"
-# Copiar resultado INTEIRO e colar em SECRET_KEY=
+# Portal Cautivo - Variáveis de Produção
 
-# DEBUG deve ser False em produção
+# ============================================
+# SEGURANÇA - OBRIGATÓRIO ALTERAR
+# ============================================
+
+# SECRET_KEY - Gere uma nova com: python3 -c "import secrets; print(secrets.token_urlsafe(64))"
+SECRET_KEY=COLE_A_CHAVE_GERADA_AQUI
+
+# Modo debug (SEMPRE False em produção)
 DEBUG=False
+FLASK_ENV=production
 
-# Seu domínio ou IP público
-ALLOWED_HOSTS=seu-dominio.com,www.seu-dominio.com
+# ============================================
+# REDIS
+# ============================================
 
-# Admin password (mude IMEDIATAMENTE após primeiro login!)
-ADMIN_PASSWORD=mude_na_primeira_acessao
+# Senha do Redis - Gere com: openssl rand -base64 32
+REDIS_PASSWORD=COLE_A_SENHA_GERADA_AQUI
+REDIS_URL=redis://:COLE_A_MESMA_SENHA_AQUI@redis:6379/0
 
-# RECOMENDADO: Redis para rate limiting distribuído  
-REDIS_URL=redis://localhost:6379/0
+# ============================================
+# DOMÍNIO
+# ============================================
 
-# OPCIONAL: Email para recuperação de senha
-# SMTP_SERVER=smtp.gmail.com
-# SMTP_PORT=587
-# etc...
+# Substitua pelo seu domínio
+ALLOWED_HOSTS=wifi.prefeitura.com.br,www.wifi.prefeitura.com.br
+
+# ============================================
+# CONFIGURAÇÕES DE SEGURANÇA
+# ============================================
+
+MAX_LOGIN_ATTEMPTS=5
+SESSION_TIMEOUT=1800
+RATE_LIMIT_ENABLED=True
+CSRF_PROTECTION=True
+SECURE_HEADERS=True
+
+# ============================================
+# LOGGING
+# ============================================
+
+LOG_LEVEL=INFO
+LOG_FILE=data/security.log
+
+# ============================================
+# ARQUIVOS
+# ============================================
+
+CSV_FILE=data/access_log.csv
+USERS_FILE=data/users.csv
 ```
 
-**Proteger arquivo:**
+**Salvar:** `Ctrl+O`, Enter, `Ctrl+X`
+
+### **Verificar Permissões**
 
 ```bash
+# .env.local deve ter permissões restritas
 chmod 600 .env.local
 
-# Verificar que .env.local está em .gitignore
-grep "\.env\.local" .gitignore
-```
-
-### Passo 4.5: Instalar e Configurar Redis (Recomendado)
-
-Redis é necessário para rate limiting distribuído e melhor performance:
-
-```bash
-# Instalar Redis
-sudo apt install redis-server -y
-
-# Iniciar e ativar no boot
-sudo systemctl enable redis-server
-sudo systemctl start redis-server
-
-# Testar que está rodando
-redis-cli ping  # deve responder: PONG
-
-# Verificar porta
-sudo ss -tulpn | grep 6379
-```
-
-Se Redis falhar, aplicação continua com rate limiting in-memory (fallback automático).
-
-### Passo 5: Criar Estrutura de Diretórios
-
-```bash
-# Criar diretórios de dados e logs
-mkdir -p /var/www/wifi-portal-teste/logs /var/www/wifi-portal-teste/data
-
 # Verificar
-ls -la /var/www/wifi-portal-teste/
+ls -la .env.local
+# Saída: -rw------- 1 usuario usuario ... .env.local
 ```
 
-### Passo 6: Instalar e Configurar Nginx
+---
+
+## 5️⃣ Setup SSL (Let's Encrypt)
+
+### **Verificar DNS**
 
 ```bash
-# Instalar Nginx
-sudo apt install nginx -y
+# Verificar se domínio aponta para o servidor
+dig +short wifi.prefeitura.com.br
 
-# Copiar configuração exemplar
-sudo cp deploy/nginx.portal_cautivo.conf /etc/nginx/sites-available/wifi-portal-teste
-
-# Editar para seu domínio
-sudo nano /etc/nginx/sites-available/wifi-portal-teste
-# Substituir "seu-dominio.com" pelo seu domínio real
+# Deve retornar o IP do servidor
+# Se não retornar, configure o DNS e aguarde propagação (até 48h)
 ```
 
-**Ativar site:**
+### **Criar Diretórios Necessários**
 
 ```bash
-# Criar symlink
-sudo ln -sf /etc/nginx/sites-available/wifi-portal-teste /etc/nginx/sites-enabled/
-
-# Desabilitar site padrão (se existir)
-sudo rm -f /etc/nginx/sites-enabled/default
-
-# Testar configuração
-sudo nginx -t
-# Deve mostrar: "syntax is ok" e "test is successful"
-
-# Reiniciar Nginx
-sudo systemctl restart nginx
-
-# Verificar status
-sudo systemctl status nginx
+# Criar diretórios para certificados
+sudo mkdir -p /etc/letsencrypt
+sudo mkdir -p certbot/www
+mkdir -p logs/nginx
 ```
 
-### Passo 7: Obter Certificado SSL com Let's Encrypt
+### **Executar Script de Setup SSL**
 
 ```bash
-# Instalar Certbot
-sudo apt install certbot python3-certbot-nginx -y
+# Dar permissão de execução
+chmod +x deploy/setup-ssl.sh
 
-# Obter certificado (seu domínio deve estar apontando para este IP)
-sudo certbot certonly --standalone -d seu-dominio.com
-
-# Testar renovação automática (não renova, apenas testa)
-sudo certbot renew --dry-run
-
-# Ativar timer de renovação automática
-sudo systemctl enable certbot.timer
-sudo systemctl start certbot.timer
+# Executar script
+# Sintaxe: sudo bash deploy/setup-ssl.sh SEU_DOMINIO SEU_EMAIL
+sudo bash deploy/setup-ssl.sh wifi.prefeitura.com.br admin@prefeitura.com.br
 ```
 
-**Verificar certificado:**
+**O que o script faz:**
+1. ✅ Cria diretórios necessários
+2. ✅ Configura Nginx para o domínio
+3. ✅ Sobe containers em modo HTTP
+4. ✅ Obtém certificados Let's Encrypt
+5. ✅ Reconfigura Nginx para HTTPS
+6. ✅ Sobe todos os containers
+7. ✅ Configura renovação automática
 
-```bash
-sudo certbot certificates
+**Saída esperada:**
+
+```
+🚀 Configurando SSL para wifi.prefeitura.com.br...
+📧 Email: admin@prefeitura.com.br
+📁 Criando diretórios...
+🔧 Configurando Nginx...
+🌐 Subindo containers em modo HTTP (para validação)...
+🔐 Obtendo certificados SSL do Let's Encrypt...
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Successfully received certificate.
+♻️  Reiniciando Nginx com SSL...
+🚀 Subindo todos os containers...
+✅ SSL configurado com sucesso!
+🌐 Acesse: https://wifi.prefeitura.com.br
 ```
 
-### Passo 8: Definir Permissões de Arquivos
+---
+
+## 6️⃣ Deploy da Aplicação
+
+### **Método Automático (Recomendado)**
+
+Se executou o script SSL acima, a aplicação já está rodando!
+
+### **Método Manual**
 
 ```bash
-# Transferir propriedade para www-data (usuário do Nginx/Gunicorn)
-sudo chown -R www-data:www-data /var/www/wifi-portal-teste
+# Subir containers em produção
+docker-compose -f docker-compose.prod.yml up -d --build
 
-# Definir permissões corretas
-sudo chmod 750 /var/www/wifi-portal-teste
-sudo chmod 750 /var/www/wifi-portal-teste/data
-sudo chmod 750 /var/www/wifi-portal-teste/logs
-sudo chmod 600 /var/www/wifi-portal-teste/.env.local
+# Ver logs em tempo real
+docker-compose -f docker-compose.prod.yml logs -f
 
-# Verificar
-ls -ld /var/www/wifi-portal-teste
-ls -la /var/www/wifi-portal-teste/.env.local
+# Pressione Ctrl+C para sair dos logs
 ```
 
-### Passo 9: Instalar Systemd Service
+### **Verificar Status dos Containers**
 
 ```bash
-# Copiar arquivo de serviço
-sudo cp deploy/portal.service /etc/systemd/system/portal-cautivo.service
+# Ver containers rodando
+docker-compose -f docker-compose.prod.yml ps
 
-# Recarregar systemd daemon
-sudo systemctl daemon-reload
-
-# Ativar serviço para iniciar automaticamente no boot
-sudo systemctl enable portal-cautivo
-
-# Iniciar serviço
-sudo systemctl start portal-cautivo
-
-# Verificar status (deve estar "active (running)")
-sudo systemctl status portal-cautivo
+# Saída esperada:
+# NAME                  STATUS          PORTS
+# wifi-portal-app       Up (healthy)    5000/tcp
+# wifi-portal-nginx     Up (healthy)    0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp
+# wifi-portal-redis     Up (healthy)    6379/tcp
+# wifi-portal-certbot   Up              -
 ```
 
-**Se tiver erro, verificar logs:**
+---
+
+## 7️⃣ Configuração de Firewall
+
+### **Configurar UFW**
 
 ```bash
-sudo journalctl -u portal-cautivo -n 30
-```
+# Permitir SSH (IMPORTANTE FAZER PRIMEIRO!)
+sudo ufw allow 22/tcp
 
-### Passo 10: Configurar Logrotate (90 dias)
+# Permitir HTTP e HTTPS
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
 
-```bash
-# Copiar configuração
-sudo cp deploy/logrotate.conf /etc/logrotate.d/wifi-portal
-
-# Testar (dry-run, não faz mudanças)
-sudo logrotate -d /etc/logrotate.d/wifi-portal
-
-# Logrotate é executado automaticamente pelo system (cron diário)
-```
-
-### Passo 11: Configurar Firewall
-
-```bash
-# Ativar UFW (Uncomplicated Firewall)
+# Habilitar firewall
 sudo ufw enable
 
-# Permitir SSH, HTTP e HTTPS
-sudo ufw allow 22/tcp   # SSH
-sudo ufw allow 80/tcp   # HTTP (redireciona para HTTPS)
-sudo ufw allow 443/tcp  # HTTPS
-
 # Verificar status
-sudo ufw status
+sudo ufw status verbose
 ```
 
-### Passo 12: Testar Aplicação
+**Saída esperada:**
 
-```bash
-# Teste 1: Gunicorn está respondendo?
-curl -s http://127.0.0.1:8003/login | head -20
+```
+Status: active
 
-# Teste 2: Nginx está respondendo (aguarde alguns segundos)?
-sleep 3
-curl -s https://seu-dominio.com/login | head -20
-
-# Teste 3: No navegador
-# Abra: https://seu-dominio.com/login
-# Deve ver o formulário de login
-# Credenciais padrão: admin / admin123
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW       Anywhere
+80/tcp                     ALLOW       Anywhere
+443/tcp                    ALLOW       Anywhere
 ```
 
-### Passo 13: Mudar Credenciais Padrão (OBRIGATÓRIO)
+### **Configuração Avançada (Opcional)**
 
 ```bash
-# CRÍTICO: Senha padrão é admin123, deve ser alterada IMEDIATAMENTE!
+# Limitar tentativas SSH (proteção contra brute force)
+sudo ufw limit 22/tcp
 
-# Acessar painel admin
-# https://seu-dominio.com/admin
-# Login com: admin / admin123
-# Clicar em "Perfil"
-# Alterar senha para algo FORTE (mínimo 12 caracteres, misturado)
-# Clicar "Salvar"
-# Fazer logout e login novamente com nova senha
-```
+# Permitir apenas IPs específicos para SSH
+sudo ufw delete allow 22/tcp
+sudo ufw allow from IP_DO_SEU_ESCRITORIO to any port 22
 
-### Passo 14: Verificar Logs e Status
-
-```bash
-# Ver logs em tempo real
-sudo journalctl -u portal-cautivo -f
-
-# Em outro terminal, fazer requisição
-curl https://seu-dominio.com/login
-
-# Deveria aparecer linha de log mostrando a requisição
-```
-
-### Passo 15: Resumo de Verificação
-
-```bash
-# Verificar que tudo está rodando
-sudo systemctl status portal-cautivo
-sudo systemctl status nginx
-redis-cli ping  # se instalou redis
-
-# Verificar permissões
-ls -la /var/www/wifi-portal-teste/.env.local
-
-# Verificar dados
-ls -la /var/www/wifi-portal-teste/data/
-ls -la /var/www/wifi-portal-teste/logs/
-```
-
-Se tudo passou ✅, aplicação está pronta para produção!
-
----
-
-## 🔐 Segurança: Alterações Obrigatórias
-
-### 1. ✅ Mudar Credenciais Padrão
-
-Após o primeiro login, **IMEDIATAMENTE**:
-
-```bash
-# Acessar https://seu-dominio.com/admin
-# Alterar senha de admin123 para algo forte
-# Salvar novo .env.local com ADMIN_PASSWORD se quiser redefini-lo via env
-```
-
-### 2. ✅ Verificar `.env.local`
-
-```bash
-# Confirmar que está fora do repositório (não versionado)
-cd /var/www/wifi-portal-teste
-cat .gitignore | grep env.local  # deve estar lá
-
-# Verificar que contém valores únicos
-sudo cat /var/www/wifi-portal-teste/.env.local | grep -E "^(SECRET_KEY|ENCRYPTION_SALT)="
-
-# Cada ambiente DEVE ter SECRET_KEY e ENCRYPTION_SALT diferentes
-```
-
-### 3. ✅ Revisar Permissões de Arquivos Sensíveis
-
-```bash
-# .env.local deve ser -rw------- (600)
-ls -la /var/www/wifi-portal-teste/.env.local
-
-# data/ deve ser d-rwxr-x--- (750)
-ls -ld /var/www/wifi-portal-teste/data
-
-# Verificar owner
-ls -la /var/www/wifi-portal-teste/ | grep -E "(data|logs|.env.local)"
-
-# Tudo deve ser www-data:www-data
-```
-
-### 4. ✅ Verificar HTTPS está Ativo
-
-```bash
-# Acessar https://seu-dominio.com (com 's' em https)
-# Certificado deve ser válido (Let's Encrypt)
-
-# Teste CLI
-curl -v https://seu-dominio.com/login 2>&1 | grep -i certificate
-```
-
-### 5. ✅ Verificar Headers de Segurança
-
-```bash
-# Nginx deve incluir:
-curl -I https://seu-dominio.com | grep -E "Strict-Transport-Security|X-Frame-Options|X-Content-Type-Options"
-
-# Saída deve mostrar estes headers
+# Verificar
+sudo ufw status numbered
 ```
 
 ---
 
-## 🔄 Operações Diárias
+## 8️⃣ Verificação e Testes
 
-### Ver Status da Aplicação
+### **Testar Health Check**
 
 ```bash
-sudo systemctl status portal-cautivo
+# Teste local
+curl -I http://localhost/healthz
+
+# Teste externo
+curl -I https://wifi.prefeitura.com.br/healthz
+
+# Saída esperada:
+# HTTP/2 200
+# {"service":"wifi-portal","status":"healthy"}
 ```
 
-### Restart da Aplicação (se necessário)
+### **Testar Portal Público**
 
 ```bash
-sudo systemctl restart portal-cautivo
+# Abrir no navegador
+https://wifi.prefeitura.com.br/login
 
-# Aguarde 2-3 segundos
-sleep 3
-sudo systemctl status portal-cautivo
+# Ou via curl
+curl -I https://wifi.prefeitura.com.br/login
+# Saída esperada: HTTP/2 200
 ```
 
-### Ver Logs em Tempo Real
+### **Testar Painel Admin**
 
 ```bash
-# Logs do systemd
-sudo journalctl -u portal-cautivo -f
+# URL
+https://wifi.prefeitura.com.br/admin/login
 
-# Logs da aplicação
-tail -f /var/www/wifi-portal-teste/logs/app.log
-tail -f /var/www/wifi-portal-teste/logs/security_events.log
+# Credenciais padrão (MUDE IMEDIATAMENTE!)
+# Usuário: admin
+# Senha: admin123
 ```
 
-### Monitorar Performance
+### **Verificar Certificado SSL**
 
 ```bash
-# Conexões ativas na porta 8000 (Gunicorn)
-netstat -tulpn 2>/dev/null | grep 8003
+# Ver detalhes do certificado
+openssl s_client -connect wifi.prefeitura.com.br:443 -servername wifi.prefeitura.com.br < /dev/null | openssl x509 -noout -dates
 
-# Ou com ss
-ss -tulpn | grep 8003
-
-# Uso de memória
-free -h
-
-# Uso de CPU
-top -b -n 1 | head -15
-
-# Espaço em disco (importante para data/logs)
-df -h /var/www/wifi-portal-teste
+# Ou online
+# https://www.ssllabs.com/ssltest/analyze.html?d=wifi.prefeitura.com.br
 ```
 
-### Ver Estatísticas de Acesso
+### **Testar Rate Limiting**
 
 ```bash
-# Últimas 10 conexões
-tail -10 /var/www/wifi-portal-teste/data/access_log.csv
+# Fazer múltiplas requisições
+for i in {1..150}; do curl -s -o /dev/null -w "%{http_code}\n" https://wifi.prefeitura.com.br/login; done
 
-# Contar acessos por dia (se tiver access_log)
-cut -d',' -f6 /var/www/wifi-portal-teste/data/access_log.csv | sort | uniq -c
+# Deve retornar 200 até ~100 requisições, depois 429 (Too Many Requests)
 ```
 
 ---
 
-## 🆘 Troubleshooting
+## 9️⃣ Backup Automático
 
-### Erro: "ModuleNotFoundError: No module named 'app_simple'"
+### **Criar Script de Backup**
 
 ```bash
-# Verificar se .venv é activado
-which python  # deve mostrar /var/www/wifi-portal-teste/.venv/bin/python
-
-# Verificar que wsgi.py importa corretamente
-source /var/www/wifi-portal-teste/.venv/bin/activate
-python -c "from wsgi import app; print('OK')"
-
-# Se ainda falhar, reinstalar dependências
-pip install -r requirements.txt --force-reinstall
+# Criar script
+sudo nano /usr/local/bin/backup-wifi-portal.sh
 ```
 
-### Erro: "Permission denied" ao escrever em `data/`
+**Conteúdo:**
 
 ```bash
-# Problema: dados/logs não podem ser criados
-sudo chown -R www-data:www-data /var/www/wifi-portal-teste/data
-sudo chown -R www-data:www-data /var/www/wifi-portal-teste/logs
-sudo chmod 750 /var/www/wifi-portal-teste/data
-sudo chmod 750 /var/www/wifi-portal-teste/logs
+#!/bin/bash
+# Backup automático do Portal Cativo
+
+# Variáveis
+APP_DIR="/var/www/wifi-portal"
+BACKUP_DIR="/backup/wifi-portal"
+DATE=$(date +%Y%m%d_%H%M%S)
+RETENTION_DAYS=30
+
+# Criar diretório de backup
+mkdir -p $BACKUP_DIR
+
+# Fazer backup
+cd $APP_DIR
+tar -czf $BACKUP_DIR/wifi-portal_$DATE.tar.gz \
+    data/ \
+    uploads/ \
+    .env.local \
+    logs/nginx/
+
+# Remover backups antigos
+find $BACKUP_DIR -name "wifi-portal_*.tar.gz" -mtime +$RETENTION_DAYS -delete
+
+# Log
+echo "$(date): Backup criado: wifi-portal_$DATE.tar.gz" >> /var/log/wifi-portal-backup.log
+```
+
+**Salvar e dar permissão:**
+
+```bash
+sudo chmod +x /usr/local/bin/backup-wifi-portal.sh
+```
+
+### **Configurar Cron**
+
+```bash
+# Editar crontab
+sudo crontab -e
+
+# Adicionar linha (backup diário às 2h da manhã)
+0 2 * * * /usr/local/bin/backup-wifi-portal.sh
+
+# Salvar e sair
+```
+
+### **Testar Backup Manual**
+
+```bash
+sudo /usr/local/bin/backup-wifi-portal.sh
+
+# Verificar
+ls -lh /backup/wifi-portal/
+```
+
+---
+
+## 🔟 Monitoramento
+
+### **Health Checks Automáticos**
+
+```bash
+# Criar script de monitoramento
+sudo nano /usr/local/bin/check-wifi-portal.sh
+```
+
+**Conteúdo:**
+
+```bash
+#!/bin/bash
+# Verificação de saúde do Portal Cativo
+
+HEALTH_URL="https://wifi.prefeitura.com.br/healthz"
+LOG_FILE="/var/log/wifi-portal-health.log"
+
+# Fazer requisição
+HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" $HEALTH_URL)
+
+if [ $HTTP_CODE -eq 200 ]; then
+    echo "$(date): OK - Portal funcionando" >> $LOG_FILE
+else
+    echo "$(date): ERRO - Portal retornou $HTTP_CODE" >> $LOG_FILE
+    # Opcional: Enviar alerta
+    # mail -s "Portal Offline" admin@prefeitura.com.br < /dev/null
+fi
+```
+
+**Configurar:**
+
+```bash
+sudo chmod +x /usr/local/bin/check-wifi-portal.sh
+
+# Adicionar ao cron (verificar a cada 5 minutos)
+sudo crontab -e
+# Adicionar:
+*/5 * * * * /usr/local/bin/check-wifi-portal.sh
+```
+
+### **Monitorar Recursos**
+
+```bash
+# Ver uso de recursos em tempo real
+docker stats
+
+# Ver logs
+docker-compose -f docker-compose.prod.yml logs -f --tail=100
+
+# Ver logs de um serviço específico
+docker-compose -f docker-compose.prod.yml logs -f app
+docker-compose -f docker-compose.prod.yml logs -f nginx
+docker-compose -f docker-compose.prod.yml logs -f redis
+```
+
+---
+
+## 1️⃣1️⃣ Manutenção
+
+### **Atualizar Aplicação**
+
+```bash
+cd /var/www/wifi-portal
+
+# Backup antes de atualizar
+sudo /usr/local/bin/backup-wifi-portal.sh
+
+# Puxar atualizações
+git pull
+
+# Rebuild e restart
+docker-compose -f docker-compose.prod.yml up -d --build
+
+# Verificar
+docker-compose -f docker-compose.prod.yml ps
+curl https://wifi.prefeitura.com.br/healthz
+```
+
+### **Ver Logs**
+
+```bash
+# Logs de todos os containers
+docker-compose -f docker-compose.prod.yml logs -f
+
+# Logs apenas do app
+docker-compose -f docker-compose.prod.yml logs -f app
+
+# Últimas 100 linhas
+docker-compose -f docker-compose.prod.yml logs --tail=100
+
+# Logs do sistema
+tail -f /var/log/syslog
+```
+
+### **Reiniciar Containers**
+
+```bash
+# Reiniciar todos
+docker-compose -f docker-compose.prod.yml restart
+
+# Reiniciar apenas um
+docker-compose -f docker-compose.prod.yml restart app
+docker-compose -f docker-compose.prod.yml restart nginx
+```
+
+### **Limpar Docker**
+
+```bash
+# Remover containers parados
+docker container prune -f
+
+# Remover imagens não usadas
+docker image prune -a -f
+
+# Remover volumes não usados (CUIDADO!)
+docker volume prune -f
+
+# Limpar tudo (CUIDADO!)
+docker system prune -a --volumes -f
+```
+
+### **Renovar Certificado SSL (Manual)**
+
+```bash
+# Renovar certificado
+docker-compose -f docker-compose.prod.yml exec certbot certbot renew
+
+# Reiniciar nginx
+docker-compose -f docker-compose.prod.yml restart nginx
+
+# Verificar validade
+openssl s_client -connect wifi.prefeitura.com.br:443 -servername wifi.prefeitura.com.br < /dev/null | openssl x509 -noout -dates
+```
+
+---
+
+## 📊 Comandos Úteis
+
+### **Quick Reference**
+
+```bash
+# Status geral
+docker-compose -f docker-compose.prod.yml ps
+
+# Subir
+docker-compose -f docker-compose.prod.yml up -d
+
+# Parar
+docker-compose -f docker-compose.prod.yml down
+
+# Rebuild
+docker-compose -f docker-compose.prod.yml up -d --build
+
+# Logs
+docker-compose -f docker-compose.prod.yml logs -f
+
+# Health check
+curl https://wifi.prefeitura.com.br/healthz
+
+# Backup
+sudo /usr/local/bin/backup-wifi-portal.sh
 
 # Reiniciar
-sudo systemctl restart portal-cautivo
-```
-
-### Nginx retorna "502 Bad Gateway"
-
-```bash
-# Gunicorn pode não estar rodando
-sudo systemctl status portal-cautivo
-
-# Ver erro específico
-sudo journalctl -u portal-cautivo -n 20
-
-# Reiniciar Gunicorn
-sudo systemctl restart portal-cautivo
-
-# Testar localmente
-curl http://127.0.0.1:8000/login
-
-# Verificar arquivo Nginx
-sudo nginx -t
-```
-
-### SSL Certificate Error
-
-```bash
-# Ver certificados atuais
-sudo certbot certificates
-
-# Renovar manualmente (se próximo do vencimento)
-sudo certbot renew --force-renewal
-
-# Testar renovação automática (dry-run)
-sudo certbot renew --dry-run
-
-# Se der erro, ver log
-sudo tail -f /var/log/letsencrypt/letsencrypt.log
-```
-
-### Aplicação muito lenta ou travando
-
-```bash
-# Verificar acessos simultâneos
-ps aux | grep gunicorn | wc -l
-
-# Ver uso de memória
-top -p $(pgrep -f gunicorn | tr '\n' ',')
-
-# Aumentar workers em /etc/systemd/system/portal-cautivo.service
-# Aumentar timeout em deploy/gunicorn.conf.py
-# Considerar Redis para cache
-
-# Reiniciar após mudanças
-sudo systemctl daemon-reload
-sudo systemctl restart portal-cautivo
-```
-
-### Logrotate não está funcionando
-
-```bash
-# Testar configuração
-sudo logrotate -d /etc/logrotate.d/wifi-portal-teste
-
-# Forçar rotação (se necessário)
-sudo logrotate -f /etc/logrotate.d/wifi-portal-teste
-
-# Verificar que logs foram rotacionados
-ls -la /var/www/wifi-portal-teste/logs/
+docker-compose -f docker-compose.prod.yml restart
 ```
 
 ---
 
-## 📊 Monitoramento (Opcional)
+## ⚠️ Segurança Pós-Deploy
 
-### Instalar e Usar Htop para Monitorar em Tempo Real
+### **Checklist de Segurança**
 
 ```bash
-sudo apt install htop -y
-htop  # monitora recursos
-# Pressione 'q' para sair
+# 1. Verificar .env.local não está no Git
+git ls-files .env.local
+# Deve retornar vazio
+
+# 2. Verificar permissões
+ls -la .env.local
+# Deve ser: -rw------- (600)
+
+# 3. Verificar firewall
+sudo ufw status
+# Deve mostrar: Status: active
+
+# 4. Verificar SSL
+curl -I https://wifi.prefeitura.com.br
+# Deve retornar: HTTP/2 200
+
+# 5. Verificar health checks
+docker-compose -f docker-compose.prod.yml ps
+# Todos devem estar: Up (healthy)
 ```
 
-### Backup Automático Diário
+### **Alterar Senha Admin**
 
 ```bash
-# Criar script de backup
-cat > /home/ubuntu/backup-wifi-portal.sh << 'EOF'
-#!/bin/bash
-BACKUP_DIR="/mnt/backup"
-DATE=$(date +%Y%m%d_%H%M%S)
-mkdir -p $BACKUP_DIR
-tar -czf $BACKUP_DIR/wifi-portal-teste_$DATE.tar.gz /var/www/wifi-portal-teste/data /var/www/wifi-portal-teste/ssl
-echo "Backup created: $BACKUP_DIR/wifi-portal_$DATE.tar.gz"
-EOF
+# Conectar ao container
+docker-compose -f docker-compose.prod.yml exec app bash
 
-# Dar permissão
-chmod +x /home/ubuntu/backup-wifi-portal.sh
+# Abrir Python
+python
 
-# Adicionar ao crontab (executa diariamente às 2h)
-sudo crontab -e
-# Adicionar linha:
-# 0 2 * * * /home/ubuntu/backup-wifi-portal.sh
-```
+# Executar
+from werkzeug.security import generate_password_hash
+print(generate_password_hash('SUA_NOVA_SENHA_FORTE'))
+# Copiar o hash gerado
 
-### Email de Alertas (Opcional)
+# Editar data/users.csv e substituir o hash da senha
+exit()
+exit
 
-Se quiser receber alertas quando a aplicação cai:
-
-```bash
-# Criar script de verificação
-cat > /home/ubuntu/check-portal.sh << 'EOF'
-#!/bin/bash
-if ! curl -sf https://seu-dominio.com/login > /dev/null; then
-  echo "Portal está offline!" | mail -s "ALERTA: Portal Cautivo Offline" seu-email@example.com
-  systemctl restart portal-cautivo
-fi
-EOF
-
-# Adicionar ao crontab (verifica a cada 5 minutos)
-sudo crontab -e
-# */5 * * * * /home/ubuntu/check-portal.sh
+# Reiniciar app
+docker-compose -f docker-compose.prod.yml restart app
 ```
 
 ---
 
-## ✅ Checklist Final Antes de Produção
+## 🆘 Troubleshooting Rápido
 
-- [ ] Python 3.9+ instalado (`python3 --version`)
-- [ ] Virtual environment criado e ativado
-- [ ] `requirements.txt` instalado (`pip list | grep Flask`)
-- [ ] `.env.local` criado e preenchido (não no git)
-- [ ] `SECRET_KEY` gerado e único
-- [ ] `ENCRYPTION_SALT` gerado e único
-- [ ] Diretórios `data/`, `logs/`, `ssl/` criados com permissões corretas
-- [ ] Nginx instalado e configurado
-- [ ] SSL certificate obtido (Let's Encrypt)
-- [ ] Systemd service instalado e habilitado
-- [ ] Logrotate configurado (90 dias de retenção)
-- [ ] Firewall configurado (portas 22, 80, 443 abertas)
-- [ ] Acesso HTTPS bem-sucedido (https://seu-dominio.com)
-- [ ] Admin password alterado de `admin123`
-- [ ] Certificado é válido e vai renovar automaticamente
-- [ ] Headers de segurança presentes (HSTS, CSP, etc)
-- [ ] Logs estão sendo gerados (`tail -f /var/www/wifi-portal/logs/app.log`)
-- [ ] Logrotate está funcionando (verifica dia 1 de cada mês)
-- [ ] Backup automático configurado (opcional)
+Ver [TROUBLESHOOTING.md](TROUBLESHOOTING-NEW.md) para soluções completas.
+
+| Problema | Solução Rápida |
+|----------|----------------|
+| Containers não sobem | `docker-compose -f docker-compose.prod.yml logs` |
+| SSL não funciona | Verificar DNS e executar script novamente |
+| 502 Bad Gateway | `docker-compose -f docker-compose.prod.yml restart app` |
+| Health check falha | Verificar `/healthz` no navegador |
+| Muito lento | `docker stats` para ver recursos |
 
 ---
 
-## 📝 Notas Importantes
+## ✅ Próximos Passos
 
-### Data/Logs Location
+Após deploy bem-sucedido:
 
-Arquivos de dados e logs estão em `/var/www/wifi-portal/`:
-
-```bash
-/var/www/wifi-portal/
-├── data/
-│   ├── access_log.csv           # Log de acessos ao portal
-│   ├── access_log_encrypted.json # Log com dados criptografados
-│   └── users.csv                # Usuários do painel admin
-├── logs/
-│   ├── app.log                  # Logs da aplicação
-│   ├── security_events.log      # Eventos de segurança
-│   └── security.log             # Log de segurança geral
-└── ssl/
-    └── (certificados Let's Encrypt gerenciados por Certbot)
-```
-
-### 90-Day Log Retention
-
-Logrotate rotaciona logs diariamente e mantém últimos **90 dias**:
-
-```bash
-# Ver configuração
-cat /etc/logrotate.d/wifi-portal
-
-# Logs são mantidos em:
-# /var/www/wifi-portal/logs/app.log
-# /var/www/wifi-portal/logs/app.log.1
-# /var/www/wifi-portal/logs/app.log.2
-# ... até app.log.90
-```
+1. ✅ Configurar MikroTik para redirecionar para o portal
+2. ✅ Testar fluxo completo de autenticação
+3. ✅ Configurar backup externo (S3, etc)
+4. ✅ Configurar monitoramento avançado (Prometheus, Grafana)
+5. ✅ Treinar equipe de suporte
 
 ---
 
-## 🆘 Suporte
-
-Se encontrar problemas:
-
-1. **Verifique os logs:**
-   ```bash
-   sudo journalctl -u portal-cautivo -f
-   tail -f /var/www/wifi-portal/logs/app.log
-   ```
-
-2. **Teste a aplicação localmente:**
-   ```bash
-   source /var/www/wifi-portal/.venv/bin/activate
-   python -c "from wsgi import app; app.run()"
-   ```
-
-3. **Consulte este guia novamente** (seção Troubleshooting)
-
-4. **Abra issue no repositório** com:
-   - Versão do SO (`uname -a`)
-   - Saída do comando problemático
-   - Trecho dos logs
-   - Contexto do que você estava tentando fazer
-
----
-
-**Stack Deployment:** Python 3.9+ | Flask 2.3+ | Gunicorn 21+ | Nginx | Systemd | Let's Encrypt | Ubuntu 20.04+
-
-**Última atualização:** Janeiro 2026
+<p align="center">
+  <strong>Portal Cativo pronto para produção! 🎉</strong>
+</p>

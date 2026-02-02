@@ -1,394 +1,458 @@
-# Portal Cativo Flask - Wi-Fi Público Municipal
+# 🌐 Portal Cativo - Wi-Fi Público Municipal
 
-Aplicação backend Flask para portal cativo integrado ao MikroTik Hotspot, destinada a Wi-Fi público municipal.
+Sistema completo de portal cativo para Wi-Fi público integrado ao MikroTik, desenvolvido em Flask com foco em segurança, escalabilidade e facilidade de manutenção.
 
-## 🚀 Funcionalidades
+[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
+[![Flask](https://img.shields.io/badge/Flask-2.3+-green.svg)](https://flask.palletsprojects.com/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://www.docker.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-- ✅ **Portal cativo** com formulário de cadastro
-- ✅ **Integração MikroTik** (captura de parâmetros IP, MAC, link-orig)
-- ✅ **Registro de acessos** em CSV com criptografia de dados sensíveis
-- ✅ **Validação de formulário** (nome, telefone, termos de uso, validação de idade)
-- ✅ **Proteção CSRF** em painel admin e portal público
-- ✅ **Design responsivo** para dispositivos móveis
-- ✅ **Painel administrativo** seguro para visualização e busca de registros
-- ✅ **Termos de uso** integrados
-- ✅ **Login administrativo** com rate limiting e proteção
-- ✅ **Edição de perfil** administrativo
-- ✅ **Recuperação de senha** com tokens de reset
-- ✅ **Rate limiting** integrado (com Redis opcional)
-- ✅ **Criptografia avançada** (Fernet + PBKDF2) de dados sensíveis
-- ✅ **Logs de segurança** e auditoria
-- ✅ **Docker Compose** para deployment rápido
+---
 
-**Nota**: Ver [LIMITATIONS.md](LIMITATIONS.md) para limitações conhecidas e [DEPLOY.md](DEPLOY.md) para deployment em produção.
+## 📋 Índice
 
-## 📁 Estrutura de Arquivos
+- [Visão Geral](#visão-geral)
+- [Funcionalidades](#funcionalidades)
+- [Requisitos](#requisitos)
+- [Início Rápido](#início-rápido)
+- [Arquitetura](#arquitetura)
+- [Documentação](#documentação)
+- [Desenvolvimento](#desenvolvimento)
+- [Produção](#produção)
+- [Segurança](#segurança)
+- [Suporte](#suporte)
+- [Licença](#licença)
 
-```
-wifi-portal-teste/
-├── app_simple.py           # Aplicação principal Flask
-├── requirements.txt        # Dependências Python
-├── README.md              # Este arquivo
-├── .gitignore             # Arquivos ignorados pelo Git
-├── .env.local             # Variáveis de ambiente (não commitar!)
-├── .env.template          # Template de variáveis de ambiente
-├── .env_example           # Exemplo antigo (não use)
-├── LICENSE                # Licença MIT
-├── CONTRIBUTING.md        # Diretrizes de contribuição
-├── data/                  # Dados
-│   ├── access_log.csv     # Registros de acesso (CSV legível)
-│   ├── access_log_encrypted.json # Registros com criptografia
-│   └── users.csv          # Usuários administrativos (hash de senha)
-├── static/                # Arquivos estáticos
-│   ├── css/
-│   │   └── style.css      # Estilos responsivos
-│   └── js/
-│       └── main.js        # Scripts principais
-├── templates/             # Templates HTML
-│   ├── login.html         # Página principal do portal
-│   ├── termos.html        # Página de termos de uso
-│   ├── admin.html         # Página de administração
-│   ├── admin_login.html   # Login administrativo
-│   ├── admin_profile.html # Perfil administrativo
-│   ├── reset_password.html # Recuperação de senha
-│   └── reset_form.html    # Formulário de redefinição
-├── deploy/                # Arquivos de deploy
-│   ├── gunicorn.conf.py   # Configuração Gunicorn
-│   ├── nginx.portal_cautivo.conf # Configuração Nginx
-│   ├── portal.service     # Systemd service
-│   ├── logrotate.conf     # Rotação de logs
-│   └── checklist.sh       # Script de verificação
-├── logs/                  # Logs da aplicação
-└── security.py            # Módulo de segurança
-```
+---
 
-## 🛠️ Instalação e Configuração
+## 🎯 Visão Geral
 
-### Requisitos
+O Portal Cativo é uma solução completa para autenticação de usuários em redes Wi-Fi públicas, especialmente desenvolvida para integração com MikroTik Hotspot. Ideal para prefeituras, bibliotecas, praças e espaços públicos que oferecem acesso gratuito à internet.
 
-#### Opção 1: Execução Direta (Linux/Mac/Windows)
-- Python 3.9+
-- pip
-- Redis (opcional, recomendado para produção)
+### **Características Principais:**
+- 🔐 Autenticação de usuários com validação de dados
+- 📊 Painel administrativo com estatísticas e busca
+- 🔒 Segurança avançada (CSRF, Rate Limiting, Criptografia)
+- 🐳 Deploy simplificado com Docker
+- 🔄 Alta disponibilidade com health checks
+- 📱 Interface responsiva para dispositivos móveis
 
-#### Opção 2: Docker Compose (Recomendado)
+---
+
+## ✨ Funcionalidades
+
+### **Portal Público**
+- ✅ Formulário de cadastro com validação de dados
+- ✅ Integração completa com MikroTik (IP, MAC, link-orig)
+- ✅ Validação de idade (mínimo 13 anos)
+- ✅ Validação de telefone e email
+- ✅ Termos de uso obrigatórios
+- ✅ Proteção CSRF
+- ✅ Design responsivo
+
+### **Painel Administrativo**
+- ✅ Login seguro com rate limiting
+- ✅ Visualização de registros de acesso
+- ✅ Busca por nome, telefone, CPF, IP ou MAC
+- ✅ Estatísticas de uso
+- ✅ Exportação de dados
+- ✅ Edição de perfil
+- ✅ Recuperação de senha
+- ✅ Logs de segurança
+
+### **Segurança**
+- ✅ Criptografia de dados sensíveis (Fernet + PBKDF2)
+- ✅ Rate limiting (100 req/min, 1000 req/hora)
+- ✅ Proteção CSRF em todas as rotas
+- ✅ Headers de segurança (HSTS, CSP, X-Frame-Options)
+- ✅ Validação e sanitização de inputs
+- ✅ Logs de auditoria
+- ✅ Session timeout configurável
+
+### **Infraestrutura**
+- ✅ Docker Compose para dev e prod
+- ✅ Health checks automáticos
+- ✅ Redis para cache e rate limiting
+- ✅ Nginx como reverse proxy
+- ✅ SSL/TLS com Let's Encrypt
+- ✅ Logs estruturados
+- ✅ Renovação automática de certificados
+
+---
+
+## 🔧 Requisitos
+
+### **Para Desenvolvimento:**
 - Docker 20.10+
 - Docker Compose 1.29+
+- Git
 
-### 1. Instalar dependências
+### **Para Produção (Ubuntu Server):**
+- Ubuntu 20.04+ (LTS recomendado)
+- Docker 20.10+
+- Docker Compose 1.29+
+- Domínio configurado (para SSL)
+- 2GB RAM mínimo (4GB recomendado)
+- 20GB disco
+- Portas 80 e 443 abertas
 
-```bash
-pip install -r requirements.txt
-```
+### **Stack Tecnológica:**
+- **Backend:** Python 3.9+, Flask 2.3+
+- **WSGI:** Gunicorn 21.0+
+- **Proxy:** Nginx (Alpine)
+- **Cache:** Redis 7.0+
+- **Criptografia:** Cryptography 41.0+
+- **Rate Limiting:** Flask-Limiter 3.5+
 
-### 2. Configurar ambiente
+---
 
-```bash
-# Copiar template de variáveis de ambiente
-cp .env.template .env.local
+## 🚀 Início Rápido
 
-# IMPORTANTE: Editar e configurar valores para seu ambiente
-nano .env.local
-```
-
-**Variáveis essenciais em `.env.local`:**
-- `SECRET_KEY` - Chave secreta única (gerar com: `python -c "import secrets; print(secrets.token_hex(32))"`)
-- `ALLOWED_HOSTS` - Seu domínio ou IP (ex: `seu-dominio.com` ou `192.168.1.100`)
-- `DEBUG` - `False` em produção, `True` em desenvolvimento
-- `ADMIN_PASSWORD` - Senha do usuário admin padrão (alterar após primeiro login)
-
-### 3. Executar a aplicação
-
-```bash
-python app_simple.py
-```
-
-A aplicação será iniciada em `http://localhost:5000`
-
-## 🔧 Configuração no MikroTik Hotspot
-
-### Configurar o Hotspot
-
-No MikroTik, configure o hotspot com a URL de login:
+### **Desenvolvimento Local (5 minutos)**
 
 ```bash
-/ip hotspot profile set [profile-name] login-url=http://seuservidor:5000/login
+# 1. Clonar repositório
+git clone https://github.com/seu-usuario/wifi-portal.git
+cd wifi-portal
+
+# 2. Copiar variáveis de ambiente
+cp .env.prod .env.local
+
+# 3. Gerar SECRET_KEY
+python3 -c "import secrets; print(secrets.token_urlsafe(64))"
+# Cole a saída no .env.local
+
+# 4. Subir ambiente
+docker-compose up -d
+
+# 5. Acessar
+# Portal: http://localhost/login
+# Admin: http://localhost/admin/login
+# Health: http://localhost/healthz
 ```
 
-Ou via WinBox:
-1. Acesse IP > Hotspot
-2. Selecione seu profile
-3. Configure "Login URL" como: `http://seuservidor:5000/login`
+**Credenciais padrão:** `admin` / `admin123` ⚠️ **MUDE EM PRODUÇÃO!**
 
-### Parâmetros enviados pelo MikroTik
-
-O MikroTik envia automaticamente os seguintes parâmetros:
-- `ip` - Endereço IP do cliente
-- `mac` - Endereço MAC do cliente  
-- `link-orig` - URL original que o cliente tentou acessar
-
-## 📱 Uso
-
-### Portal de Login Público
-
-1. Usuário conecta-se à rede Wi-Fi
-2. É redirecionado automaticamente para o portal cativo
-3. Preenche os campos obrigatórios:
-   - Nome completo
-   - Email
-   - Data de nascimento
-   - Telefone celular
-   - Aceita os termos de uso
-4. Clica em "Acessar Internet"
-5. É redirecionado para a URL original ou Google
-
-### Área Administrativa
-
-#### Login Administrativo
-- **URL**: `http://localhost:5000/admin/login`
-- **Usuário padrão**: `admin`
-- **Senha padrão**: `admin123`
-
-#### Páginas Administrativas
-- **Painel**: `http://localhost:5000/admin` - Visualização de registros
-- **Perfil**: `http://localhost:5000/admin/profile` - Edição de perfil
-- **Recuperação**: `http://localhost:5000/admin/reset-password` - Recuperação de senha
-
-## � Email e Recuperação de Senha
-
-A funcionalidade de recuperação de senha pode enviar emails via SMTP (opcional).
-
-**Se quiser ativar email SMTP, configure em `.env.local`:**
+### **Verificar Status**
 
 ```bash
-# Gmail (exemplo)
-SMTP_SERVER=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USERNAME=seu-email@gmail.com
-SMTP_PASSWORD=sua-senha-app  # Use "Senha de app" se 2FA ativado
-SMTP_USE_TLS=True
-FROM_EMAIL=seu-email@gmail.com
-FROM_NAME=Wi-Fi Portal Admin
+# Ver containers
+docker-compose ps
+
+# Ver logs
+docker-compose logs -f
+
+# Parar ambiente
+docker-compose down
 ```
 
-**Obs:** Se não configurar SMTP, a recuperação de senha mostrará o link na tela (apenas para desenvolvimento).
+---
+
+## 🏗️ Arquitetura
+
+### **Diagrama de Componentes**
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    INTERNET / USUÁRIOS                   │
+└────────────────────┬────────────────────────────────────┘
+                     │
+                     ▼
+            ┌────────────────┐
+            │  MikroTik      │
+            │  Hotspot       │
+            └────────┬───────┘
+                     │
+                     ▼
+         ┌───────────────────────┐
+         │   Nginx Container     │
+         │   (Reverse Proxy)     │
+         │   Porta: 80, 443      │
+         └───────────┬───────────┘
+                     │
+                     ▼
+         ┌───────────────────────┐
+         │   Flask App           │
+         │   (Gunicorn)          │
+         │   Porta: 5000         │
+         └───────┬───────────────┘
+                 │
+                 ├──────────────────┐
+                 │                  │
+                 ▼                  ▼
+      ┌──────────────────┐  ┌──────────────┐
+      │  Redis           │  │  Data        │
+      │  (Rate Limiting) │  │  (CSV/JSON)  │
+      └──────────────────┘  └──────────────┘
+```
+
+### **Fluxo de Requisição**
+
+1. **Usuário** conecta ao Wi-Fi → MikroTik redireciona para portal
+2. **Nginx** recebe requisição (HTTPS) → proxy para app
+3. **Flask App** processa → valida dados → registra acesso
+4. **Redis** controla rate limiting
+5. **MikroTik** libera acesso após validação
+
+---
+
+## 📚 Documentação
+
+| Documento | Descrição |
+|-----------|-----------|
+| [DEPLOY.md](DEPLOY-NEW.md) | **Guia completo de deploy em produção** |
+| [CONTRIBUTING.md](CONTRIBUTING-NEW.md) | Como contribuir com o projeto |
+| [LIMITATIONS.md](LIMITATIONS-NEW.md) | Limitações conhecidas e roadmap |
+| [TROUBLESHOOTING.md](TROUBLESHOOTING-NEW.md) | Solução de problemas comuns |
+| [README-PRODUCTION.md](README-PRODUCTION.md) | Deploy rápido com SSL |
+
+---
+
+## 💻 Desenvolvimento
+
+### **Estrutura do Projeto**
+
+```
+wifi-portal/
+├── app_simple.py              # Aplicação Flask principal
+├── wsgi.py                    # Entry point para Gunicorn
+├── requirements.txt           # Dependências Python
+├── Dockerfile                 # Build da aplicação
+├── docker-compose.yml         # Ambiente desenvolvimento
+├── docker-compose.prod.yml    # Ambiente produção
+├── .env.prod                  # Template de variáveis
+├── .env.local                 # Variáveis locais (não commitar!)
+│
+├── app/                       # Módulos da aplicação
+│   ├── security.py           # Gerenciamento de segurança
+│   ├── data_manager.py       # Gerenciamento de dados
+│   └── locks.py              # File locking
+│
+├── deploy/                    # Arquivos de deploy
+│   ├── nginx.docker.conf     # Nginx para dev
+│   ├── nginx.docker.prod.conf# Nginx para prod (SSL)
+│   ├── gunicorn.conf.py      # Config Gunicorn
+│   ├── setup-ssl.sh          # Script setup SSL
+│   └── portal.service        # Systemd service
+│
+├── templates/                 # Templates HTML
+│   ├── login.html            # Portal público
+│   ├── admin.html            # Painel admin
+│   ├── admin_login.html      # Login admin
+│   └── termos.html           # Termos de uso
+│
+├── static/                    # Arquivos estáticos
+│   ├── css/style.css         # Estilos
+│   └── js/main.js            # JavaScript
+│
+└── data/                      # Dados (persistente)
+    ├── access_log.csv        # Registros em CSV
+    ├── access_log_encrypted.json # Registros criptografados
+    └── users.csv             # Usuários admin
+```
+
+### **Variáveis de Ambiente**
+
+```bash
+# Segurança
+SECRET_KEY=<gerar-com-secrets>
+DEBUG=False
+FLASK_ENV=production
+
+# Redis
+REDIS_URL=redis://redis:6379/0
+REDIS_PASSWORD=<senha-forte>
+
+# Configurações
+MAX_LOGIN_ATTEMPTS=5
+SESSION_TIMEOUT=1800
+ALLOWED_HOSTS=seu-dominio.com,www.seu-dominio.com
+```
+
+### **Desenvolvimento Local**
+
+```bash
+# Modo dev (hot reload)
+docker-compose up
+
+# Rebuild
+docker-compose up --build
+
+# Ver logs específicos
+docker-compose logs -f app
+docker-compose logs -f nginx
+docker-compose logs -f redis
+
+# Executar comandos no container
+docker-compose exec app bash
+docker-compose exec app python -c "import app_simple"
+
+# Limpar tudo
+docker-compose down -v
+```
+
+### **Testes**
+
+```bash
+# Rodar testes
+docker-compose exec app python -m pytest
+
+# Test de carga
+ab -n 1000 -c 10 http://localhost/login
+
+# Health check
+curl http://localhost/healthz
+```
+
+---
+
+## 🌐 Produção
+
+### **Deploy Rápido (Ubuntu Server)**
+
+```bash
+# 1. Preparar servidor
+sudo apt update && sudo apt install docker.io docker-compose git -y
+sudo usermod -aG docker $USER
+
+# 2. Clonar e configurar
+git clone https://github.com/seu-usuario/wifi-portal.git /var/www/wifi-portal
+cd /var/www/wifi-portal
+cp .env.prod .env.local
+nano .env.local  # Configurar variáveis
+
+# 3. Setup SSL
+chmod +x deploy/setup-ssl.sh
+sudo bash deploy/setup-ssl.sh seu-dominio.com admin@seu-dominio.com
+
+# 4. Pronto!
+# https://seu-dominio.com
+```
+
+Ver [DEPLOY.md](DEPLOY-NEW.md) para guia completo.
+
+### **Manutenção**
+
+```bash
+# Atualizar aplicação
+cd /var/www/wifi-portal
+git pull
+docker-compose -f docker-compose.prod.yml up -d --build
+
+# Backup
+tar -czf backup-$(date +%Y%m%d).tar.gz data/ uploads/ .env.local
+
+# Ver logs
+docker-compose -f docker-compose.prod.yml logs -f
+
+# Reiniciar
+docker-compose -f docker-compose.prod.yml restart
+
+# Health check
+curl https://seu-dominio.com/healthz
+```
 
 ---
 
 ## 🔒 Segurança
 
-**Features implementadas:**
-- ✅ **Criptografia Fernet** (PBKDF2-SHA256) para dados sensíveis (nome, email, telefone, data nascimento)
-- ✅ **Hash de senhas** com Werkzeug (PBKDF2) 
-- ✅ **Proteção CSRF** em todas as rotas POST
-- ✅ **Rate limiting** (5 tentativas/hora admin, 100/min global)
-- ✅ **Headers de segurança** (HSTS, CSP, X-Frame-Options, etc)
-- ✅ **Validação server-side** de todos os inputs
-- ✅ **Sanitização HTML** para prevenir XSS
-- ✅ **File-locking atômico** para integridade de dados (concurrent access)
-- ✅ **Logs de segurança** com audit trail
+### **Checklist de Segurança**
 
-⚠️ **Veja [LIMITATIONS.md](LIMITATIONS.md)** para features não implementadas e recomendações de escala
+- [ ] SECRET_KEY única e forte
+- [ ] REDIS_PASSWORD configurada
+- [ ] Senha admin alterada
+- [ ] SSL/TLS configurado
+- [ ] Firewall ativo (UFW)
+- [ ] Backup automático
+- [ ] Logs monitorados
+- [ ] Atualizações regulares
+- [ ] .env.local fora do Git
 
-## 🎨 Personalização
+### **Boas Práticas**
 
-### Estilos
-
-Edite `static/css/style.css` para alterar o design do portal.
-
-### Textos
-
-Edite os templates HTML em `templates/` para alterar textos e mensagens.
-
-### Validação
-
-Modifique as funções de validação em `app_simple.py`:
-- `validate_phone()` - Validação de telefone
-- `validate_email()` - Validação de email
-- `validate_birth_date()` - Validação de data de nascimento
-- `sanitize_input()` - Sanitização de inputs
-
-## � Quick Start com Docker Compose
-
-Para rodar a aplicação rapidamente com Docker (inclui Redis):
-
-```bash
-# Buildar e iniciar
-docker-compose up -d
-
-# A aplicação estará em http://localhost:5000
-# Redis estará em localhost:6379
-
-# Ver logs
-docker-compose logs -f app
-
-# Parar
-docker-compose down
-
-# Limpar volumes (dados)
-docker-compose down -v
-```
-
-**Credenciais padrão:**
-- Usuário: `admin`
-- Senha: `admin123`
-
-⚠️ **MUDE IMEDIATAMENTE após primeiro login!**
+1. **Nunca** commite `.env.local`
+2. **Sempre** use HTTPS em produção
+3. **Monitore** logs de segurança
+4. **Faça backup** diário dos dados
+5. **Mantenha** dependências atualizadas
+6. **Teste** em staging antes de produção
+7. **Use** senhas fortes e únicas
 
 ---
 
-## 🚀 Deploy em Produção (Ubuntu Server)
+## 🆘 Suporte
 
-**LEIA COMPLETAMENTE**: Este é o guia essencial para deployar em produção seguro.
+### **Problemas Comuns**
 
-### Opção 1: Deploy Manual (Recomendado)
+Ver [TROUBLESHOOTING.md](TROUBLESHOOTING-NEW.md) para soluções detalhadas.
 
-Para instruções detalhadas passo-a-passo:
+### **Reportar Bugs**
 
-👉 **[DEPLOY.md](DEPLOY.md)** - Guia completo (15 passos, ~45-60 minutos)
+1. Verifique [Issues existentes](https://github.com/seu-usuario/wifi-portal/issues)
+2. Crie novo issue com:
+   - Descrição do problema
+   - Passos para reproduzir
+   - Logs relevantes
+   - Ambiente (dev/prod, versão)
 
-**O que será configurado:**
-- Python 3.9+ com virtual environment
-- Gunicorn (porta 8003) como WSGI application server
-- Nginx como reverse proxy + SSL/TLS termination
-- Let's Encrypt para certificados HTTPS automáticos
-- Systemd service para auto-restart
-- Logrotate para rotação de logs (90 dias)
-- Redis para rate limiting distribuído (opcional)
-- UFW firewall configurado
+### **Comunidade**
 
-**Pré-requisitos:**
-- Ubuntu 20.04 ou superior
-- Domínio DNS apontando para o servidor (ou IP público)
-- Acesso SSH com permissão `sudo`
-- ~2GB RAM mínimo
-- ~5GB disco mínimo
+- 📧 Email: suporte@prefeitura.com.br
+- 💬 Discord: [Link do servidor]
+- 📝 Wiki: [Link da wiki]
 
-### Opção 2: Deploy com Docker em Produção
+---
+
+## 🤝 Contribuindo
+
+Contribuições são bem-vindas! Ver [CONTRIBUTING.md](CONTRIBUTING-NEW.md) para diretrizes.
 
 ```bash
-# Build da imagem
-docker build -t wifi-portal:latest .
-
-# Push para registry (DockerHub, ECR, etc)
-docker push seu-registry/wifi-portal:latest
-
-# Deploy em seu orquestrador:
-# - Docker Swarm
-# - Kubernetes
-# - AWS ECS
-# - DigitalOcean App Platform
-# - etc
+# Fork → Clone → Branch → Commit → Push → Pull Request
+git checkout -b feature/nova-funcionalidade
+git commit -m "feat: adiciona nova funcionalidade"
+git push origin feature/nova-funcionalidade
 ```
 
-### Opção 3: Plataformas Gerenciadas
+---
 
-- **Railway.app**, **Render**, **Heroku**: `git push` automático
-- **AWS EC2**: Usar manual deployment
-- **Azure App Service**: Suporta containers
-- **DigitalOcean**: App Platform com Docker
+## 📊 Roadmap
 
-**Qualquer que seja a opção:**
-1. ✅ Altere a senha admin padrão imediatamente
-2. ✅ Gere SECRET_KEY e ENCRYPTION_SALT únicos
-3. ✅ Configure HTTPS/SSL
-4. ✅ Ative rate limiting (com Redis se possível)
-5. ✅ Configure backups automáticos dos dados
+- [ ] Dashboard com gráficos em tempo real
+- [ ] Exportação em múltiplos formatos
+- [ ] Autenticação via redes sociais
+- [ ] Notificações por email/SMS
+- [ ] API REST para integração
+- [ ] Multi-tenancy
+- [ ] Dark mode
 
-## 📊 Dados e Registros
+Ver [LIMITATIONS.md](LIMITATIONS-NEW.md) para detalhes.
 
-### Formato do CSV
-
-Os registros são armazenados em CSV com os seguintes campos:
-- `nome` - Nome completo do usuário
-- `telefone` - Telefone celular
-- `ip` - Endereço IP do cliente
-- `mac` - Endereço MAC do cliente
-- `user_agent` - User agent do navegador
-- `data` - Data do acesso (YYYY-MM-DD)
-- `hora` - Hora do acesso (HH:MM:SS)
-- `email` - Email do usuário
-- `data_nascimento` - Data de nascimento
-
-### Backup
-
-Para backup dos dados:
-
-```bash
-# Copie o arquivo de registros
-cp data/access_log.csv backup/access_log_$(date +%Y%m%d).csv
-
-# Copie o arquivo de usuários
-cp data/users.csv backup/users_$(date +%Y%m%d).csv
-```
-
-## 🆘 Troubleshooting
-
-Para soluções de problemas comuns em deployment:
-
-👉 **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** - Guia de diagnóstico e resolução
-
-**Problemas cobertos:**
-- Systemd service não inicia
-- Nginx retorna 502 Bad Gateway
-- SSL certificate errors
-- Permission denied em data/logs
-- Logs não são criados
-- Aplicação travando/lenta
-- E muito mais...
-
-**Desenvolvimento local:**
-
-```bash
-# Teste rápido
-python3 -c "from wsgi import app; print(app)"
-
-# Rodar localmente (desenvolvimento apenas)
-python app_simple.py
-# Acessa http://localhost:5000
-```
-
-## 🧪 Testes
-
-### Testes de redirecionamento
-
-```bash
-# Teste o redirecionamento automático
-python test_redirect.py
-```
-
-### Testes de integração
-
-```bash
-# Teste a aplicação completa
-python test_portal.py
-```
-
-## 🤝 Contribuição
-
-Contribuições são bem-vindas! Por favor, leia o arquivo [CONTRIBUTING.md](CONTRIBUTING.md) para mais informações.
-
-### Como contribuir
-
-1. Fork do projeto
-2. Crie uma branch: `git checkout -b feature/nome-feature`
-3. Faça commit das suas alterações: `git commit -m 'Adiciona feature X'`
-4. Push para a branch: `git push origin feature/nome-feature`
-5. Abra um Pull Request
+---
 
 ## 📄 Licença
 
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
+Este projeto está sob a licença MIT. Ver [LICENSE](LICENSE) para detalhes.
+
+---
+
+## 👥 Autores
+
+- **Prefeitura Municipal** - Desenvolvimento inicial
+- **Comunidade** - Contribuições e melhorias
+
+Ver [contributors](https://github.com/seu-usuario/wifi-portal/graphs/contributors) para lista completa.
+
+---
 
 ## 🙏 Agradecimentos
 
 - Comunidade Flask
-- Equipe do MikroTik
-- Contribuidores e testadores
+- Projeto MikroTik
+- Contribuidores open source
 
 ---
 
-**Desenvolvido para Wi-Fi público municipal**  
-**Versão**: 2.0 (Criptografia avançada, Docker, Rate limiting com Redis)  
-**Última atualização**: Janeiro 2026  
-**Status**: Pronto para produção
+<p align="center">
+  Feito com ❤️ para Wi-Fi público e gratuito
+</p>
