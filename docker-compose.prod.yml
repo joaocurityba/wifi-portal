@@ -1,0 +1,96 @@
+# Docker Compose for Production with SSL
+# Usage: docker-compose -f docker-compose.prod.yml up -d
+
+services:
+  redis:
+    image: redis:alpine
+    container_name: wifi-portal-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-changeme}
+    networks:
+      - wifi-portal-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wifi-portal-app
+    expose:
+      - "5000"
+    env_file:
+      - .env.local
+    environment:
+      - REDIS_URL=redis://:${REDIS_PASSWORD:-changeme}@redis:6379/0
+      - FLASK_ENV=production
+      - SECRET_KEY=${SECRET_KEY}
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./uploads:/app/uploads
+    restart: unless-stopped
+    networks:
+      - wifi-portal-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:5000/healthz')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  nginx:
+    image: nginx:alpine
+    container_name: wifi-portal-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/nginx.docker.prod.conf:/etc/nginx/nginx.conf:ro
+      - ./static:/var/www/static:ro
+      - ./uploads:/var/www/uploads:ro
+      - ./logs/nginx:/var/log/nginx
+      # Certificados SSL (gerados no host)
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /etc/ssl/certs:/etc/ssl/certs:ro
+      # Para renovação Let's Encrypt
+      - ./certbot/www:/var/www/certbot:ro
+    depends_on:
+      app:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - wifi-portal-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Container para renovação automática de certificados SSL
+  certbot:
+    image: certbot/certbot:latest
+    container_name: wifi-portal-certbot
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    # Renova certificados a cada 12 horas
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot --quiet; sleep 12h & wait $${!}; done;'"
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+
+networks:
+  wifi-portal-network:
+    driver: bridge
