@@ -782,3 +782,21 @@ jinja2.exceptions.UndefinedError: 'csrf_token' is undefined
 2026-02-02 13:29:19,111 - werkzeug - INFO - 172.18.0.1 - - [02/Feb/2026 13:29:19] "[32mGET /admin HTTP/1.1[0m" 302 -
 2026-02-02 13:29:19,144 - werkzeug - INFO - 172.18.0.1 - - [02/Feb/2026 13:29:19] "GET /admin/login HTTP/1.1" 200 -
 2026-02-02 13:29:19,167 - werkzeug - INFO - 172.18.0.1 - - [02/Feb/2026 13:29:19] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-02 14:57:57,044 - app.security - INFO - Rate limiting configured with Redis
+2026-02-02 14:57:57,045 - app.security - INFO - Rate limiting configured with Redis
+2026-02-02 14:57:57,045 - app.security - INFO - Rate limiting configured with Redis
+2026-02-02 14:57:57,046 - app.security - INFO - Rate limiting configured with Redis
+2026-02-02 14:57:57,046 - app.security - INFO - Rate limiting configured with Redis
+2026-02-02 14:57:57,048 - app.security - INFO - Rate limiting configured with Redis
+2026-02-02 14:57:57,049 - app.security - INFO - Rate limiting configured with Redis
+2026-02-02 15:01:26,978 - app.security - INFO - Rate limiting configured with Redis
+2026-02-02 15:01:27,019 - app.security - INFO - Rate limiting configured with Redis
+2026-02-02 15:01:27,064 - app.security - INFO - Rate limiting configured with Redis
+2026-02-02 15:01:27,066 - app.security - INFO - Rate limiting configured with Redis
+2026-02-02 15:01:27,147 - app.security - INFO - Rate limiting configured with Redis
+2026-02-02 15:01:27,244 - app.security - INFO - Rate limiting configured with Redis
+2026-02-02 15:01:27,283 - app.security - INFO - Rate limiting configured with Redis
+2026-02-02 15:01:57,647 - app.data_manager - INFO - Acesso registrado: be7f6b08c004f9a436233bd3ba750e2557f7e7fd30f36581418c415f21e53a4b
+2026-02-02 15:01:57,648 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-02T15:01:57.648003', 'event_type': 'access_registered', 'ip': '172.18.0.4', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'ip': '', 'mac': '', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Sa'}}
+2026-02-02 15:02:11,098 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-02T15:02:11.098784', 'event_type': 'unauthorized_admin_access', 'ip': '172.18.0.4', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-02-02 15:02:17,013 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-02T15:02:17.013747', 'event_type': 'admin_login_success', 'ip': '172.18.0.4', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'username': 'admin'}}

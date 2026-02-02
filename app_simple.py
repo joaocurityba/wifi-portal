@@ -523,6 +523,11 @@ def login():
     csrf_token = generate_csrf_token()
     return render_template('login.html', ip=ip, mac=mac, link_orig=link_orig, csrf_token=csrf_token)
 
+@app.route('/healthz')
+def health_check():
+    """Health check endpoint para monitoramento"""
+    return {'status': 'healthy', 'service': 'wifi-portal'}, 200
+
 @app.route('/termos')
 def termos():
     """Página de termos de uso"""
