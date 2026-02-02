@@ -22,7 +22,7 @@ from app.security import security_manager, require_admin, rate_limit_admin, gene
 from app.data_manager import data_manager
 
 # Configuração de logging avançado
-os.makedirs('logs', exist_ok=True)
+os.makedirs('data', exist_ok=True)
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',

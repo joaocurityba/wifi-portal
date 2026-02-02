@@ -758,3 +758,27 @@ jinja2.exceptions.UndefinedError: 'csrf_token' is undefined
 2026-02-02 02:18:12,106 - werkzeug - INFO - 172.18.0.1 - - [02/Feb/2026 02:18:12] "[32mGET /admin/logout HTTP/1.1[0m" 302 -
 2026-02-02 02:18:12,125 - werkzeug - INFO - 172.18.0.1 - - [02/Feb/2026 02:18:12] "GET /admin/login HTTP/1.1" 200 -
 2026-02-02 02:18:12,160 - werkzeug - INFO - 172.18.0.1 - - [02/Feb/2026 02:18:12] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-02 13:24:22,025 - app.security - INFO - Rate limiting configured with Redis
+2026-02-02 13:24:22,096 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.18.0.3:5000
+2026-02-02 13:24:22,096 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-02 13:24:29,274 - werkzeug - INFO - 172.18.0.1 - - [02/Feb/2026 13:24:29] "[32mGET / HTTP/1.1[0m" 302 -
+2026-02-02 13:24:29,386 - werkzeug - INFO - 172.18.0.1 - - [02/Feb/2026 13:24:29] "GET /login HTTP/1.1" 200 -
+2026-02-02 13:24:29,510 - werkzeug - INFO - 172.18.0.1 - - [02/Feb/2026 13:24:29] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-02 13:24:29,585 - werkzeug - INFO - 172.18.0.1 - - [02/Feb/2026 13:24:29] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-02-02 13:24:29,739 - werkzeug - INFO - 172.18.0.1 - - [02/Feb/2026 13:24:29] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-02-02 13:29:11,794 - app.security - INFO - Rate limiting configured with Redis
+2026-02-02 13:29:11,872 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.18.0.3:5000
+2026-02-02 13:29:11,874 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-02 13:29:15,413 - werkzeug - INFO - 172.18.0.1 - - [02/Feb/2026 13:29:15] "GET /login HTTP/1.1" 200 -
+2026-02-02 13:29:15,435 - werkzeug - INFO - 172.18.0.1 - - [02/Feb/2026 13:29:15] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-02 13:29:15,436 - werkzeug - INFO - 172.18.0.1 - - [02/Feb/2026 13:29:15] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-02-02 13:29:19,109 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-02T13:29:19.109399', 'event_type': 'unauthorized_admin_access', 'ip': '172.18.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-02-02 13:29:19,111 - werkzeug - INFO - 172.18.0.1 - - [02/Feb/2026 13:29:19] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-02-02 13:29:19,144 - werkzeug - INFO - 172.18.0.1 - - [02/Feb/2026 13:29:19] "GET /admin/login HTTP/1.1" 200 -
+2026-02-02 13:29:19,167 - werkzeug - INFO - 172.18.0.1 - - [02/Feb/2026 13:29:19] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
