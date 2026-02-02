@@ -4,12 +4,11 @@
 import multiprocessing
 
 # Bind to localhost only (Nginx will proxy from outside)
-bind = "127.0.0.1:8003"
+bind = "0.0.0.0:5000"
 
 # Worker configuration
 workers = multiprocessing.cpu_count() + 1
-worker_class = "sync"  # Use "gevent" if you
-install gevent and need async
+worker_class = "sync"  # Use "gevent" if you install gevent and need async
 worker_connections = 1000
 threads = 2
 
@@ -22,8 +21,8 @@ max_requests = 1000
 max_requests_jitter = 50
 
 # Logging
-accesslog = "/var/www/wifi-portal-teste/logs/access.log"
-errorlog = "/var/www/wifi-portal-teste/logs/error.log"
+accesslog = "/app/logs/access.log"
+errorlog = "/app/logs/error.log"
 loglevel = "info"
 
 # Process naming
@@ -31,7 +30,7 @@ proc_name = "portal-cautivo"
 
 # Server mechanics
 daemon = False
-pidfile = "/var/run/wifi-portal-teste.pid"
+pidfile = None
 umask = 0o022
 
 # SSL (optional - use only if not behind Nginx with SSL)

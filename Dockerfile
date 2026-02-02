@@ -7,4 +7,4 @@ RUN pip install --no-cache-dir -r requirements.txt gunicorn  # Adicione gunicorn
 
 COPY . .
 EXPOSE 5000
-CMD ["python", "-c", "from app_simple import app; app.run(host='0.0.0.0', port=5000)"]
+CMD ["gunicorn", "--config", "deploy/gunicorn.conf.py", "app_simple:app"]
