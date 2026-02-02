@@ -800,3 +800,10 @@ jinja2.exceptions.UndefinedError: 'csrf_token' is undefined
 2026-02-02 15:01:57,648 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-02T15:01:57.648003', 'event_type': 'access_registered', 'ip': '172.18.0.4', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'ip': '', 'mac': '', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Sa'}}
 2026-02-02 15:02:11,098 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-02T15:02:11.098784', 'event_type': 'unauthorized_admin_access', 'ip': '172.18.0.4', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'endpoint': 'admin', 'path': '/admin'}}
 2026-02-02 15:02:17,013 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-02T15:02:17.013747', 'event_type': 'admin_login_success', 'ip': '172.18.0.4', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'username': 'admin'}}
+2026-02-02 18:15:59,472 - app.security - INFO - Rate limiting configured with Redis
+2026-02-02 18:15:59,487 - app.security - INFO - Rate limiting configured with Redis
+2026-02-02 18:15:59,528 - app.security - INFO - Rate limiting configured with Redis
+2026-02-02 18:15:59,530 - app.security - INFO - Rate limiting configured with Redis
+2026-02-02 18:15:59,643 - app.security - INFO - Rate limiting configured with Redis
+2026-02-02 18:15:59,644 - app.security - INFO - Rate limiting configured with Redis
+2026-02-02 18:15:59,693 - app.security - INFO - Rate limiting configured with Redis
