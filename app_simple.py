@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Portal Cautivo Flask - Wi-Fi Público Municipal
+Portal Cativo Flask - Wi-Fi Público Municipal
 Versão com segurança avançada e criptografia
 """
 
