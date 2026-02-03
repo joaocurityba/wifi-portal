@@ -312,22 +312,21 @@ def reset_password_request():
     if request.method == 'POST':
         email = request.form.get('email', '').strip()
         
-        # Procura usuário pelo email
-        users_file = get_users_file()
-        if os.path.exists(users_file):
-            with open(users_file, 'r', encoding='utf-8') as csvfile:
-                reader = csv.DictReader(csvfile)
-                for row in reader:
-                    if row['email'] == email:
-                        # Gera token de recuperação
-                        token = secrets.token_urlsafe(32)
-                        expires = datetime.now() + timedelta(hours=1)
-                        
-                        update_reset_token(row['username'], token, expires)
-                        send_reset_email(email, row['username'], token)
-                        
-                        flash('Instruções de recuperação enviadas para seu email.', 'success')
-                        return redirect(url_for('admin_login'))
+        # Procura usuário pelo email usando SQLAlchemy
+        user = User.query.filter_by(email=email).first()
+        if user:
+            # Gera token de recuperação
+            token = secrets.token_urlsafe(32)
+            expires = datetime.utcnow() + timedelta(hours=1)
+            
+            user.reset_token = token
+            user.reset_expires = expires
+            db.session.commit()
+            
+            send_reset_email(email, user.username, token)
+            
+            flash('Instruções de recuperação enviadas para seu email.', 'success')
+            return redirect(url_for('admin_login'))
         
         # Mensagem genérica para não revelar se o email existe
         flash('Se o email estiver cadastrado, instruções foram enviadas.', 'info')
@@ -338,43 +337,35 @@ def reset_password_request():
 @require_csrf_token
 def reset_password_form(token):
     """Formulário de redefinição de senha"""
-    if request.method == 'POST':
-        username = request.form.get('username', '').strip()
-        new_password = request.form.get('password', '')
-        confirm_password = request.form.get('confirm_password', '')
-        
-        if not validate_reset_token(username, token):
-            flash('Token inválido ou expirado.', 'error')
-            return redirect(url_for('reset_password_request'))
-        
-        if not new_password or len(new_password) < 6:
-            flash('A senha deve ter pelo menos 6 caracteres.', 'error')
-            return render_template('reset_form.html', token=token, username=username)
-        
-        if new_password != confirm_password:
-            flash('As senhas não coincidem.', 'error')
-            return render_template('reset_form.html', token=token, username=username)
-        
-        reset_password(username, new_password)
-        flash('Senha redefinida com sucesso!', 'success')
-        return redirect(url_for('admin_login'))
+    # Busca usuário pelo token usando SQLAlchemy
+    user = User.query.filter_by(reset_token=token).first()
     
-    # Verifica se o token é válido para exibir o formulário
-    users_file = get_users_file()
-    username = None
-    if os.path.exists(users_file):
-        with open(users_file, 'r', encoding='utf-8') as csvfile:
-            reader = csv.DictReader(csvfile)
-            for row in reader:
-                if row['reset_token'] == token:
-                    username = row['username']
-                    break
-    
-    if not username or not validate_reset_token(username, token):
+    if not user or not user.reset_expires or user.reset_expires < datetime.utcnow():
         flash('Token inválido ou expirado.', 'error')
         return redirect(url_for('reset_password_request'))
     
-    return render_template('reset_form.html', token=token, username=username)
+    if request.method == 'POST':
+        new_password = request.form.get('password', '')
+        confirm_password = request.form.get('confirm_password', '')
+        
+        if not new_password or len(new_password) < 6:
+            flash('A senha deve ter pelo menos 6 caracteres.', 'error')
+            return render_template('reset_form.html', token=token, username=user.username)
+        
+        if new_password != confirm_password:
+            flash('As senhas não coincidem.', 'error')
+            return render_template('reset_form.html', token=token, username=user.username)
+        
+        # Atualiza senha e limpa token
+        user.password_hash = generate_password_hash(new_password)
+        user.reset_token = None
+        user.reset_expires = None
+        db.session.commit()
+        
+        flash('Senha redefinida com sucesso!', 'success')
+        return redirect(url_for('admin_login'))
+    
+    return render_template('reset_form.html', token=token, username=user.username)
 
 @app.route('/login', methods=['GET', 'POST'])
 @security_manager.limiter.limit("20 per minute")
