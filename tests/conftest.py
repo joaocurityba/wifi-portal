@@ -13,10 +13,16 @@ from unittest.mock import MagicMock, patch
 # Adiciona o diretório raiz ao path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+# IMPORTANTE: Configurar variáveis de ambiente ANTES de importar a aplicação
+os.environ['DATABASE_URL'] = 'sqlite:///:memory:'
+os.environ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+os.environ['RATELIMIT_ENABLED'] = 'false'
+os.environ['SECRET_KEY'] = 'test-secret-key-for-testing-only'
+
 # Mock do Redis ANTES de importar a aplicação
 sys.modules['redis'] = MagicMock()
 
-from app_simple import app, create_default_user
+from app_simple import app, create_default_user, db
 from app.security import security_manager
 from app.data_manager import data_manager
 
@@ -24,9 +30,14 @@ from app.data_manager import data_manager
 @pytest.fixture
 def client():
     """Fixture que fornece um cliente de teste Flask"""
+    # Configurações de teste
     app.config['TESTING'] = True
     app.config['WTF_CSRF_ENABLED'] = False  # Desabilita CSRF para testes que não precisam
     app.config['SECRET_KEY'] = 'test-secret-key-for-testing-only'
+    
+    # Usa SQLite em memória para testes (muito mais rápido que PostgreSQL)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
     # Desabilita rate limiting nos testes (não precisa de Redis)
     os.environ['RATELIMIT_ENABLED'] = 'false'
@@ -36,13 +47,21 @@ def client():
     app.config['CSV_FILE'] = os.path.join(test_data_dir, 'access_log.csv')
     
     # Reconfigura limiter para usar memória ao invés de Redis
-    from app.security import security_manager
     security_manager.limiter.enabled = False
     
     with app.test_client() as client:
         with app.app_context():
+            # Cria todas as tabelas no banco de teste
+            db.create_all()
+            
+            # Cria usuário admin padrão
             create_default_user()
+            
             yield client
+            
+            # Cleanup - remove tabelas
+            db.session.remove()
+            db.drop_all()
     
     # Cleanup - remove diretório temporário
     if os.path.exists(test_data_dir):
@@ -52,9 +71,14 @@ def client():
 @pytest.fixture
 def client_with_csrf():
     """Fixture que fornece um cliente de teste Flask COM CSRF habilitado"""
+    # Configurações de teste
     app.config['TESTING'] = True
     app.config['WTF_CSRF_ENABLED'] = True
     app.config['SECRET_KEY'] = 'test-secret-key-for-testing-only'
+    
+    # Usa SQLite em memória para testes
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
     # Desabilita rate limiting nos testes
     os.environ['RATELIMIT_ENABLED'] = 'false'
@@ -64,15 +88,23 @@ def client_with_csrf():
     app.config['CSV_FILE'] = os.path.join(test_data_dir, 'access_log.csv')
     
     # Desabilita limiter
-    from app.security import security_manager
     security_manager.limiter.enabled = False
     
     with app.test_client() as client:
         with app.app_context():
+            # Cria todas as tabelas no banco de teste
+            db.create_all()
+            
+            # Cria usuário admin padrão
             create_default_user()
+            
             yield client
+            
+            # Cleanup - remove tabelas
+            db.session.remove()
+            db.drop_all()
     
-    # Cleanup
+    # Cleanup - remove diretório temporário
     if os.path.exists(test_data_dir):
         shutil.rmtree(test_data_dir)
 

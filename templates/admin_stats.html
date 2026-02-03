@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estatísticas - Portal Cautivo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 1rem;
+        }
+        
+        .admin-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card.green {
+            background: linear-gradient(135deg, #667eea 0%, #2563eb 100%);
+        }
+        
+        .stat-card.blue {
+            background: linear-gradient(135deg, #36d1dc 0%, #5b86e5 100%);
+        }
+        
+        .stat-card.purple {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #1f2937;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .btn-back {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-back:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+        
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .chart-placeholder {
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            padding: 3rem;
+            text-align: center;
+            color: #64748b;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="admin-container">
+            <div class="admin-header">
+                <h1 class="admin-title">📊 Estatísticas Detalhadas</h1>
+                <a href="{{ url_for('admin') }}" class="btn-back">← Voltar</a>
+            </div>
+
+            {% if stats %}
+            <div class="stats-grid">
+                <div class="stat-card green">
+                    <div class="stat-number">{{ stats.get('total_accesses', 0) }}</div>
+                    <div class="stat-label">Total de Acessos</div>
+                </div>
+                
+                <div class="stat-card blue">
+                    <div class="stat-number">{{ stats.get('unique_ips', 0) }}</div>
+                    <div class="stat-label">IPs Únicos</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.get('unique_macs', 0) }}</div>
+                    <div class="stat-label">MACs Únicos</div>
+                </div>
+                
+                <div class="stat-card purple">
+                    <div class="stat-number">{{ stats.get('today_accesses', 0) }}</div>
+                    <div class="stat-label">Acessos Hoje</div>
+                </div>
+                
+                {% if stats.get('this_week_accesses') is not none %}
+                <div class="stat-card blue">
+                    <div class="stat-number">{{ stats.get('this_week_accesses', 0) }}</div>
+                    <div class="stat-label">Acessos esta Semana</div>
+                </div>
+                {% endif %}
+                
+                {% if stats.get('this_month_accesses') is not none %}
+                <div class="stat-card green">
+                    <div class="stat-number">{{ stats.get('this_month_accesses', 0) }}</div>
+                    <div class="stat-label">Acessos este Mês</div>
+                </div>
+                {% endif %}
+            </div>
+
+            <h2 class="section-title">Análise de Tendências</h2>
+            <div class="chart-placeholder">
+                <p>📈 Gráficos de tendências serão exibidos aqui</p>
+                <p style="font-size: 0.875rem; margin-top: 0.5rem;">Funcionalidade em desenvolvimento</p>
+            </div>
+
+            <h2 class="section-title">Dispositivos Mais Ativos</h2>
+            <div class="chart-placeholder">
+                <p>📱 Ranking de dispositivos será exibido aqui</p>
+                <p style="font-size: 0.875rem; margin-top: 0.5rem;">Funcionalidade em desenvolvimento</p>
+            </div>
+            
+            {% else %}
+            <div style="text-align: center; padding: 3rem; color: #6b7280;">
+                <p>Nenhuma estatística disponível no momento.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

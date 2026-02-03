@@ -34,40 +34,42 @@ def get_csrf_token(client, url='/login'):
 @pytest.mark.critical
 def test_user_data_saved_to_csv(client, sample_user_data, cleanup_data_files):
     """
-    CRÍTICO: Dados do usuário devem ser salvos no CSV
+    CRÍTICO: Dados do usuário devem ser salvos no banco de dados
     
+    NOTA: CSV está deprecated, agora usa PostgreSQL (ou SQLite em testes)
     Se falhar: Registros de acesso são perdidos
     """
     csrf_token = get_csrf_token(client, '/login')
     sample_user_data['csrf_token'] = csrf_token
+    
+    # Importa modelos para verificar banco
+    from app.models import AccessLog
+    
+    # Conta registros antes
+    initial_count = AccessLog.query.count()
     
     # Submete formulário
     response = client.post('/login', data=sample_user_data, follow_redirects=False)
     
     assert response.status_code == 302, "Deve processar dados com sucesso"
     
-    # Verifica que arquivo CSV foi criado
-    csv_file = client.application.config.get('CSV_FILE', 'data/access_log.csv')
-    
     # Aguarda um momento para I/O
     import time
     time.sleep(0.1)
     
-    assert os.path.exists(csv_file), "Arquivo CSV deve ser criado"
+    # Verifica que registro foi salvo no banco
+    final_count = AccessLog.query.count()
+    assert final_count > initial_count, "Deve criar registro no banco de dados"
     
-    # Lê CSV e verifica dados
-    with open(csv_file, 'r', encoding='utf-8') as f:
-        reader = csv.DictReader(f)
-        records = list(reader)
+    # Busca último registro
+    last_record = AccessLog.query.order_by(AccessLog.id.desc()).first()
     
-    assert len(records) > 0, "Deve haver pelo menos um registro"
-    
-    last_record = records[-1]
-    assert last_record['nome'] == sample_user_data['nome'], \
+    assert last_record is not None, "Deve haver pelo menos um registro"
+    assert last_record.nome == sample_user_data['nome'], \
         "Nome deve ser salvo corretamente"
-    assert last_record['email'] == sample_user_data['email'], \
+    assert last_record.email == sample_user_data['email'], \
         "Email deve ser salvo corretamente"
-    assert last_record['telefone'] == sample_user_data['telefone'], \
+    assert last_record.telefone == sample_user_data['telefone'], \
         "Telefone deve ser salvo corretamente"
 
 

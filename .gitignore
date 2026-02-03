@@ -10,6 +10,9 @@ CREDENTIALS.md
 *.pem
 *.crt
 
+# Documentation (old/archived)
+docs-old/
+
 # Backups
 /backups/
 *.sql
