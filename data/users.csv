@@ -1,2 +1,0 @@
-username,password_hash,email,created_at,reset_token,reset_expires
-admin,scrypt:32768:8:1$B8OlgW8G7xMJNK5x$30f660e497335d0663ed380df4e2ea27f99f6c3d2518a09bb61d2ae72f135e74d353395dd34ca18ccd4801dc1d41958b5c059eb24722fbf6d6ea4b831add0818,admin@prefeitura.com,2026-02-02T15:41:02.255241,,

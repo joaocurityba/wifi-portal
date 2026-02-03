@@ -5,29 +5,35 @@ Versão com segurança avançada e criptografia
 """
 
 import os
-import csv
 import smtplib
 import secrets
 import logging
 from datetime import datetime, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Flask, request, render_template, redirect, url_for, flash, session
+from flask_migrate import Migrate
 from dotenv import load_dotenv
 
 # Carrega variáveis de ambiente
 load_dotenv('.env.local')
 
+# Importa modelos SQLAlchemy
+from app.models import db, User, AccessLog
+
 # Importa módulos de segurança
 from app.security import security_manager, require_admin, rate_limit_admin, generate_csrf_token, validate_csrf_token, require_csrf_token
 from app.data_manager import data_manager
 
+# Importa utilitários
+from app.utils import ensure_directory
+
 # Configuração de logging avançado
-os.makedirs('data', exist_ok=True)
+ensure_directory('logs', mode=0o750)
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('data/security.log'),
+        logging.FileHandler('logs/security.log'),
         logging.StreamHandler()
     ]
 )
@@ -39,14 +45,27 @@ app = Flask(__name__)
 # Configurações a partir de variáveis de ambiente
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', secrets.token_urlsafe(64))
 app.config['DEBUG'] = os.getenv('DEBUG', 'False').lower() == 'true'
-app.config['CSV_FILE'] = os.getenv('CSV_FILE', 'data/access_log.csv')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://portal_user:portal_password_2026@localhost:5432/wifi_portal')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'pool_pre_ping': True,
+    'pool_recycle': 300,
+}
 app.config['MAX_LOGIN_ATTEMPTS'] = int(os.getenv('MAX_LOGIN_ATTEMPTS', '5'))
 app.config['SESSION_TIMEOUT'] = int(os.getenv('SESSION_TIMEOUT', '1800'))
 app.config['ALLOWED_HOSTS'] = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
+# Inicializa extensões
+db.init_app(app)
+migrate = Migrate(app, db)
+
 # Inicializa gerenciadores de segurança
 security_manager.init_app(app)
 data_manager.init_app(app)
+
+# Configura encriptação nos modelos
+from app.models import set_encryption_cipher
+set_encryption_cipher(security_manager.cipher_suite)
 
 def sanitize_input(text):
     """Sanitiza input para prevenir XSS"""
@@ -83,86 +102,52 @@ def validate_birth_date(birth_date):
         return False
 
 # Funções de gerenciamento de usuários
-def get_users_file():
-    """Retorna o caminho do arquivo de usuários"""
-    return 'data/users.csv'
-
 def create_default_user():
     """Cria usuário admin padrão se não existir"""
-    users_file = get_users_file()
-    os.makedirs(os.path.dirname(users_file), exist_ok=True)
-    
-    if not os.path.exists(users_file):
-        with open(users_file, 'w', newline='', encoding='utf-8') as csvfile:
-            fieldnames = ['username', 'password_hash', 'email', 'created_at', 'reset_token', 'reset_expires']
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writeheader()
-            
-            # Cria usuário admin padrão
-            default_user = {
-                'username': 'admin',
-                'password_hash': generate_password_hash('admin123'),
-                'email': 'admin@prefeitura.com',
-                'created_at': datetime.now().isoformat()
-            }
-            writer.writerow(default_user)
+    with app.app_context():
+        # Verifica se já existe algum usuário
+        if User.query.count() == 0:
+            default_user = User(
+                username='admin',
+                password_hash=generate_password_hash('admin123'),
+                email='admin@prefeitura.com',
+                created_at=datetime.utcnow()
+            )
+            db.session.add(default_user)
+            db.session.commit()
+            logger.info("Default admin user created")
 
 def get_user(username):
     """Obtém usuário pelo username"""
-    users_file = get_users_file()
-    if not os.path.exists(users_file):
-        return None
-    
-    with open(users_file, 'r', encoding='utf-8') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            if row['username'] == username:
-                return row
-    return None
+    return User.query.filter_by(username=username).first()
 
 def verify_password(username, password):
     """Verifica senha do usuário"""
     user = get_user(username)
-    if user and check_password_hash(user['password_hash'], password):
+    if user and check_password_hash(user.password_hash, password):
         return True
     return False
 
 def update_reset_token(username, token, expires):
     """Atualiza token de recuperação de senha"""
-    users_file = get_users_file()
-    users = []
-    
-    with open(users_file, 'r', encoding='utf-8') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            if row['username'] == username:
-                row['reset_token'] = token
-                row['reset_expires'] = expires.isoformat()
-            users.append(row)
-    
-    with open(users_file, 'w', newline='', encoding='utf-8') as csvfile:
-        fieldnames = ['username', 'password_hash', 'email', 'created_at', 'reset_token', 'reset_expires']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(users)
+    user = User.query.filter_by(username=username).first()
+    if user:
+        user.reset_token = token
+        user.reset_expires = expires
+        db.session.commit()
+        return True
+    return False
 
 def reset_password(username, new_password):
     """Redefine senha do usuário"""
-    users_file = get_users_file()
-    users = []
-    
-    with open(users_file, 'r', encoding='utf-8') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            if row['username'] == username:
-                row['password_hash'] = generate_password_hash(new_password)
-            users.append(row)
-    
-    with open(users_file, 'w', newline='', encoding='utf-8') as csvfile:
-        fieldnames = ['username', 'password_hash', 'email', 'created_at']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(users)
+    user = User.query.filter_by(username=username).first()
+    if user:
+        user.password_hash = generate_password_hash(new_password)
+        user.reset_token = None
+        user.reset_expires = None
+        db.session.commit()
+        return True
+    return False
 
 def validate_reset_token(username, token):
     """Valida token de recuperação de senha"""
@@ -170,12 +155,11 @@ def validate_reset_token(username, token):
     if not user:
         return False
     
-    if user['reset_token'] != token:
+    if user.reset_token != token:
         return False
     
-    if user['reset_expires']:
-        expires = datetime.fromisoformat(user['reset_expires'])
-        if datetime.now() > expires:
+    if user.reset_expires:
+        if datetime.utcnow() > user.reset_expires:
             return False
     
     return True
@@ -183,21 +167,13 @@ def validate_reset_token(username, token):
 # Funções de edição de perfil
 def update_user(username, data):
     """Atualiza dados do usuário (exceto senha)"""
-    users_file = get_users_file()
-    users = []
-    
-    with open(users_file, 'r', encoding='utf-8') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            if row['username'] == username:
-                row.update(data)
-            users.append(row)
-    
-    with open(users_file, 'w', newline='', encoding='utf-8') as csvfile:
-        fieldnames = ['username', 'password_hash', 'email', 'created_at', 'reset_token', 'reset_expires']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(users)
+    user = User.query.filter_by(username=username).first()
+    if user:
+        if 'email' in data:
+            user.email = data['email']
+        db.session.commit()
+        return True
+    return False
 
 def change_password(username, old_password, new_password):
     """Altera senha do usuário com validação da senha atual"""
@@ -206,7 +182,7 @@ def change_password(username, old_password, new_password):
         return False, "Usuário não encontrado"
     
     # Verifica se a senha atual está correta
-    if not check_password_hash(user['password_hash'], old_password):
+    if not check_password_hash(user.password_hash, old_password):
         return False, "Senha atual incorreta"
     
     # Valida nova senha
@@ -214,7 +190,8 @@ def change_password(username, old_password, new_password):
         return False, "A nova senha deve ter pelo menos 6 caracteres"
     
     # Atualiza senha
-    update_user(username, {'password_hash': generate_password_hash(new_password)})
+    user.password_hash = generate_password_hash(new_password)
+    db.session.commit()
     return True, "Senha alterada com sucesso"
 
 def validate_current_password(username, password):
@@ -277,21 +254,6 @@ Atenciosamente,
     except Exception as e:
         logger.error(f"Failed to send reset email: {e}")
         return False
-
-def log_access(data):
-    """Registra acesso no arquivo CSV"""
-    os.makedirs(os.path.dirname(app.config['CSV_FILE']), exist_ok=True)
-    
-    file_exists = os.path.isfile(app.config['CSV_FILE'])
-    
-    with open(app.config['CSV_FILE'], 'a', newline='', encoding='utf-8') as csvfile:
-        fieldnames = ['nome', 'telefone', 'ip', 'mac', 'user_agent', 'data', 'hora', 'email', 'data_nascimento']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        
-        if not file_exists:
-            writer.writeheader()
-        
-        writer.writerow(data)
 
 # Rotas de autenticação admin
 @app.route('/admin/login', methods=['GET', 'POST'])
@@ -498,10 +460,7 @@ def login():
         }
         
         try:
-            # Registra no CSV tradicional (para compatibilidade)
-            log_access(access_data)
-            
-            # Registra no sistema criptografado
+            # Registra no banco de dados PostgreSQL com criptografia
             data_manager.log_access_encrypted(access_data)
             
             security_manager.log_security_event('access_registered', {
@@ -632,10 +591,10 @@ def admin_profile():
         if errors:
             for error in errors:
                 flash(error, 'error')
-            return render_template('admin_profile.html', user=user)
+            return render_template('admin_profile.html', user=user.to_dict())
         
         # Atualiza email
-        if email != user['email']:
+        if email != user.email:
             update_user(username, {'email': email})
             flash('Email atualizado com sucesso!', 'success')
         
@@ -646,13 +605,20 @@ def admin_profile():
                 flash(message, 'success')
             else:
                 flash(message, 'error')
-                return render_template('admin_profile.html', user=user)
+                return render_template('admin_profile.html', user=user.to_dict())
         
         flash('Perfil atualizado com sucesso!', 'success')
         return redirect(url_for('admin_profile'))
     
-    return render_template('admin_profile.html', user=user)
+    return render_template('admin_profile.html', user=user.to_dict())
 
 if __name__ == '__main__':
-    os.makedirs('data', exist_ok=True)
+    with app.app_context():
+        # Cria tabelas se não existirem
+        db.create_all()
+        # Cria usuário admin padrão
+        create_default_user()
+    
+    ensure_directory('logs', mode=0o750)
+    ensure_directory('uploads', mode=0o750)
     app.run(host='0.0.0.0', debug=False)

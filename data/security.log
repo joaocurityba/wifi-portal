@@ -953,3 +953,18 @@ jinja2.exceptions.UndefinedError: 'csrf_token' is undefined
 2026-02-02 18:45:57,581 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-02T18:45:57.581782', 'event_type': 'access_registered', 'ip': '172.18.0.4', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'ip': '', 'mac': '', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Sa'}}
 2026-02-02 18:46:11,463 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-02T18:46:11.463721', 'event_type': 'unauthorized_admin_access', 'ip': '172.18.0.4', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'endpoint': 'admin', 'path': '/admin'}}
 2026-02-02 18:46:17,591 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-02T18:46:17.591328', 'event_type': 'admin_login_success', 'ip': '172.18.0.4', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'username': 'admin'}}
+2026-02-03 11:10:47,634 - app.security - INFO - Rate limiting configured with Redis
+2026-02-03 11:11:00,149 - app.security - INFO - Rate limiting configured with Redis
+2026-02-03 11:11:20,863 - app.security - INFO - Rate limiting configured with Redis
+2026-02-03 11:12:11,829 - app.security - INFO - Rate limiting configured with Redis
+2026-02-03 11:12:25,007 - app.security - INFO - Rate limiting configured with Redis
+2026-02-03 11:13:29,058 - app.security - INFO - Rate limiting configured with Redis
+2026-02-03 11:13:29,345 - __main__ - INFO - Default admin user created
+2026-02-03 11:13:29,363 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-03 11:13:29,363 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-03 11:13:45,010 - werkzeug - INFO - 127.0.0.1 - - [03/Feb/2026 11:13:45] "[32mGET /?id=eeb934a5-94d0-4206-928c-c6bc60c2daab&vscodeBrowserReqId=1770128024984 HTTP/1.1[0m" 302 -
+2026-02-03 11:13:45,084 - werkzeug - INFO - 127.0.0.1 - - [03/Feb/2026 11:13:45] "GET /login HTTP/1.1" 200 -
+2026-02-03 11:13:57,759 - werkzeug - INFO - 127.0.0.1 - - [03/Feb/2026 11:13:57] "GET /admin/login?id=eeb934a5-94d0-4206-928c-c6bc60c2daab&vscodeBrowserReqId=1770128037708 HTTP/1.1" 200 -
