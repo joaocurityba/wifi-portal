@@ -10,9 +10,6 @@ CREDENTIALS.md
 *.pem
 *.crt
 
-# Documentation (old/archived)
-docs-old/
-
 # Backups
 /backups/
 *.sql
@@ -107,7 +104,6 @@ backup_*/
 *.db
 *.sqlite
 *.sqlite3
-migrations/versions/
 
 # OS
 Thumbs.db
