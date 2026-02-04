@@ -13,11 +13,12 @@
     <div class="container">
         <div class="logo-section">
             <div class="logo">
-                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="32" cy="32" r="30" stroke="#2563eb" stroke-width="4"/>
-                    <path d="M16 32l8-8 16 16 8-8" stroke="#2563eb" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                    <circle cx="32" cy="32" r="8" fill="#2563eb"/>
-                </svg>
+                <img 
+                    src="{{ url_for('static', filename='images/logo.svg') }}" 
+                    alt="Logo Wi-Fi Público Municipal"
+                    width="160"
+                    height="auto"
+                >
             </div>
             <h1>Wi-Fi Público Municipal</h1>
             <p class="subtitle">Conexão segura e gratuita nas praças da cidade</p>
@@ -74,7 +75,7 @@
                     <label class="checkbox-label">
                         <input type="checkbox" id="termos" name="termos" required>
                         <span class="checkmark"></span>
-                        Li e aceito os <a href="{{ url_for('termos') }}" target="_blank">Termos de Uso</a> do Wi-Fi Público Municipal *
+                        Li e aceito os <a href="{{ url_for('termos') }}" target="_blank"> Termos de Uso </a> do Wi-Fi Público Municipal *
                     </label>
                     <span class="error-message" id="termos-error"></span>
                 </div>
