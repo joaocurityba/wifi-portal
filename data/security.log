@@ -3320,3 +3320,5 @@ with app.app_context(). See the documentation for more information.
 2026-02-03 20:59:30,877 - app.security - WARNING - SECURITY: csrf_validation_failed - {'timestamp': '2026-02-03T20:59:30.877359', 'event_type': 'csrf_validation_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'reset_password_form', 'method': 'POST'}}
 2026-02-03 20:59:31,392 - app_simple - INFO - Default admin user created
 2026-02-03 20:59:31,394 - app_simple - ERROR - SMTP credentials not configured
+2026-02-05 14:32:03,489 - app.security - INFO - Rate limiting configured with Redis
+2026-02-05 14:32:03,562 - app.models - INFO - Encryption cipher configured: True
