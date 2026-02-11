@@ -128,7 +128,7 @@ FAILED tests/test_encryption.py::test_encrypt_decrypt_data - AssertionError: ...
 - ✅ Menores de 13 anos são bloqueados
 - ✅ Termos de uso são obrigatórios
 - ✅ Email é validado
-- ✅ Telefone é validado
+- ✅ Nome e email são validados
 - ✅ Data de nascimento é validada
 
 **Se falhar:** Dados inválidos entram no sistema

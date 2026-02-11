@@ -69,8 +69,6 @@ def test_user_data_saved_to_csv(client, sample_user_data, cleanup_data_files):
         "Nome deve ser salvo corretamente"
     assert last_record.email == sample_user_data['email'], \
         "Email deve ser salvo corretamente"
-    assert last_record.telefone == sample_user_data['telefone'], \
-        "Telefone deve ser salvo corretamente"
 
 
 @pytest.mark.critical
@@ -121,8 +119,8 @@ def test_retrieve_saved_data(client, sample_user_data, cleanup_data_files):
         "Deve recuperar nome corretamente"
     assert last_log['email'] == sample_user_data['email'], \
         "Deve recuperar email corretamente"
-    assert last_log['telefone'] == sample_user_data['telefone'], \
-        "Deve recuperar telefone corretamente"
+    assert last_log['email'] == sample_user_data['email'], \
+        "Deve recuperar email corretamente"
 
 
 @pytest.mark.critical
@@ -137,8 +135,6 @@ def test_multiple_records_saved(client, cleanup_data_files):
         data = {
             'nome': f'Usuário {i}',
             'email': f'user{i}@test.com',
-            'telefone': f'1198765432{i}',
-            'data_nascimento': '1990-01-01',
             'ip': f'192.168.1.{i}',
             'mac': f'AA:BB:CC:DD:EE:F{i}'
         }
@@ -175,7 +171,7 @@ def test_data_integrity_after_save(client, sample_user_data, cleanup_data_files)
     # Compara campos principais
     assert recovered_data.get('nome') == original_data['nome']
     assert recovered_data.get('email') == original_data['email']
-    assert recovered_data.get('telefone') == original_data['telefone']
+    assert recovered_data.get('email') == original_data['email']
     assert recovered_data.get('ip') == original_data['ip']
     assert recovered_data.get('mac') == original_data['mac']
 
@@ -200,7 +196,6 @@ def test_csv_headers_created(client, sample_user_data, cleanup_data_files):
         
         # Verifica headers esperados
         assert 'nome' in first_line.lower()
-        assert 'telefone' in first_line.lower()
         assert 'email' in first_line.lower()
 
 
@@ -213,8 +208,6 @@ def test_mikrotik_params_saved(client, cleanup_data_files):
     response = client.post('/login', data={
         'nome': 'Teste MikroTik',
         'email': 'mikrotik@test.com',
-        'telefone': '11987654321',
-        'data_nascimento': '1990-01-01',
         'termos': 'on',
         'ip': '10.0.0.50',
         'mac': 'DE:AD:BE:EF:CA:FE',

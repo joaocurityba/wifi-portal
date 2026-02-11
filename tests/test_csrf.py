@@ -53,8 +53,6 @@ def test_post_without_csrf_token_blocked(client_with_csrf):
     response = client_with_csrf.post('/login', data={
         'nome': 'Teste',
         'email': 'test@test.com',
-        'telefone': '11987654321',
-        'data_nascimento': '1990-01-01',
         'termos': 'on'
         # Sem csrf_token
     }, follow_redirects=False)
@@ -76,8 +74,6 @@ def test_post_with_invalid_csrf_token_blocked(client_with_csrf):
     response = client_with_csrf.post('/login', data={
         'nome': 'Teste',
         'email': 'test@test.com',
-        'telefone': '11987654321',
-        'data_nascimento': '1990-01-01',
         'termos': 'on',
         'csrf_token': 'token_falso_12345'
     }, follow_redirects=False)
@@ -101,8 +97,6 @@ def test_post_with_valid_csrf_token_accepted(client_with_csrf):
     response = client_with_csrf.post('/login', data={
         'nome': 'Usuário Válido',
         'email': 'valido@test.com',
-        'telefone': '11987654321',
-        'data_nascimento': '1990-01-01',
         'termos': 'on',
         'ip': '192.168.1.100',
         'mac': 'AA:BB:CC:DD:EE:FF',

@@ -140,8 +140,6 @@ def sample_user_data():
     return {
         'nome': 'Usuário Teste',
         'email': 'usuario.teste@example.com',
-        'telefone': '(11) 98765-4321',
-        'data_nascimento': '1990-01-01',
         'termos': 'on',
         'ip': '192.168.88.100',
         'mac': 'AA:BB:CC:DD:EE:FF',

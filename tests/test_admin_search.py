@@ -86,26 +86,6 @@ def test_search_by_email(client, sample_user_data):
     assert 'usuario.teste' in results[0]['email'].lower()
 
 
-def test_search_by_telefone(client, sample_user_data):
-    """
-    Busca por telefone deve funcionar
-    """
-    from app.data_manager import data_manager
-    from app.models import AccessLog
-    
-    # Limpa dados
-    AccessLog.query.delete()
-    
-    # Registra acesso
-    data_manager.log_access_encrypted(sample_user_data)
-    
-    # Busca
-    results = data_manager.search_access_logs('98765', 'telefone')
-    
-    assert len(results) > 0
-    assert '98765' in results[0]['telefone']
-
-
 def test_search_by_ip(client, sample_user_data):
     """
     Busca por IP deve ser rápida (campo não criptografado)
@@ -184,16 +164,14 @@ def test_search_empty_term():
     assert isinstance(results, list)
 
 
-def test_search_no_results():
+def test_search_no_results(client):
     """
     Busca sem resultados deve retornar lista vazia
     """
     from app.data_manager import data_manager
     from app.models import AccessLog
-    
     # Limpa dados
     AccessLog.query.delete()
-    
     results = data_manager.search_access_logs('termo_inexistente_12345', 'nome')
     
     assert isinstance(results, list)
@@ -214,8 +192,8 @@ def test_search_case_insensitive(client, sample_user_data):
     data_manager.log_access_encrypted(sample_user_data)
     
     # Busca com case diferente
-    results_lower = data_manager.search_access_logs('usuario', 'nome')
-    results_upper = data_manager.search_access_logs('USUARIO', 'nome')
+    results_lower = data_manager.search_access_logs('usuário', 'nome')
+    results_upper = data_manager.search_access_logs('USUÁRIO', 'nome')
     
     assert len(results_lower) > 0
     assert len(results_upper) > 0

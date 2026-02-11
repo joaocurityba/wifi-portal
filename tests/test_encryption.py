@@ -93,8 +93,6 @@ def test_encrypted_data_saved_to_file(client, sample_user_data, cleanup_data_fil
                 "Nome deve estar criptografado no arquivo"
             assert last_record['email'] != sample_user_data['email'], \
                 "Email deve estar criptografado no arquivo"
-            assert last_record['telefone'] != sample_user_data['telefone'], \
-                "Telefone deve estar criptografado no arquivo"
             
             # Verifica que dados estão em formato base64 (criptografados)
             assert len(last_record['nome']) > len(sample_user_data['nome']), \
@@ -123,8 +121,6 @@ def test_decrypt_encrypted_data_from_file(client, sample_user_data, cleanup_data
         "Nome deve ser descriptografado corretamente"
     assert last_log['email'] == sample_user_data['email'], \
         "Email deve ser descriptografado corretamente"
-    assert last_log['telefone'] == sample_user_data['telefone'], \
-        "Telefone deve ser descriptografado corretamente"
 
 
 @pytest.mark.security
@@ -149,8 +145,7 @@ def test_encrypt_multiple_fields():
     """
     fields = {
         'nome': 'João Silva',
-        'email': 'joao@email.com',
-        'telefone': '11987654321'
+        'email': 'joao@email.com'
     }
     
     encrypted_fields = {

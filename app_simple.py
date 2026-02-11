@@ -309,6 +309,7 @@ def admin_logout():
 @require_csrf_token
 def reset_password_request():
     """Solicitação de recuperação de senha"""
+    csrf_token = generate_csrf_token()
     if request.method == 'POST':
         email = request.form.get('email', '').strip()
         
@@ -331,7 +332,7 @@ def reset_password_request():
         # Mensagem genérica para não revelar se o email existe
         flash('Se o email estiver cadastrado, instruções foram enviadas.', 'info')
     
-    return render_template('reset_password.html')
+    return render_template('reset_password.html', csrf_token=csrf_token)
 
 @app.route('/admin/reset/<token>', methods=['GET', 'POST'])
 @require_csrf_token
@@ -343,6 +344,7 @@ def reset_password_form(token):
     if not user or not user.reset_expires or user.reset_expires < datetime.utcnow():
         flash('Token inválido ou expirado.', 'error')
         return redirect(url_for('reset_password_request'))
+    csrf_token = generate_csrf_token()
     
     if request.method == 'POST':
         new_password = request.form.get('password', '')
@@ -350,11 +352,11 @@ def reset_password_form(token):
         
         if not new_password or len(new_password) < 6:
             flash('A senha deve ter pelo menos 6 caracteres.', 'error')
-            return render_template('reset_form.html', token=token, username=user.username)
+            return render_template('reset_form.html', token=token, username=user.username, csrf_token=csrf_token)
         
         if new_password != confirm_password:
             flash('As senhas não coincidem.', 'error')
-            return render_template('reset_form.html', token=token, username=user.username)
+            return render_template('reset_form.html', token=token, username=user.username, csrf_token=csrf_token)
         
         # Atualiza senha e limpa token
         user.password_hash = generate_password_hash(new_password)
@@ -365,7 +367,7 @@ def reset_password_form(token):
         flash('Senha redefinida com sucesso!', 'success')
         return redirect(url_for('admin_login'))
     
-    return render_template('reset_form.html', token=token, username=user.username)
+    return render_template('reset_form.html', token=token, username=user.username, csrf_token=csrf_token)
 
 @app.route('/login', methods=['GET', 'POST'])
 @security_manager.limiter.limit("20 per minute")
@@ -381,8 +383,6 @@ def login():
     if request.method == 'POST':
         nome = security_manager.sanitize_input_advanced(request.form.get('nome', ''))
         email = security_manager.sanitize_input_advanced(request.form.get('email', ''))
-        data_nascimento = security_manager.sanitize_input_advanced(request.form.get('data_nascimento', ''))
-        telefone = security_manager.sanitize_input_advanced(request.form.get('telefone', ''))
         termos = request.form.get('termos', '')
 
         errors = []
@@ -399,27 +399,14 @@ def login():
         elif len(email) > 100:
             errors.append('O email deve ter no máximo 100 caracteres.')
 
-        if not data_nascimento:
-            errors.append('Por favor, informe sua data de nascimento.')
-        elif not validate_birth_date(data_nascimento):
-            errors.append('É necessário ter pelo menos 13 anos para utilizar o serviço.')
-
-        if not telefone:
-            errors.append('Por favor, informe seu telefone celular.')
-        elif not validate_phone(telefone):
-            errors.append('Por favor, informe um telefone válido.')
-        elif len(telefone) > 20:
-            errors.append('O telefone deve ter no máximo 20 caracteres.')
-
         if not termos:
             errors.append('É necessário aceitar os Termos de Uso para continuar.')
 
         # Validação anti-bot (verifica se o formulário foi preenchido rapidamente)
-        if len(nome) > 0 and len(email) > 0 and len(telefone) > 0:
+        if len(nome) > 0 and len(email) > 0:
             # Verifica se os campos não são preenchidos com valores padrão
             if nome.lower() in ['test', 'teste', 'admin', 'user'] or \
-               email.lower() in ['test@test.com', 'admin@admin.com'] or \
-               telefone in ['123456789', '987654321', '111111111']:
+               email.lower() in ['test@test.com', 'admin@admin.com']:
                 security_manager.log_security_event('suspicious_form_submission', {
                     'ip': ip,
                     'user_agent': request.headers.get('User-Agent', 'Unknown')
@@ -431,7 +418,7 @@ def login():
                 flash(error, 'error')
             return render_template('login.html', 
                                  ip=ip, mac=mac, link_orig=link_orig,
-                                 nome=nome, email=email, data_nascimento=data_nascimento, telefone=telefone)
+                                 nome=nome, email=email)
         
         user_agent = request.headers.get('User-Agent', 'Desconhecido')
         now = datetime.now()
@@ -440,14 +427,12 @@ def login():
         
         access_data = {
             'nome': nome,
-            'telefone': telefone,
             'ip': ip,
             'mac': mac,
             'user_agent': user_agent,
             'data': data,
             'hora': hora,
-            'email': email,
-            'data_nascimento': data_nascimento
+            'email': email
         }
         
         try:
@@ -465,7 +450,7 @@ def login():
             flash('Erro ao registrar acesso. Por favor, tente novamente.', 'error')
             return render_template('login.html', 
                                  ip=ip, mac=mac, link_orig=link_orig,
-                                 nome=nome, telefone=telefone)
+                                 nome=nome, email=email)
         
         redirect_url = 'https://www.patydoalferes.rj.gov.br'
         return redirect(redirect_url)
@@ -550,6 +535,7 @@ def admin_profile():
     if not user:
         flash('Usuário não encontrado.', 'error')
         return redirect(url_for('admin_login'))
+    csrf_token = generate_csrf_token()
     
     if request.method == 'POST':
         # Dados do formulário
@@ -582,7 +568,7 @@ def admin_profile():
         if errors:
             for error in errors:
                 flash(error, 'error')
-            return render_template('admin_profile.html', user=user.to_dict())
+            return render_template('admin_profile.html', user=user.to_dict(), csrf_token=csrf_token)
         
         # Atualiza email
         if email != user.email:
@@ -596,12 +582,12 @@ def admin_profile():
                 flash(message, 'success')
             else:
                 flash(message, 'error')
-                return render_template('admin_profile.html', user=user.to_dict())
+                return render_template('admin_profile.html', user=user.to_dict(), csrf_token=csrf_token)
         
         flash('Perfil atualizado com sucesso!', 'success')
         return redirect(url_for('admin_profile'))
     
-    return render_template('admin_profile.html', user=user.to_dict())
+    return render_template('admin_profile.html', user=user.to_dict(), csrf_token=csrf_token)
 
 if __name__ == '__main__':
     with app.app_context():

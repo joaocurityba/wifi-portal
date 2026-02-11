@@ -50,8 +50,6 @@ class EncryptedDataManager:
             access_log = self.AccessLog(
                 nome=data.get('nome', ''),
                 email=data.get('email', ''),
-                telefone=data.get('telefone', ''),
-                data_nascimento=data.get('data_nascimento', ''),
                 ip=ip,
                 ip_hash=self.AccessLog.hash_value(ip) if ip else None,
                 mac=mac if mac else None,
@@ -113,7 +111,7 @@ class EncryptedDataManager:
                 
                 return [log.to_dict(decrypt=True) for log in logs]
             
-            # Para campos encriptados (nome, email, telefone, data_nascimento),
+            # Para campos encriptados (nome, email),
             # precisa carregar todos e filtrar em memória
             all_logs = self.get_access_logs(limit=10000)
             results = []

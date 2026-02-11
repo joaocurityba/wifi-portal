@@ -61,16 +61,14 @@ def test_get_user_stats_function():
     assert 'unique_macs' in stats
 
 
-def test_stats_with_no_data():
+def test_stats_with_no_data(client):
     """
     Estatísticas com banco vazio devem retornar zeros
     """
     from app.data_manager import data_manager
     from app.models import AccessLog
-    
     # Limpa dados (se houver)
     AccessLog.query.delete()
-    
     stats = data_manager.get_user_stats()
     
     assert stats['total_accesses'] == 0

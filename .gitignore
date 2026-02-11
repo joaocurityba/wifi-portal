@@ -1,5 +1,6 @@
 # Environment variables and secrets
 .env.local
+.env.local.dev
 .env
 .env*.local
 .env.prod

@@ -191,7 +191,6 @@
                         <select id="search_field" name="search_field">
                             <option value="nome" {% if search_field == 'nome' %}selected{% endif %}>Nome</option>
                             <option value="email" {% if search_field == 'email' %}selected{% endif %}>Email</option>
-                            <option value="telefone" {% if search_field == 'telefone' %}selected{% endif %}>Telefone</option>
                             <option value="ip" {% if search_field == 'ip' %}selected{% endif %}>IP</option>
                             <option value="mac" {% if search_field == 'mac' %}selected{% endif %}>MAC Address</option>
                             <option value="user_agent" {% if search_field == 'user_agent' %}selected{% endif %}>User Agent</option>
@@ -220,7 +219,6 @@
                                 <th>Data/Hora</th>
                                 <th>Nome</th>
                                 <th>Email</th>
-                                <th>Telefone</th>
                                 <th>IP</th>
                                 <th>MAC</th>
                             </tr>
@@ -231,7 +229,6 @@
                                 <td>{{ registro.timestamp.strftime('%d/%m/%Y %H:%M') if registro.timestamp else 'N/A' }}</td>
                                 <td>{{ registro.nome or 'N/A' }}</td>
                                 <td>{{ registro.email or 'N/A' }}</td>
-                                <td>{{ registro.telefone or 'N/A' }}</td>
                                 <td>{{ registro.ip or 'N/A' }}</td>
                                 <td>{{ registro.mac or 'N/A' }}</td>
                             </tr>

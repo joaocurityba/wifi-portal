@@ -101,8 +101,6 @@ class AccessLog(db.Model):
     # Encrypted sensitive fields
     nome = db.Column(EncryptedString(500), nullable=False)  # Will be encrypted
     email = db.Column(EncryptedString(500), nullable=False)  # Will be encrypted
-    telefone = db.Column(EncryptedString(500), nullable=False)  # Will be encrypted
-    data_nascimento = db.Column(EncryptedString(500), nullable=False)  # Will be encrypted (date as string)
     
     # Non-encrypted fields
     ip = db.Column(String(45), nullable=True, default='0.0.0.0')  # IPv4 or IPv6
@@ -133,8 +131,6 @@ class AccessLog(db.Model):
         return {
             'nome': self.nome if decrypt else '[encrypted]',
             'email': self.email if decrypt else '[encrypted]',
-            'telefone': self.telefone if decrypt else '[encrypted]',
-            'data_nascimento': self.data_nascimento if decrypt else '[encrypted]',
             'ip': self.ip,
             'ip_hash': self.ip_hash,
             'mac': self.mac,
