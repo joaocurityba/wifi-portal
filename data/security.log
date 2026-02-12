@@ -4205,3 +4205,27 @@ with app.app_context(). See the documentation for more information.
 2026-02-12 11:22:24,780 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 11:22:24] "[32mGET /admin/logout HTTP/1.1[0m" 302 -
 2026-02-12 11:22:24,839 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 11:22:24] "GET /admin/login HTTP/1.1" 200 -
 2026-02-12 11:22:25,037 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 11:22:25] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 11:45:49,558 - app.security - INFO - Rate limiting configured with Redis
+2026-02-12 11:45:49,646 - app.models - INFO - Encryption cipher configured: True
+2026-02-12 11:45:49,721 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-12 11:45:49,722 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-12 11:46:00,522 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 11:46:00] "GET /login HTTP/1.1" 200 -
+2026-02-12 11:46:00,670 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 11:46:00] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 11:46:00,671 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 11:46:00] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-12 11:46:00,848 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 11:46:00] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-02-12 11:46:00,983 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 11:46:00] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-12 11:46:01,316 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 11:46:01] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-02-12 11:47:11,696 - app.security - INFO - Rate limiting configured with Redis
+2026-02-12 11:47:11,755 - app.models - INFO - Encryption cipher configured: True
+2026-02-12 11:47:11,784 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-12 11:47:11,784 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-12 11:47:14,916 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 11:47:14] "GET /login HTTP/1.1" 200 -
+2026-02-12 11:47:14,978 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 11:47:14] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 11:47:15,137 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 11:47:15] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-12 11:47:15,235 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 11:47:15] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
