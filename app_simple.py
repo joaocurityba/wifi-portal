@@ -15,7 +15,7 @@ from flask_migrate import Migrate
 from dotenv import load_dotenv
 
 # Carrega variáveis de ambiente
-load_dotenv('.env.local.dev')
+load_dotenv('.env.local')
 
 # Importa modelos SQLAlchemy
 from app.models import db, User, AccessLog

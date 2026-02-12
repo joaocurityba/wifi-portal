@@ -4344,3 +4344,1053 @@ with app.app_context(). See the documentation for more information.
 2026-02-12 17:26:37,286 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:26:37] "[32mGET /admin/logout HTTP/1.1[0m" 302 -
 2026-02-12 17:26:37,294 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:26:37] "GET /admin/login HTTP/1.1" 200 -
 2026-02-12 17:26:37,305 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:26:37] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:30:45,973 - app.security - INFO - Rate limiting configured with Redis
+2026-02-12 17:30:46,029 - app.models - INFO - Encryption cipher configured: True
+2026-02-12 17:30:46,357 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:46,504 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:46,638 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:46,772 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:46,920 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:47,173 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:47,444 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:47,631 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:48,272 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:48,785 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:49,166 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:49,596 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:49,865 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:50,123 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:50,123 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-12T17:30:50.123411', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin_search', 'path': '/admin/search'}}
+2026-02-12 17:30:50,257 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:50,393 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:50,399 - app.data_manager - INFO - Acesso registrado: 20260212203050_57aad89f05b06e4e
+2026-02-12 17:30:50,528 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:50,528 - app.data_manager - INFO - Acesso registrado: 20260212203050_f97f7edbf4f8ebf1
+2026-02-12 17:30:50,660 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:50,660 - app.data_manager - INFO - Acesso registrado: 20260212203050_50a3bf1f5e91d203
+2026-02-12 17:30:50,789 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:50,789 - app.data_manager - INFO - Acesso registrado: 20260212203050_aff1c880de1e7d61
+2026-02-12 17:30:50,920 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:50,922 - app.data_manager - INFO - Acesso registrado: 20260212203050_72a388387fbc6709
+2026-02-12 17:30:50,927 - app.data_manager - ERROR - Erro ao ler logs de acesso: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2026-02-12 17:30:51,051 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:51,178 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:51,180 - app.data_manager - INFO - Acesso registrado: 20260212203051_e69b70f7e7d7f5e1
+2026-02-12 17:30:51,308 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:51,310 - app.data_manager - INFO - Acesso registrado: 20260212203051_6e5250df41958e9f
+2026-02-12 17:30:51,435 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:51,438 - app.data_manager - INFO - Acesso registrado: 20260212203051_7a144d97c579cbe6
+2026-02-12 17:30:51,439 - app.data_manager - INFO - Acesso registrado: 20260212203051_c026e9a9898a3674
+2026-02-12 17:30:51,440 - app.data_manager - INFO - Acesso registrado: 20260212203051_135ab665892120c8
+2026-02-12 17:30:51,567 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:51,569 - app.data_manager - INFO - Acesso registrado: 20260212203051_aff51f55ca330a05
+2026-02-12 17:30:51,696 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:51,697 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-12T17:30:51.697754', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-02-12 17:30:51,823 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:51,949 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-12T17:30:51.948267', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin'}}
+2026-02-12 17:30:52,078 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:52,200 - app.security - WARNING - SECURITY: admin_login_failed - {'timestamp': '2026-02-12T17:30:52.200753', 'event_type': 'admin_login_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin', 'ip': '127.0.0.1'}}
+2026-02-12 17:30:52,329 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:52,449 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-12T17:30:52.449544', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin'}}
+2026-02-12 17:30:52,578 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:52,710 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:52,838 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:52,838 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-12T17:30:52.838582', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin_search', 'path': '/admin/search'}}
+2026-02-12 17:30:52,965 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:52,970 - app.security - WARNING - SECURITY: weak_password_attempt - {'timestamp': '2026-02-12T17:30:52.969518', 'event_type': 'weak_password_attempt', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': '', 'password_length': 0}}
+2026-02-12 17:30:52,970 - app.security - WARNING - SECURITY: admin_login_failed - {'timestamp': '2026-02-12T17:30:52.970872', 'event_type': 'admin_login_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': '', 'ip': '127.0.0.1'}}
+2026-02-12 17:30:53,097 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:53,098 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-12T17:30:53.098436', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin_stats', 'path': '/admin/stats'}}
+2026-02-12 17:30:53,225 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:53,237 - app.data_manager - ERROR - Erro ao gerar estatísticas: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2026-02-12 17:30:53,364 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:53,492 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:53,494 - app.data_manager - INFO - Acesso registrado: 20260212203053_60e0bbc06fd53d40
+2026-02-12 17:30:53,495 - app.data_manager - INFO - Acesso registrado: 20260212203053_31d63d0a04a2cc8a
+2026-02-12 17:30:53,496 - app.data_manager - INFO - Acesso registrado: 20260212203053_2f42fedf827a1a7b
+2026-02-12 17:30:53,497 - app.data_manager - INFO - Acesso registrado: 20260212203053_263a4bd57c460b5a
+2026-02-12 17:30:53,498 - app.data_manager - INFO - Acesso registrado: 20260212203053_a923e0f68c5a68cf
+2026-02-12 17:30:53,626 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:53,628 - app.data_manager - INFO - Acesso registrado: 20260212203053_a81851e6e2bcdec5
+2026-02-12 17:30:53,629 - app.data_manager - INFO - Acesso registrado: 20260212203053_a215820288dd6af8
+2026-02-12 17:30:53,630 - app.data_manager - INFO - Acesso registrado: 20260212203053_2f558e6a57ccba6b
+2026-02-12 17:30:53,756 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:53,756 - app.data_manager - INFO - Acesso registrado: 20260212203053_c8664848541aa7e5
+2026-02-12 17:30:53,756 - app.data_manager - INFO - Acesso registrado: 20260212203053_e44ab6dc88ceb81f
+2026-02-12 17:30:53,756 - app.data_manager - INFO - Acesso registrado: 20260212203053_7450dea207388174
+2026-02-12 17:30:53,889 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:53,891 - app.data_manager - INFO - Acesso registrado: 20260212203053_d72e04b59835fcbf
+2026-02-12 17:30:54,014 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:54,014 - app.data_manager - INFO - Acesso registrado: 20260212203054_1c6d997a8b42eb55
+2026-02-12 17:30:54,014 - app.data_manager - INFO - Acesso registrado: 20260212203054_f74848ff7d3015e4
+2026-02-12 17:30:54,022 - app.data_manager - INFO - Acesso registrado: 20260212203054_4f5d4d7a40111f4d
+2026-02-12 17:30:54,024 - app.data_manager - ERROR - Erro ao gerar estatísticas: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2026-02-12 17:30:54,149 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:54,149 - app.data_manager - INFO - Acesso registrado: 20260212203054_b83fc74be29f3182
+2026-02-12 17:30:54,149 - app.data_manager - INFO - Acesso registrado: 20260212203054_c5ee77783b2d419a
+2026-02-12 17:30:54,154 - app.data_manager - INFO - Acesso registrado: 20260212203054_17ca0b780593a10a
+2026-02-12 17:30:54,154 - app.data_manager - INFO - Acesso registrado: 20260212203054_3c0df737f5a53ca6
+2026-02-12 17:30:54,154 - app.data_manager - INFO - Acesso registrado: 20260212203054_e438c4dae453ebfb
+2026-02-12 17:30:54,154 - app.data_manager - INFO - Acesso registrado: 20260212203054_269d3552e09ae297
+2026-02-12 17:30:54,154 - app.data_manager - INFO - Acesso registrado: 20260212203054_3c473b2721a329c4
+2026-02-12 17:30:54,159 - app.data_manager - INFO - Acesso registrado: 20260212203054_39bf9c561885e83f
+2026-02-12 17:30:54,159 - app.data_manager - INFO - Acesso registrado: 20260212203054_e85884d01bf0fc99
+2026-02-12 17:30:54,159 - app.data_manager - INFO - Acesso registrado: 20260212203054_12691fa2d8227f36
+2026-02-12 17:30:54,159 - app.data_manager - INFO - Acesso registrado: 20260212203054_bb855c4d8385b190
+2026-02-12 17:30:54,159 - app.data_manager - INFO - Acesso registrado: 20260212203054_91ae3246d98b404e
+2026-02-12 17:30:54,159 - app.data_manager - INFO - Acesso registrado: 20260212203054_bb72836b14491b49
+2026-02-12 17:30:54,159 - app.data_manager - INFO - Acesso registrado: 20260212203054_7caf1b8f26c09d6a
+2026-02-12 17:30:54,159 - app.data_manager - INFO - Acesso registrado: 20260212203054_74052fda154791a5
+2026-02-12 17:30:54,159 - app.data_manager - INFO - Acesso registrado: 20260212203054_ce7a51f19a9e0d73
+2026-02-12 17:30:54,159 - app.data_manager - INFO - Acesso registrado: 20260212203054_baf00db68c8f1823
+2026-02-12 17:30:54,159 - app.data_manager - INFO - Acesso registrado: 20260212203054_fbb91899dd854034
+2026-02-12 17:30:54,170 - app.data_manager - INFO - Acesso registrado: 20260212203054_0718b1c13930bb7a
+2026-02-12 17:30:54,170 - app.data_manager - INFO - Acesso registrado: 20260212203054_fd01b7a3b73807e5
+2026-02-12 17:30:54,172 - app.data_manager - INFO - Acesso registrado: 20260212203054_30dc71b066232906
+2026-02-12 17:30:54,172 - app.data_manager - INFO - Acesso registrado: 20260212203054_079d37456e077b0b
+2026-02-12 17:30:54,172 - app.data_manager - INFO - Acesso registrado: 20260212203054_2ee576c3fc526c04
+2026-02-12 17:30:54,172 - app.data_manager - INFO - Acesso registrado: 20260212203054_4a924cf696967f90
+2026-02-12 17:30:54,172 - app.data_manager - INFO - Acesso registrado: 20260212203054_a1d9cdc7b9983f02
+2026-02-12 17:30:54,172 - app.data_manager - INFO - Acesso registrado: 20260212203054_034fbae6ae8f7cd3
+2026-02-12 17:30:54,172 - app.data_manager - INFO - Acesso registrado: 20260212203054_b14b11d74dded332
+2026-02-12 17:30:54,172 - app.data_manager - INFO - Acesso registrado: 20260212203054_dfa9457e36aba2b3
+2026-02-12 17:30:54,180 - app.data_manager - INFO - Acesso registrado: 20260212203054_20355006b3f9a95d
+2026-02-12 17:30:54,180 - app.data_manager - INFO - Acesso registrado: 20260212203054_efc6020b2d590a2b
+2026-02-12 17:30:54,180 - app.data_manager - INFO - Acesso registrado: 20260212203054_dadf26730d29891b
+2026-02-12 17:30:54,180 - app.data_manager - INFO - Acesso registrado: 20260212203054_724408652a46d74d
+2026-02-12 17:30:54,180 - app.data_manager - INFO - Acesso registrado: 20260212203054_951c3f6a742559d4
+2026-02-12 17:30:54,180 - app.data_manager - INFO - Acesso registrado: 20260212203054_5d50e4f0eb004c96
+2026-02-12 17:30:54,186 - app.data_manager - INFO - Acesso registrado: 20260212203054_096a6665ea3c37ee
+2026-02-12 17:30:54,186 - app.data_manager - INFO - Acesso registrado: 20260212203054_7515b59722ed7ac3
+2026-02-12 17:30:54,186 - app.data_manager - INFO - Acesso registrado: 20260212203054_6510801264e5a86f
+2026-02-12 17:30:54,186 - app.data_manager - INFO - Acesso registrado: 20260212203054_146d58e97f3679ff
+2026-02-12 17:30:54,186 - app.data_manager - INFO - Acesso registrado: 20260212203054_eef0220d355a50e6
+2026-02-12 17:30:54,190 - app.data_manager - INFO - Acesso registrado: 20260212203054_e4479d36855c54fd
+2026-02-12 17:30:54,190 - app.data_manager - INFO - Acesso registrado: 20260212203054_0236515f26f85712
+2026-02-12 17:30:54,190 - app.data_manager - INFO - Acesso registrado: 20260212203054_ea52747dcc5e47cb
+2026-02-12 17:30:54,194 - app.data_manager - INFO - Acesso registrado: 20260212203054_82228360627600d3
+2026-02-12 17:30:54,194 - app.data_manager - INFO - Acesso registrado: 20260212203054_566bb5cb143e60dd
+2026-02-12 17:30:54,196 - app.data_manager - INFO - Acesso registrado: 20260212203054_fb27f8217e25801b
+2026-02-12 17:30:54,197 - app.data_manager - INFO - Acesso registrado: 20260212203054_94181fdf190e39d2
+2026-02-12 17:30:54,198 - app.data_manager - INFO - Acesso registrado: 20260212203054_579d6ab216eedffb
+2026-02-12 17:30:54,199 - app.data_manager - INFO - Acesso registrado: 20260212203054_36447c10ad417c47
+2026-02-12 17:30:54,200 - app.data_manager - INFO - Acesso registrado: 20260212203054_235c27dd127f9eef
+2026-02-12 17:30:54,201 - app.data_manager - INFO - Acesso registrado: 20260212203054_15fb73f73ece77d0
+2026-02-12 17:30:54,332 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:54,465 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:54,466 - app.security - WARNING - SECURITY: csrf_token_invalid - {'timestamp': '2026-02-12T17:30:54.466775', 'event_type': 'csrf_token_invalid', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'session_token': False, 'form_token': False}}
+2026-02-12 17:30:54,466 - app.security - WARNING - SECURITY: csrf_validation_failed - {'timestamp': '2026-02-12T17:30:54.466775', 'event_type': 'csrf_validation_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'login', 'method': 'POST'}}
+2026-02-12 17:30:54,594 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:54,595 - app.security - WARNING - SECURITY: csrf_token_invalid - {'timestamp': '2026-02-12T17:30:54.595960', 'event_type': 'csrf_token_invalid', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'session_token': False, 'form_token': True}}
+2026-02-12 17:30:54,595 - app.security - WARNING - SECURITY: csrf_validation_failed - {'timestamp': '2026-02-12T17:30:54.595960', 'event_type': 'csrf_validation_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'login', 'method': 'POST'}}
+2026-02-12 17:30:54,722 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:54,728 - app.data_manager - INFO - Acesso registrado: 20260212203054_56dcd0f811fb0e46
+2026-02-12 17:30:54,728 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:30:54.728188', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.1.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:30:54,856 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:54,981 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:54,987 - app.security - WARNING - SECURITY: csrf_token_invalid - {'timestamp': '2026-02-12T17:30:54.987891', 'event_type': 'csrf_token_invalid', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'session_token': False, 'form_token': False}}
+2026-02-12 17:30:54,988 - app.security - WARNING - SECURITY: csrf_validation_failed - {'timestamp': '2026-02-12T17:30:54.988798', 'event_type': 'csrf_validation_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin_login', 'method': 'POST'}}
+2026-02-12 17:30:55,113 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:55,238 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-12T17:30:55.238188', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin'}}
+2026-02-12 17:30:55,367 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:55,495 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:55,505 - app.data_manager - INFO - Acesso registrado: 20260212203055_32844043394f9fa4
+2026-02-12 17:30:55,505 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:30:55.505491', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.88.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:30:55,784 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:55,792 - app.data_manager - INFO - Acesso registrado: 20260212203055_927125c05157c51d
+2026-02-12 17:30:55,792 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:30:55.792906', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.88.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:30:56,062 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:56,064 - app.data_manager - INFO - Acesso registrado: 20260212203056_4967d204d3e33a10
+2026-02-12 17:30:56,201 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:56,203 - app.data_manager - INFO - Acesso registrado: 20260212203056_5c77bf7f0f4a6c7a
+2026-02-12 17:30:56,203 - app.data_manager - INFO - Acesso registrado: 20260212203056_1c9e774c35beff7f
+2026-02-12 17:30:56,203 - app.data_manager - INFO - Acesso registrado: 20260212203056_6d49139affc03724
+2026-02-12 17:30:56,331 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:56,334 - app.data_manager - INFO - Acesso registrado: 20260212203056_14784b02c7f0819b
+2026-02-12 17:30:56,462 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:56,462 - app.data_manager - INFO - Acesso registrado: 20260212203056_d40940ef34b30ff0
+2026-02-12 17:30:56,462 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:30:56.462232', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.88.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:30:56,715 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:56,719 - app.data_manager - INFO - Acesso registrado: 20260212203056_8a309c6ce79d3fb7
+2026-02-12 17:30:56,719 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:30:56.719146', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '10.0.0.50', 'mac': 'DE:AD:BE:EF:CA:FE', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:30:56,956 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:56,956 - app.data_manager - INFO - Acesso registrado: 20260212203056_a1a9dc5d8ea9a3ef
+2026-02-12 17:30:57,090 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:57,092 - app.data_manager - INFO - Acesso registrado: 20260212203057_9db94260ccbf8c04
+2026-02-12 17:30:57,225 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:57,359 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:57,359 - app.security - WARNING - SECURITY: suspicious_form_submission - {'timestamp': '2026-02-12T17:30:57.359066', 'event_type': 'suspicious_form_submission', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:30:57,493 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:57,625 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:57,628 - app.security - WARNING - SECURITY: suspicious_form_submission - {'timestamp': '2026-02-12T17:30:57.628193', 'event_type': 'suspicious_form_submission', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:30:57,755 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:57,755 - app.data_manager - INFO - Acesso registrado: 20260212203057_9cc862f831f2bcaf
+2026-02-12 17:30:57,755 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:30:57.755075', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.88.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:30:57,888 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:58,020 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:58,155 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:58,278 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:58,415 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:58,551 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:58,672 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:58,811 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:59,184 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:59,434 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:59,688 - app_simple - INFO - Default admin user created
+2026-02-12 17:30:59,688 - app_simple - ERROR - Failed to send reset email: Working outside of request context.
+
+This typically means that you attempted to use functionality that needed
+an active HTTP request. Consult the documentation on testing for
+information about how to avoid this problem.
+2026-02-12 17:36:53,325 - app.security - INFO - Rate limiting configured with Redis
+2026-02-12 17:36:53,383 - app.models - INFO - Encryption cipher configured: True
+2026-02-12 17:36:53,637 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:53,774 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:53,913 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:54,038 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:54,171 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:54,423 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:54,670 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:54,803 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:55,394 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:55,756 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:56,119 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:56,476 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:56,730 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:56,979 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:56,979 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-12T17:36:56.979629', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin_search', 'path': '/admin/search'}}
+2026-02-12 17:36:57,108 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:57,238 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:57,247 - app.data_manager - INFO - Acesso registrado: 20260212203657_64eef5703d008379
+2026-02-12 17:36:57,371 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:57,371 - app.data_manager - INFO - Acesso registrado: 20260212203657_97ebbecd65b4cb58
+2026-02-12 17:36:57,494 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:57,504 - app.data_manager - INFO - Acesso registrado: 20260212203657_37929aea1cd2fa2a
+2026-02-12 17:36:57,629 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:57,629 - app.data_manager - INFO - Acesso registrado: 20260212203657_d1859a4ce24ee190
+2026-02-12 17:36:57,758 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:57,758 - app.data_manager - INFO - Acesso registrado: 20260212203657_9f2ee82650bdc837
+2026-02-12 17:36:57,763 - app.data_manager - ERROR - Erro ao ler logs de acesso: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2026-02-12 17:36:57,886 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:58,017 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:58,018 - app.data_manager - INFO - Acesso registrado: 20260212203658_5f5c60afa22a599c
+2026-02-12 17:36:58,143 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:58,143 - app.data_manager - INFO - Acesso registrado: 20260212203658_01a26d27d5d643dd
+2026-02-12 17:36:58,273 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:58,273 - app.data_manager - INFO - Acesso registrado: 20260212203658_dd17d34418a89b01
+2026-02-12 17:36:58,277 - app.data_manager - INFO - Acesso registrado: 20260212203658_537b842cdf034f2d
+2026-02-12 17:36:58,278 - app.data_manager - INFO - Acesso registrado: 20260212203658_a5265edd814cc9b9
+2026-02-12 17:36:58,403 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:58,403 - app.data_manager - INFO - Acesso registrado: 20260212203658_1a1b6e9290874857
+2026-02-12 17:36:58,532 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:58,534 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-12T17:36:58.534450', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-02-12 17:36:58,653 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:58,785 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-12T17:36:58.785150', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin'}}
+2026-02-12 17:36:58,909 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:59,035 - app.security - WARNING - SECURITY: admin_login_failed - {'timestamp': '2026-02-12T17:36:59.035054', 'event_type': 'admin_login_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin', 'ip': '127.0.0.1'}}
+2026-02-12 17:36:59,156 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:59,280 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-12T17:36:59.280451', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin'}}
+2026-02-12 17:36:59,404 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:59,544 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:59,670 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:59,670 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-12T17:36:59.670888', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin_search', 'path': '/admin/search'}}
+2026-02-12 17:36:59,797 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:59,797 - app.security - WARNING - SECURITY: weak_password_attempt - {'timestamp': '2026-02-12T17:36:59.797337', 'event_type': 'weak_password_attempt', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': '', 'password_length': 0}}
+2026-02-12 17:36:59,797 - app.security - WARNING - SECURITY: admin_login_failed - {'timestamp': '2026-02-12T17:36:59.797337', 'event_type': 'admin_login_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': '', 'ip': '127.0.0.1'}}
+2026-02-12 17:36:59,927 - app_simple - INFO - Default admin user created
+2026-02-12 17:36:59,927 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-12T17:36:59.927778', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin_stats', 'path': '/admin/stats'}}
+2026-02-12 17:37:00,053 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:00,057 - app.data_manager - ERROR - Erro ao gerar estatísticas: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2026-02-12 17:37:00,189 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:00,317 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:00,319 - app.data_manager - INFO - Acesso registrado: 20260212203700_74bfa897a1f063f6
+2026-02-12 17:37:00,320 - app.data_manager - INFO - Acesso registrado: 20260212203700_f4322e6ae8eb0ab0
+2026-02-12 17:37:00,321 - app.data_manager - INFO - Acesso registrado: 20260212203700_1f5bb5a645d256ab
+2026-02-12 17:37:00,321 - app.data_manager - INFO - Acesso registrado: 20260212203700_203dc0b0700eb093
+2026-02-12 17:37:00,321 - app.data_manager - INFO - Acesso registrado: 20260212203700_75601d49e0fdb925
+2026-02-12 17:37:00,449 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:00,449 - app.data_manager - INFO - Acesso registrado: 20260212203700_9151f67b45362ca9
+2026-02-12 17:37:00,453 - app.data_manager - INFO - Acesso registrado: 20260212203700_ef55c75206909749
+2026-02-12 17:37:00,453 - app.data_manager - INFO - Acesso registrado: 20260212203700_434370bf21c76131
+2026-02-12 17:37:00,572 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:00,583 - app.data_manager - INFO - Acesso registrado: 20260212203700_92826d2677a63e4a
+2026-02-12 17:37:00,583 - app.data_manager - INFO - Acesso registrado: 20260212203700_e09ae4c7eb854783
+2026-02-12 17:37:00,583 - app.data_manager - INFO - Acesso registrado: 20260212203700_f0057cbfb35fc1a1
+2026-02-12 17:37:00,720 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:00,720 - app.data_manager - INFO - Acesso registrado: 20260212203700_6160349551266ed9
+2026-02-12 17:37:00,853 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:00,853 - app.data_manager - INFO - Acesso registrado: 20260212203700_4cff601aef4a87a2
+2026-02-12 17:37:00,856 - app.data_manager - INFO - Acesso registrado: 20260212203700_53a8e9fe6ffbc495
+2026-02-12 17:37:00,856 - app.data_manager - INFO - Acesso registrado: 20260212203700_d958d13b18a46745
+2026-02-12 17:37:00,859 - app.data_manager - ERROR - Erro ao gerar estatísticas: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2026-02-12 17:37:00,983 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:00,987 - app.data_manager - INFO - Acesso registrado: 20260212203700_4973621419faada8
+2026-02-12 17:37:00,988 - app.data_manager - INFO - Acesso registrado: 20260212203700_4364cafe658a6688
+2026-02-12 17:37:00,988 - app.data_manager - INFO - Acesso registrado: 20260212203700_ecbb21bfa3c78c76
+2026-02-12 17:37:00,991 - app.data_manager - INFO - Acesso registrado: 20260212203700_a8b00134fa72b6ff
+2026-02-12 17:37:00,991 - app.data_manager - INFO - Acesso registrado: 20260212203700_b31c237a13b06b31
+2026-02-12 17:37:00,993 - app.data_manager - INFO - Acesso registrado: 20260212203700_ea4f6a724e17d577
+2026-02-12 17:37:00,993 - app.data_manager - INFO - Acesso registrado: 20260212203700_70a3cfb701b08af3
+2026-02-12 17:37:00,993 - app.data_manager - INFO - Acesso registrado: 20260212203700_2815dce8c0a4e2e7
+2026-02-12 17:37:00,993 - app.data_manager - INFO - Acesso registrado: 20260212203700_d3479d1ee3f8d487
+2026-02-12 17:37:00,993 - app.data_manager - INFO - Acesso registrado: 20260212203700_4055d86fdf3559b3
+2026-02-12 17:37:00,993 - app.data_manager - INFO - Acesso registrado: 20260212203700_df931adf29785994
+2026-02-12 17:37:00,993 - app.data_manager - INFO - Acesso registrado: 20260212203700_b2768ce55144056e
+2026-02-12 17:37:00,993 - app.data_manager - INFO - Acesso registrado: 20260212203700_0d63256c7da053df
+2026-02-12 17:37:00,993 - app.data_manager - INFO - Acesso registrado: 20260212203700_0801200711c42c5b
+2026-02-12 17:37:00,993 - app.data_manager - INFO - Acesso registrado: 20260212203700_e8712d2431bd1646
+2026-02-12 17:37:01,003 - app.data_manager - INFO - Acesso registrado: 20260212203700_f1c33c37882f7e21
+2026-02-12 17:37:01,004 - app.data_manager - INFO - Acesso registrado: 20260212203701_be817defdcac23e4
+2026-02-12 17:37:01,004 - app.data_manager - INFO - Acesso registrado: 20260212203701_f226e979513106ff
+2026-02-12 17:37:01,004 - app.data_manager - INFO - Acesso registrado: 20260212203701_0cb327be7dfff40e
+2026-02-12 17:37:01,004 - app.data_manager - INFO - Acesso registrado: 20260212203701_ebd6de20b29be07f
+2026-02-12 17:37:01,004 - app.data_manager - INFO - Acesso registrado: 20260212203701_ba912b69283a7db6
+2026-02-12 17:37:01,004 - app.data_manager - INFO - Acesso registrado: 20260212203701_b0e23753c9f10423
+2026-02-12 17:37:01,004 - app.data_manager - INFO - Acesso registrado: 20260212203701_3059287ec179d224
+2026-02-12 17:37:01,004 - app.data_manager - INFO - Acesso registrado: 20260212203701_2eef0bf4e8b6bbe4
+2026-02-12 17:37:01,004 - app.data_manager - INFO - Acesso registrado: 20260212203701_11315ce7acdae444
+2026-02-12 17:37:01,004 - app.data_manager - INFO - Acesso registrado: 20260212203701_851d19f1af2fe321
+2026-02-12 17:37:01,013 - app.data_manager - INFO - Acesso registrado: 20260212203701_76c0b517859a8378
+2026-02-12 17:37:01,013 - app.data_manager - INFO - Acesso registrado: 20260212203701_8816544e7ff04053
+2026-02-12 17:37:01,013 - app.data_manager - INFO - Acesso registrado: 20260212203701_cf25534b18d30cbe
+2026-02-12 17:37:01,013 - app.data_manager - INFO - Acesso registrado: 20260212203701_bf57a379a8bf38a0
+2026-02-12 17:37:01,013 - app.data_manager - INFO - Acesso registrado: 20260212203701_22ed702d428d014d
+2026-02-12 17:37:01,019 - app.data_manager - INFO - Acesso registrado: 20260212203701_21ff280a765b11c1
+2026-02-12 17:37:01,019 - app.data_manager - INFO - Acesso registrado: 20260212203701_f14d26fdf216b5a8
+2026-02-12 17:37:01,019 - app.data_manager - INFO - Acesso registrado: 20260212203701_1fead3d9cada77a3
+2026-02-12 17:37:01,019 - app.data_manager - INFO - Acesso registrado: 20260212203701_22da536fb8e198af
+2026-02-12 17:37:01,019 - app.data_manager - INFO - Acesso registrado: 20260212203701_f16f3e626dc77c41
+2026-02-12 17:37:01,024 - app.data_manager - INFO - Acesso registrado: 20260212203701_c23bdd7d90f7149c
+2026-02-12 17:37:01,024 - app.data_manager - INFO - Acesso registrado: 20260212203701_34b5914cdd509305
+2026-02-12 17:37:01,024 - app.data_manager - INFO - Acesso registrado: 20260212203701_c2bfaf2719030ae8
+2026-02-12 17:37:01,024 - app.data_manager - INFO - Acesso registrado: 20260212203701_edbb5003afde2286
+2026-02-12 17:37:01,024 - app.data_manager - INFO - Acesso registrado: 20260212203701_81e6748ca45b1719
+2026-02-12 17:37:01,024 - app.data_manager - INFO - Acesso registrado: 20260212203701_5f9e5a1dc1b5b507
+2026-02-12 17:37:01,024 - app.data_manager - INFO - Acesso registrado: 20260212203701_f2b0a246ae9fc389
+2026-02-12 17:37:01,024 - app.data_manager - INFO - Acesso registrado: 20260212203701_b5ebae1782724d60
+2026-02-12 17:37:01,024 - app.data_manager - INFO - Acesso registrado: 20260212203701_f52175a076f4bbc1
+2026-02-12 17:37:01,024 - app.data_manager - INFO - Acesso registrado: 20260212203701_da5f7de7cebc18f4
+2026-02-12 17:37:01,024 - app.data_manager - INFO - Acesso registrado: 20260212203701_83407c8a71e2a36f
+2026-02-12 17:37:01,035 - app.data_manager - INFO - Acesso registrado: 20260212203701_ebab5ef74565ba68
+2026-02-12 17:37:01,035 - app.data_manager - INFO - Acesso registrado: 20260212203701_9f9fa6ec6b41d812
+2026-02-12 17:37:01,035 - app.data_manager - INFO - Acesso registrado: 20260212203701_014d495ffa823dea
+2026-02-12 17:37:01,159 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:01,294 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:01,294 - app.security - WARNING - SECURITY: csrf_token_invalid - {'timestamp': '2026-02-12T17:37:01.294050', 'event_type': 'csrf_token_invalid', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'session_token': False, 'form_token': False}}
+2026-02-12 17:37:01,294 - app.security - WARNING - SECURITY: csrf_validation_failed - {'timestamp': '2026-02-12T17:37:01.294050', 'event_type': 'csrf_validation_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'login', 'method': 'POST'}}
+2026-02-12 17:37:01,419 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:01,419 - app.security - WARNING - SECURITY: csrf_token_invalid - {'timestamp': '2026-02-12T17:37:01.419949', 'event_type': 'csrf_token_invalid', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'session_token': False, 'form_token': True}}
+2026-02-12 17:37:01,419 - app.security - WARNING - SECURITY: csrf_validation_failed - {'timestamp': '2026-02-12T17:37:01.419949', 'event_type': 'csrf_validation_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'login', 'method': 'POST'}}
+2026-02-12 17:37:01,547 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:01,553 - app.data_manager - INFO - Acesso registrado: 20260212203701_c8084c2146e7ee13
+2026-02-12 17:37:01,553 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:37:01.553347', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.1.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:37:01,678 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:01,804 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:01,804 - app.security - WARNING - SECURITY: csrf_token_invalid - {'timestamp': '2026-02-12T17:37:01.804099', 'event_type': 'csrf_token_invalid', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'session_token': False, 'form_token': False}}
+2026-02-12 17:37:01,804 - app.security - WARNING - SECURITY: csrf_validation_failed - {'timestamp': '2026-02-12T17:37:01.804099', 'event_type': 'csrf_validation_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin_login', 'method': 'POST'}}
+2026-02-12 17:37:01,927 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:02,049 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-12T17:37:02.049455', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin'}}
+2026-02-12 17:37:02,171 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:02,308 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:02,313 - app.data_manager - INFO - Acesso registrado: 20260212203702_723ae3a5e1fa71a9
+2026-02-12 17:37:02,313 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:37:02.313476', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.88.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:37:02,545 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:02,545 - app.data_manager - INFO - Acesso registrado: 20260212203702_f22b1133df67eec8
+2026-02-12 17:37:02,545 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:37:02.545676', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.88.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:37:02,793 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:02,793 - app.data_manager - INFO - Acesso registrado: 20260212203702_75d2f9a66a23340b
+2026-02-12 17:37:02,924 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:02,924 - app.data_manager - INFO - Acesso registrado: 20260212203702_8be0f66201160c44
+2026-02-12 17:37:02,928 - app.data_manager - INFO - Acesso registrado: 20260212203702_97039b238cfa60dd
+2026-02-12 17:37:02,928 - app.data_manager - INFO - Acesso registrado: 20260212203702_9bcb2fd8222b23ef
+2026-02-12 17:37:03,053 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:03,053 - app.data_manager - INFO - Acesso registrado: 20260212203703_08a0e4cec1e38dc5
+2026-02-12 17:37:03,181 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:03,181 - app.data_manager - INFO - Acesso registrado: 20260212203703_80a248411130c98a
+2026-02-12 17:37:03,181 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:37:03.181590', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.88.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:37:03,413 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:03,414 - app.data_manager - INFO - Acesso registrado: 20260212203703_e62dc1f1e976b92d
+2026-02-12 17:37:03,414 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:37:03.414922', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '10.0.0.50', 'mac': 'DE:AD:BE:EF:CA:FE', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:37:03,669 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:03,676 - app.data_manager - INFO - Acesso registrado: 20260212203703_d3b272edb35ef3ff
+2026-02-12 17:37:03,809 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:03,811 - app.data_manager - INFO - Acesso registrado: 20260212203703_2cc0c663fdd27add
+2026-02-12 17:37:03,948 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:04,073 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:04,073 - app.security - WARNING - SECURITY: suspicious_form_submission - {'timestamp': '2026-02-12T17:37:04.073011', 'event_type': 'suspicious_form_submission', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:37:04,205 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:04,334 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:04,336 - app.security - WARNING - SECURITY: suspicious_form_submission - {'timestamp': '2026-02-12T17:37:04.336819', 'event_type': 'suspicious_form_submission', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:37:04,454 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:04,465 - app.data_manager - INFO - Acesso registrado: 20260212203704_c2d65ca1a9ba94c9
+2026-02-12 17:37:04,465 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:37:04.465336', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.88.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:37:04,591 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:04,720 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:04,851 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:04,983 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:05,113 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:05,241 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:05,374 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:05,503 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:05,865 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:06,111 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:06,360 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:06,360 - app_simple - ERROR - Failed to send reset email: Working outside of request context.
+
+This typically means that you attempted to use functionality that needed
+an active HTTP request. Consult the documentation on testing for
+information about how to avoid this problem.
+2026-02-12 17:37:53,136 - app.security - INFO - Rate limiting configured with Redis
+2026-02-12 17:37:53,188 - app.models - INFO - Encryption cipher configured: True
+2026-02-12 17:37:53,437 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:53,571 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:53,705 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:53,837 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:53,963 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:54,221 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:54,458 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:54,592 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:55,191 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:55,553 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:55,914 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:56,274 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:56,530 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:56,781 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:56,781 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-12T17:37:56.781033', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin_search', 'path': '/admin/search'}}
+2026-02-12 17:37:56,906 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:57,040 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:57,044 - app.data_manager - INFO - Acesso registrado: 20260212203757_8bcca89f0058a643
+2026-02-12 17:37:57,173 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:57,173 - app.data_manager - INFO - Acesso registrado: 20260212203757_753344557f4c777d
+2026-02-12 17:37:57,297 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:57,303 - app.data_manager - INFO - Acesso registrado: 20260212203757_b1f0bef35f408c39
+2026-02-12 17:37:57,420 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:57,430 - app.data_manager - INFO - Acesso registrado: 20260212203757_e7421fff3feecc8e
+2026-02-12 17:37:57,555 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:57,555 - app.data_manager - INFO - Acesso registrado: 20260212203757_03c1cb870d714806
+2026-02-12 17:37:57,565 - app.data_manager - ERROR - Erro ao ler logs de acesso: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2026-02-12 17:37:57,689 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:57,813 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:57,813 - app.data_manager - INFO - Acesso registrado: 20260212203757_7055b1fc8f7de7ae
+2026-02-12 17:37:57,944 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:57,944 - app.data_manager - INFO - Acesso registrado: 20260212203757_e7f85d5ac0dbcb9a
+2026-02-12 17:37:58,072 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:58,072 - app.data_manager - INFO - Acesso registrado: 20260212203758_0f16fecad44e40da
+2026-02-12 17:37:58,072 - app.data_manager - INFO - Acesso registrado: 20260212203758_683a1968784bc0c5
+2026-02-12 17:37:58,072 - app.data_manager - INFO - Acesso registrado: 20260212203758_4d15b81084924853
+2026-02-12 17:37:58,203 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:58,204 - app.data_manager - INFO - Acesso registrado: 20260212203758_25a16a038a950ba4
+2026-02-12 17:37:58,330 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:58,330 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-12T17:37:58.330476', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-02-12 17:37:58,455 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:58,582 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-12T17:37:58.582795', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin'}}
+2026-02-12 17:37:58,704 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:58,825 - app.security - WARNING - SECURITY: admin_login_failed - {'timestamp': '2026-02-12T17:37:58.825778', 'event_type': 'admin_login_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin', 'ip': '127.0.0.1'}}
+2026-02-12 17:37:58,960 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:59,073 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-12T17:37:59.073954', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin'}}
+2026-02-12 17:37:59,206 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:59,337 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:59,510 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:59,510 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-12T17:37:59.510143', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin_search', 'path': '/admin/search'}}
+2026-02-12 17:37:59,637 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:59,639 - app.security - WARNING - SECURITY: weak_password_attempt - {'timestamp': '2026-02-12T17:37:59.639125', 'event_type': 'weak_password_attempt', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': '', 'password_length': 0}}
+2026-02-12 17:37:59,639 - app.security - WARNING - SECURITY: admin_login_failed - {'timestamp': '2026-02-12T17:37:59.639125', 'event_type': 'admin_login_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': '', 'ip': '127.0.0.1'}}
+2026-02-12 17:37:59,763 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:59,769 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-12T17:37:59.769819', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin_stats', 'path': '/admin/stats'}}
+2026-02-12 17:37:59,895 - app_simple - INFO - Default admin user created
+2026-02-12 17:37:59,902 - app.data_manager - ERROR - Erro ao gerar estatísticas: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2026-02-12 17:38:00,032 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:00,156 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:00,156 - app.data_manager - INFO - Acesso registrado: 20260212203800_5f27e8625d98bdd5
+2026-02-12 17:38:00,156 - app.data_manager - INFO - Acesso registrado: 20260212203800_f1da52acd90bceee
+2026-02-12 17:38:00,156 - app.data_manager - INFO - Acesso registrado: 20260212203800_52f7ce0e54e9ed61
+2026-02-12 17:38:00,166 - app.data_manager - INFO - Acesso registrado: 20260212203800_5bef7dbc38811ddc
+2026-02-12 17:38:00,166 - app.data_manager - INFO - Acesso registrado: 20260212203800_342e287f88f0288c
+2026-02-12 17:38:00,290 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:00,290 - app.data_manager - INFO - Acesso registrado: 20260212203800_29acd1e680e490a2
+2026-02-12 17:38:00,290 - app.data_manager - INFO - Acesso registrado: 20260212203800_bd7a9d3449b0d5e3
+2026-02-12 17:38:00,296 - app.data_manager - INFO - Acesso registrado: 20260212203800_b7081901cda5b427
+2026-02-12 17:38:00,420 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:00,424 - app.data_manager - INFO - Acesso registrado: 20260212203800_e584be7f2e389034
+2026-02-12 17:38:00,424 - app.data_manager - INFO - Acesso registrado: 20260212203800_6e342405dbcfee22
+2026-02-12 17:38:00,424 - app.data_manager - INFO - Acesso registrado: 20260212203800_a711ace0fb0df7d2
+2026-02-12 17:38:00,553 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:00,553 - app.data_manager - INFO - Acesso registrado: 20260212203800_235e551ba030501a
+2026-02-12 17:38:00,681 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:00,683 - app.data_manager - INFO - Acesso registrado: 20260212203800_87252adb8c634be5
+2026-02-12 17:38:00,683 - app.data_manager - INFO - Acesso registrado: 20260212203800_fc69de394155e947
+2026-02-12 17:38:00,686 - app.data_manager - INFO - Acesso registrado: 20260212203800_4ed4074cbc7e3a48
+2026-02-12 17:38:00,686 - app.data_manager - ERROR - Erro ao gerar estatísticas: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2026-02-12 17:38:00,817 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:00,818 - app.data_manager - INFO - Acesso registrado: 20260212203800_2e9d4c1f3a589e96
+2026-02-12 17:38:00,819 - app.data_manager - INFO - Acesso registrado: 20260212203800_979b4f564974627d
+2026-02-12 17:38:00,820 - app.data_manager - INFO - Acesso registrado: 20260212203800_829b670d252f044c
+2026-02-12 17:38:00,821 - app.data_manager - INFO - Acesso registrado: 20260212203800_45d23c2afaccfb6d
+2026-02-12 17:38:00,821 - app.data_manager - INFO - Acesso registrado: 20260212203800_53acc9572218332c
+2026-02-12 17:38:00,821 - app.data_manager - INFO - Acesso registrado: 20260212203800_100431762fd37837
+2026-02-12 17:38:00,821 - app.data_manager - INFO - Acesso registrado: 20260212203800_1cbad0a13455e904
+2026-02-12 17:38:00,821 - app.data_manager - INFO - Acesso registrado: 20260212203800_99e44b8e9324ae5f
+2026-02-12 17:38:00,821 - app.data_manager - INFO - Acesso registrado: 20260212203800_1abfa4bd6129d54b
+2026-02-12 17:38:00,821 - app.data_manager - INFO - Acesso registrado: 20260212203800_1f0aed659af80ccb
+2026-02-12 17:38:00,828 - app.data_manager - INFO - Acesso registrado: 20260212203800_87027c1ba2c26072
+2026-02-12 17:38:00,828 - app.data_manager - INFO - Acesso registrado: 20260212203800_7ba7c38e1b61ad58
+2026-02-12 17:38:00,828 - app.data_manager - INFO - Acesso registrado: 20260212203800_f0b1330b00f6e61e
+2026-02-12 17:38:00,828 - app.data_manager - INFO - Acesso registrado: 20260212203800_3a6ffa00d8253bca
+2026-02-12 17:38:00,832 - app.data_manager - INFO - Acesso registrado: 20260212203800_82b90b60f4777180
+2026-02-12 17:38:00,832 - app.data_manager - INFO - Acesso registrado: 20260212203800_c4b63ef2fdf0b10f
+2026-02-12 17:38:00,832 - app.data_manager - INFO - Acesso registrado: 20260212203800_c9b43a174ba46aca
+2026-02-12 17:38:00,832 - app.data_manager - INFO - Acesso registrado: 20260212203800_ff1134f71cb65dcf
+2026-02-12 17:38:00,832 - app.data_manager - INFO - Acesso registrado: 20260212203800_6507eb551d9daab4
+2026-02-12 17:38:00,837 - app.data_manager - INFO - Acesso registrado: 20260212203800_420acf366dd71d89
+2026-02-12 17:38:00,838 - app.data_manager - INFO - Acesso registrado: 20260212203800_f5dba6dcb6b5b363
+2026-02-12 17:38:00,838 - app.data_manager - INFO - Acesso registrado: 20260212203800_406cd5798f3bd12b
+2026-02-12 17:38:00,838 - app.data_manager - INFO - Acesso registrado: 20260212203800_5cc610f8361291ec
+2026-02-12 17:38:00,838 - app.data_manager - INFO - Acesso registrado: 20260212203800_30eee4cb80deebd5
+2026-02-12 17:38:00,838 - app.data_manager - INFO - Acesso registrado: 20260212203800_c4d25bb38ffc52d3
+2026-02-12 17:38:00,838 - app.data_manager - INFO - Acesso registrado: 20260212203800_1db51db63ab80db7
+2026-02-12 17:38:00,838 - app.data_manager - INFO - Acesso registrado: 20260212203800_cea62be46ba6dd42
+2026-02-12 17:38:00,838 - app.data_manager - INFO - Acesso registrado: 20260212203800_ba1a80e6775f074b
+2026-02-12 17:38:00,838 - app.data_manager - INFO - Acesso registrado: 20260212203800_39f0bf1c39ad80a7
+2026-02-12 17:38:00,838 - app.data_manager - INFO - Acesso registrado: 20260212203800_b12b91eeac2aaa41
+2026-02-12 17:38:00,838 - app.data_manager - INFO - Acesso registrado: 20260212203800_0c9938b015caa6c4
+2026-02-12 17:38:00,848 - app.data_manager - INFO - Acesso registrado: 20260212203800_de533497bfdd5f22
+2026-02-12 17:38:00,848 - app.data_manager - INFO - Acesso registrado: 20260212203800_1897c82409662205
+2026-02-12 17:38:00,848 - app.data_manager - INFO - Acesso registrado: 20260212203800_54e4e7915184fc12
+2026-02-12 17:38:00,848 - app.data_manager - INFO - Acesso registrado: 20260212203800_546c9fef2b150f16
+2026-02-12 17:38:00,848 - app.data_manager - INFO - Acesso registrado: 20260212203800_9d62644a03e77cf9
+2026-02-12 17:38:00,853 - app.data_manager - INFO - Acesso registrado: 20260212203800_9fe50252b473a82e
+2026-02-12 17:38:00,853 - app.data_manager - INFO - Acesso registrado: 20260212203800_aaa66a33fe296ba0
+2026-02-12 17:38:00,853 - app.data_manager - INFO - Acesso registrado: 20260212203800_4b317c2db31400c9
+2026-02-12 17:38:00,853 - app.data_manager - INFO - Acesso registrado: 20260212203800_8f90a0ece97d7805
+2026-02-12 17:38:00,853 - app.data_manager - INFO - Acesso registrado: 20260212203800_4347f846496d896f
+2026-02-12 17:38:00,853 - app.data_manager - INFO - Acesso registrado: 20260212203800_525f2a3438690d60
+2026-02-12 17:38:00,858 - app.data_manager - INFO - Acesso registrado: 20260212203800_0513aba1f43cfe01
+2026-02-12 17:38:00,858 - app.data_manager - INFO - Acesso registrado: 20260212203800_dc674d507223a773
+2026-02-12 17:38:00,860 - app.data_manager - INFO - Acesso registrado: 20260212203800_c2f2588a21ee1d84
+2026-02-12 17:38:00,860 - app.data_manager - INFO - Acesso registrado: 20260212203800_3fd825d9dd369d1e
+2026-02-12 17:38:00,860 - app.data_manager - INFO - Acesso registrado: 20260212203800_6ef8a639fa2aa610
+2026-02-12 17:38:00,860 - app.data_manager - INFO - Acesso registrado: 20260212203800_7803419cc19e2669
+2026-02-12 17:38:00,860 - app.data_manager - INFO - Acesso registrado: 20260212203800_73a8a755ddc8fc8a
+2026-02-12 17:38:00,860 - app.data_manager - INFO - Acesso registrado: 20260212203800_9f5134916a0e9a94
+2026-02-12 17:38:00,993 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:01,121 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:01,121 - app.security - WARNING - SECURITY: csrf_token_invalid - {'timestamp': '2026-02-12T17:38:01.121293', 'event_type': 'csrf_token_invalid', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'session_token': False, 'form_token': False}}
+2026-02-12 17:38:01,121 - app.security - WARNING - SECURITY: csrf_validation_failed - {'timestamp': '2026-02-12T17:38:01.121293', 'event_type': 'csrf_validation_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'login', 'method': 'POST'}}
+2026-02-12 17:38:01,251 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:01,252 - app.security - WARNING - SECURITY: csrf_token_invalid - {'timestamp': '2026-02-12T17:38:01.252219', 'event_type': 'csrf_token_invalid', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'session_token': False, 'form_token': True}}
+2026-02-12 17:38:01,252 - app.security - WARNING - SECURITY: csrf_validation_failed - {'timestamp': '2026-02-12T17:38:01.252219', 'event_type': 'csrf_validation_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'login', 'method': 'POST'}}
+2026-02-12 17:38:01,376 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:01,376 - app.data_manager - INFO - Acesso registrado: 20260212203801_6d74d8e06bb8ec08
+2026-02-12 17:38:01,376 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:38:01.376853', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.1.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:38:01,504 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:01,637 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:01,637 - app.security - WARNING - SECURITY: csrf_token_invalid - {'timestamp': '2026-02-12T17:38:01.637166', 'event_type': 'csrf_token_invalid', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'session_token': False, 'form_token': False}}
+2026-02-12 17:38:01,637 - app.security - WARNING - SECURITY: csrf_validation_failed - {'timestamp': '2026-02-12T17:38:01.637166', 'event_type': 'csrf_validation_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin_login', 'method': 'POST'}}
+2026-02-12 17:38:01,758 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:01,885 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-12T17:38:01.885291', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin'}}
+2026-02-12 17:38:02,004 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:02,141 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:02,141 - app.data_manager - INFO - Acesso registrado: 20260212203802_70604409cb0ef06d
+2026-02-12 17:38:02,141 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:38:02.141868', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.88.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:38:02,389 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:02,389 - app.data_manager - INFO - Acesso registrado: 20260212203802_8eb5371358b073c0
+2026-02-12 17:38:02,389 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:38:02.389674', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.88.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:38:02,626 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:02,628 - app.data_manager - INFO - Acesso registrado: 20260212203802_4c0ef05cde1b7e48
+2026-02-12 17:38:02,752 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:02,752 - app.data_manager - INFO - Acesso registrado: 20260212203802_867224992f7927a4
+2026-02-12 17:38:02,752 - app.data_manager - INFO - Acesso registrado: 20260212203802_31d8be1c37c176c8
+2026-02-12 17:38:02,752 - app.data_manager - INFO - Acesso registrado: 20260212203802_7c8187568e75c65f
+2026-02-12 17:38:02,884 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:02,886 - app.data_manager - INFO - Acesso registrado: 20260212203802_b4573bc929fd0110
+2026-02-12 17:38:03,012 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:03,012 - app.data_manager - INFO - Acesso registrado: 20260212203803_5cd9229ea2da2a76
+2026-02-12 17:38:03,012 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:38:03.012010', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.88.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:38:03,252 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:03,252 - app.data_manager - INFO - Acesso registrado: 20260212203803_2a0fada336b24ab5
+2026-02-12 17:38:03,252 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:38:03.252726', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '10.0.0.50', 'mac': 'DE:AD:BE:EF:CA:FE', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:38:03,501 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:03,501 - app.data_manager - INFO - Acesso registrado: 20260212203803_2eec14419bab2e0d
+2026-02-12 17:38:03,628 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:03,628 - app.data_manager - INFO - Acesso registrado: 20260212203803_a1fc6995d2697572
+2026-02-12 17:38:03,806 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:03,934 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:03,936 - app.security - WARNING - SECURITY: suspicious_form_submission - {'timestamp': '2026-02-12T17:38:03.936415', 'event_type': 'suspicious_form_submission', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:38:04,066 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:04,193 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:04,193 - app.security - WARNING - SECURITY: suspicious_form_submission - {'timestamp': '2026-02-12T17:38:04.193719', 'event_type': 'suspicious_form_submission', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:38:04,321 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:04,321 - app.data_manager - INFO - Acesso registrado: 20260212203804_446a27fde4b5929f
+2026-02-12 17:38:04,321 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:38:04.321846', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.88.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:38:04,447 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:04,581 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:04,711 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:04,843 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:04,971 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:05,106 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:05,234 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:05,361 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:05,722 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:05,970 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:06,219 - app_simple - INFO - Default admin user created
+2026-02-12 17:38:06,220 - app_simple - ERROR - Failed to send reset email: Working outside of request context.
+
+This typically means that you attempted to use functionality that needed
+an active HTTP request. Consult the documentation on testing for
+information about how to avoid this problem.
+2026-02-12 17:42:33,107 - app.security - INFO - Rate limiting configured with Redis
+2026-02-12 17:42:33,203 - app.models - INFO - Encryption cipher configured: True
+2026-02-12 17:42:33,542 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:33,683 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:33,835 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:33,972 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:34,112 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:34,372 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:34,630 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:34,764 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:35,369 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:35,787 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:36,165 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:36,538 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:36,792 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:37,057 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:37,057 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-12T17:42:37.057383', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin_search', 'path': '/admin/search'}}
+2026-02-12 17:42:37,189 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:37,336 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:37,342 - app.data_manager - INFO - Acesso registrado: 20260212204237_4f138ff76a32cd8d
+2026-02-12 17:42:37,472 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:37,477 - app.data_manager - INFO - Acesso registrado: 20260212204237_82b36df3e9823fe8
+2026-02-12 17:42:37,611 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:37,615 - app.data_manager - INFO - Acesso registrado: 20260212204237_8fee66e82a0e7ada
+2026-02-12 17:42:37,748 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:37,752 - app.data_manager - INFO - Acesso registrado: 20260212204237_8c1d8e358d0ee60f
+2026-02-12 17:42:37,885 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:37,890 - app.data_manager - INFO - Acesso registrado: 20260212204237_6e0d23e2b9ca9722
+2026-02-12 17:42:37,897 - app.data_manager - ERROR - Erro ao ler logs de acesso: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2026-02-12 17:42:38,026 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:38,153 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:38,153 - app.data_manager - INFO - Acesso registrado: 20260212204238_2501740e17bf6dec
+2026-02-12 17:42:38,292 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:38,295 - app.data_manager - INFO - Acesso registrado: 20260212204238_78216324ac64331c
+2026-02-12 17:42:38,422 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:38,427 - app.data_manager - INFO - Acesso registrado: 20260212204238_2ebe09420e6bcd6b
+2026-02-12 17:42:38,427 - app.data_manager - INFO - Acesso registrado: 20260212204238_37f65346cd1ce85a
+2026-02-12 17:42:38,431 - app.data_manager - INFO - Acesso registrado: 20260212204238_9e04cbd0b7e59176
+2026-02-12 17:42:38,564 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:38,567 - app.data_manager - INFO - Acesso registrado: 20260212204238_dc0d5cc25b067acf
+2026-02-12 17:42:38,697 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:38,699 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-12T17:42:38.699798', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-02-12 17:42:38,824 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:38,962 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-12T17:42:38.958992', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin'}}
+2026-02-12 17:42:39,092 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:39,216 - app.security - WARNING - SECURITY: admin_login_failed - {'timestamp': '2026-02-12T17:42:39.216831', 'event_type': 'admin_login_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin', 'ip': '127.0.0.1'}}
+2026-02-12 17:42:39,351 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:39,472 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-12T17:42:39.472008', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin'}}
+2026-02-12 17:42:39,604 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:39,754 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:39,888 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:39,891 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-12T17:42:39.891873', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin_search', 'path': '/admin/search'}}
+2026-02-12 17:42:40,026 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:40,031 - app.security - WARNING - SECURITY: weak_password_attempt - {'timestamp': '2026-02-12T17:42:40.031638', 'event_type': 'weak_password_attempt', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': '', 'password_length': 0}}
+2026-02-12 17:42:40,034 - app.security - WARNING - SECURITY: admin_login_failed - {'timestamp': '2026-02-12T17:42:40.034252', 'event_type': 'admin_login_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': '', 'ip': '127.0.0.1'}}
+2026-02-12 17:42:40,171 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:40,173 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-12T17:42:40.173379', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin_stats', 'path': '/admin/stats'}}
+2026-02-12 17:42:40,307 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:40,330 - app.data_manager - ERROR - Erro ao gerar estatísticas: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2026-02-12 17:42:40,464 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:40,602 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:40,605 - app.data_manager - INFO - Acesso registrado: 20260212204240_aa2a20862c1561c2
+2026-02-12 17:42:40,608 - app.data_manager - INFO - Acesso registrado: 20260212204240_f64f0d9eb0d4995e
+2026-02-12 17:42:40,609 - app.data_manager - INFO - Acesso registrado: 20260212204240_2d93ee5a3104c376
+2026-02-12 17:42:40,610 - app.data_manager - INFO - Acesso registrado: 20260212204240_63e64776ac65b141
+2026-02-12 17:42:40,613 - app.data_manager - INFO - Acesso registrado: 20260212204240_892df010e80dcf22
+2026-02-12 17:42:40,749 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:40,753 - app.data_manager - INFO - Acesso registrado: 20260212204240_6c9ba28a7097ad84
+2026-02-12 17:42:40,754 - app.data_manager - INFO - Acesso registrado: 20260212204240_c404329007b03f2f
+2026-02-12 17:42:40,757 - app.data_manager - INFO - Acesso registrado: 20260212204240_93361e1d0197e137
+2026-02-12 17:42:40,893 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:40,896 - app.data_manager - INFO - Acesso registrado: 20260212204240_6fa9a062e7d6c829
+2026-02-12 17:42:40,899 - app.data_manager - INFO - Acesso registrado: 20260212204240_421d7ef0996e59a7
+2026-02-12 17:42:40,901 - app.data_manager - INFO - Acesso registrado: 20260212204240_2f19f8123003d542
+2026-02-12 17:42:41,038 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:41,041 - app.data_manager - INFO - Acesso registrado: 20260212204241_2aa28456edcb8c3e
+2026-02-12 17:42:41,177 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:41,177 - app.data_manager - INFO - Acesso registrado: 20260212204241_584788a365697260
+2026-02-12 17:42:41,183 - app.data_manager - INFO - Acesso registrado: 20260212204241_d774aea9d4aac30a
+2026-02-12 17:42:41,185 - app.data_manager - INFO - Acesso registrado: 20260212204241_3f8a3f46e838a180
+2026-02-12 17:42:41,191 - app.data_manager - ERROR - Erro ao gerar estatísticas: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2026-02-12 17:42:41,319 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:41,325 - app.data_manager - INFO - Acesso registrado: 20260212204241_a29e162fe8f81e64
+2026-02-12 17:42:41,325 - app.data_manager - INFO - Acesso registrado: 20260212204241_10680ed3c5a8e318
+2026-02-12 17:42:41,330 - app.data_manager - INFO - Acesso registrado: 20260212204241_5416a2feace47dbd
+2026-02-12 17:42:41,330 - app.data_manager - INFO - Acesso registrado: 20260212204241_bb6f1afd40700336
+2026-02-12 17:42:41,330 - app.data_manager - INFO - Acesso registrado: 20260212204241_a84a8f2bf70afa5f
+2026-02-12 17:42:41,335 - app.data_manager - INFO - Acesso registrado: 20260212204241_41e70aad323bf5a7
+2026-02-12 17:42:41,340 - app.data_manager - INFO - Acesso registrado: 20260212204241_e460c35af93cbe01
+2026-02-12 17:42:41,342 - app.data_manager - INFO - Acesso registrado: 20260212204241_40abf8683cc40ee6
+2026-02-12 17:42:41,342 - app.data_manager - INFO - Acesso registrado: 20260212204241_4a3f76f6b45e8500
+2026-02-12 17:42:41,344 - app.data_manager - INFO - Acesso registrado: 20260212204241_c17243dffd5050fb
+2026-02-12 17:42:41,346 - app.data_manager - INFO - Acesso registrado: 20260212204241_9c48190196bfdbc8
+2026-02-12 17:42:41,348 - app.data_manager - INFO - Acesso registrado: 20260212204241_b8d2b9b4e26f5cc4
+2026-02-12 17:42:41,350 - app.data_manager - INFO - Acesso registrado: 20260212204241_43dba87f98914c91
+2026-02-12 17:42:41,351 - app.data_manager - INFO - Acesso registrado: 20260212204241_44f65434a7bbca30
+2026-02-12 17:42:41,353 - app.data_manager - INFO - Acesso registrado: 20260212204241_577489708ab2203b
+2026-02-12 17:42:41,355 - app.data_manager - INFO - Acesso registrado: 20260212204241_033c365613a9996a
+2026-02-12 17:42:41,357 - app.data_manager - INFO - Acesso registrado: 20260212204241_5d8debc7f3cdcd5e
+2026-02-12 17:42:41,359 - app.data_manager - INFO - Acesso registrado: 20260212204241_bec186f74c7213a6
+2026-02-12 17:42:41,360 - app.data_manager - INFO - Acesso registrado: 20260212204241_37c144268ed1e4f8
+2026-02-12 17:42:41,360 - app.data_manager - INFO - Acesso registrado: 20260212204241_284f19ee925a909a
+2026-02-12 17:42:41,362 - app.data_manager - INFO - Acesso registrado: 20260212204241_e3ee1e77b7c26a02
+2026-02-12 17:42:41,364 - app.data_manager - INFO - Acesso registrado: 20260212204241_5c40da7879397d83
+2026-02-12 17:42:41,366 - app.data_manager - INFO - Acesso registrado: 20260212204241_f614250832582330
+2026-02-12 17:42:41,368 - app.data_manager - INFO - Acesso registrado: 20260212204241_38deddc2db481bd7
+2026-02-12 17:42:41,370 - app.data_manager - INFO - Acesso registrado: 20260212204241_814e4bc213bde93f
+2026-02-12 17:42:41,370 - app.data_manager - INFO - Acesso registrado: 20260212204241_17036d25873a72da
+2026-02-12 17:42:41,373 - app.data_manager - INFO - Acesso registrado: 20260212204241_ff2f05ae21dd251a
+2026-02-12 17:42:41,375 - app.data_manager - INFO - Acesso registrado: 20260212204241_212b7cbd09dad223
+2026-02-12 17:42:41,375 - app.data_manager - INFO - Acesso registrado: 20260212204241_aa34cd567fadba99
+2026-02-12 17:42:41,377 - app.data_manager - INFO - Acesso registrado: 20260212204241_1e9a8d05419dffa2
+2026-02-12 17:42:41,379 - app.data_manager - INFO - Acesso registrado: 20260212204241_1a930dc715d41808
+2026-02-12 17:42:41,382 - app.data_manager - INFO - Acesso registrado: 20260212204241_af7a9448c7f5dcce
+2026-02-12 17:42:41,383 - app.data_manager - INFO - Acesso registrado: 20260212204241_0f09831409fc4266
+2026-02-12 17:42:41,385 - app.data_manager - INFO - Acesso registrado: 20260212204241_c397a1903943c2d1
+2026-02-12 17:42:41,387 - app.data_manager - INFO - Acesso registrado: 20260212204241_ea55bd38939d0782
+2026-02-12 17:42:41,387 - app.data_manager - INFO - Acesso registrado: 20260212204241_cad72752475ddda2
+2026-02-12 17:42:41,389 - app.data_manager - INFO - Acesso registrado: 20260212204241_5af50c7a8bf7c29d
+2026-02-12 17:42:41,391 - app.data_manager - INFO - Acesso registrado: 20260212204241_49c29822958f9a49
+2026-02-12 17:42:41,393 - app.data_manager - INFO - Acesso registrado: 20260212204241_03d212667dcdfeb0
+2026-02-12 17:42:41,395 - app.data_manager - INFO - Acesso registrado: 20260212204241_7f09b8467b26a574
+2026-02-12 17:42:41,395 - app.data_manager - INFO - Acesso registrado: 20260212204241_c50441fd236af4e4
+2026-02-12 17:42:41,398 - app.data_manager - INFO - Acesso registrado: 20260212204241_242dab04e2279728
+2026-02-12 17:42:41,400 - app.data_manager - INFO - Acesso registrado: 20260212204241_a7857cd78362264a
+2026-02-12 17:42:41,401 - app.data_manager - INFO - Acesso registrado: 20260212204241_e8f0bf3dc947479c
+2026-02-12 17:42:41,403 - app.data_manager - INFO - Acesso registrado: 20260212204241_0d394601b281d72a
+2026-02-12 17:42:41,403 - app.data_manager - INFO - Acesso registrado: 20260212204241_1fa9e4718c7a8c55
+2026-02-12 17:42:41,405 - app.data_manager - INFO - Acesso registrado: 20260212204241_2083b97dfffa1681
+2026-02-12 17:42:41,407 - app.data_manager - INFO - Acesso registrado: 20260212204241_9ca7aabcaa6543fe
+2026-02-12 17:42:41,409 - app.data_manager - INFO - Acesso registrado: 20260212204241_8b190e9ce87f80ec
+2026-02-12 17:42:41,411 - app.data_manager - INFO - Acesso registrado: 20260212204241_5f0d30a6d54f5928
+2026-02-12 17:42:41,536 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:41,684 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:41,684 - app.security - WARNING - SECURITY: csrf_token_invalid - {'timestamp': '2026-02-12T17:42:41.684506', 'event_type': 'csrf_token_invalid', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'session_token': False, 'form_token': False}}
+2026-02-12 17:42:41,684 - app.security - WARNING - SECURITY: csrf_validation_failed - {'timestamp': '2026-02-12T17:42:41.684506', 'event_type': 'csrf_validation_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'login', 'method': 'POST'}}
+2026-02-12 17:42:41,819 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:41,822 - app.security - WARNING - SECURITY: csrf_token_invalid - {'timestamp': '2026-02-12T17:42:41.822008', 'event_type': 'csrf_token_invalid', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'session_token': False, 'form_token': True}}
+2026-02-12 17:42:41,822 - app.security - WARNING - SECURITY: csrf_validation_failed - {'timestamp': '2026-02-12T17:42:41.822008', 'event_type': 'csrf_validation_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'login', 'method': 'POST'}}
+2026-02-12 17:42:41,949 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:41,952 - app.data_manager - INFO - Acesso registrado: 20260212204241_ec036813bc2ec06e
+2026-02-12 17:42:41,952 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:42:41.952688', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.1.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:42:42,085 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:42,219 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:42,219 - app.security - WARNING - SECURITY: csrf_token_invalid - {'timestamp': '2026-02-12T17:42:42.219426', 'event_type': 'csrf_token_invalid', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'session_token': False, 'form_token': False}}
+2026-02-12 17:42:42,219 - app.security - WARNING - SECURITY: csrf_validation_failed - {'timestamp': '2026-02-12T17:42:42.219426', 'event_type': 'csrf_validation_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin_login', 'method': 'POST'}}
+2026-02-12 17:42:42,353 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:42,464 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-12T17:42:42.464807', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin'}}
+2026-02-12 17:42:42,608 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:42,743 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:42,751 - app.data_manager - INFO - Acesso registrado: 20260212204242_651b6e162a159574
+2026-02-12 17:42:42,754 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:42:42.754149', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.88.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:42:42,985 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:42,991 - app.data_manager - INFO - Acesso registrado: 20260212204242_4ba5f7eccc65a431
+2026-02-12 17:42:42,991 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:42:42.991370', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.88.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:42:43,248 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:43,251 - app.data_manager - INFO - Acesso registrado: 20260212204243_de241a24e1bf164f
+2026-02-12 17:42:43,376 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:43,376 - app.data_manager - INFO - Acesso registrado: 20260212204243_6cb15f2bd88baa37
+2026-02-12 17:42:43,386 - app.data_manager - INFO - Acesso registrado: 20260212204243_35ecf1acea71d07f
+2026-02-12 17:42:43,387 - app.data_manager - INFO - Acesso registrado: 20260212204243_5f295603412453d9
+2026-02-12 17:42:43,511 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:43,521 - app.data_manager - INFO - Acesso registrado: 20260212204243_05c5184dbe42bf24
+2026-02-12 17:42:43,651 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:43,657 - app.data_manager - INFO - Acesso registrado: 20260212204243_c56232cafa28bf80
+2026-02-12 17:42:43,657 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:42:43.657690', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.88.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:42:43,893 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:43,904 - app.data_manager - INFO - Acesso registrado: 20260212204243_e01f035dc570cfdd
+2026-02-12 17:42:43,904 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:42:43.904031', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '10.0.0.50', 'mac': 'DE:AD:BE:EF:CA:FE', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:42:44,172 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:44,175 - app.data_manager - INFO - Acesso registrado: 20260212204244_85172757d64c12e4
+2026-02-12 17:42:44,302 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:44,309 - app.data_manager - INFO - Acesso registrado: 20260212204244_9695eae9bb1a830d
+2026-02-12 17:42:44,454 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:44,588 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:44,598 - app.security - WARNING - SECURITY: suspicious_form_submission - {'timestamp': '2026-02-12T17:42:44.598994', 'event_type': 'suspicious_form_submission', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:42:44,735 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:44,869 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:44,869 - app.security - WARNING - SECURITY: suspicious_form_submission - {'timestamp': '2026-02-12T17:42:44.869511', 'event_type': 'suspicious_form_submission', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:42:45,002 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:45,002 - app.data_manager - INFO - Acesso registrado: 20260212204245_f7bb7620089ab23b
+2026-02-12 17:42:45,002 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:42:45.002353', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.88.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:42:45,137 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:45,270 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:45,420 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:45,552 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:45,685 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:45,829 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:45,965 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:46,102 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:46,470 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:46,726 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:46,984 - app_simple - INFO - Default admin user created
+2026-02-12 17:42:46,984 - app_simple - ERROR - Failed to send reset email: Working outside of request context.
+
+This typically means that you attempted to use functionality that needed
+an active HTTP request. Consult the documentation on testing for
+information about how to avoid this problem.
+2026-02-12 17:45:16,537 - app.security - INFO - Rate limiting configured with Redis
+2026-02-12 17:45:16,635 - app.models - INFO - Encryption cipher configured: True
+2026-02-12 17:45:16,961 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:17,102 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:17,262 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:17,397 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:17,540 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:17,798 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:18,053 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:18,189 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:18,792 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:19,168 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:19,540 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:20,004 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:20,277 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:20,545 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:20,545 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-12T17:45:20.545648', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin_search', 'path': '/admin/search'}}
+2026-02-12 17:45:20,679 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:20,828 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:20,835 - app.data_manager - INFO - Acesso registrado: 20260212204520_94c7e35a10653678
+2026-02-12 17:45:20,976 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:20,976 - app.data_manager - INFO - Acesso registrado: 20260212204520_4cfc4f3baa99f03a
+2026-02-12 17:45:21,114 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:21,119 - app.data_manager - INFO - Acesso registrado: 20260212204521_87dacb46fa1f8c64
+2026-02-12 17:45:21,253 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:21,256 - app.data_manager - INFO - Acesso registrado: 20260212204521_e4a2c4d59da37fc8
+2026-02-12 17:45:21,388 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:21,391 - app.data_manager - INFO - Acesso registrado: 20260212204521_386e0e1b6e07c318
+2026-02-12 17:45:21,395 - app.data_manager - ERROR - Erro ao ler logs de acesso: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2026-02-12 17:45:21,528 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:21,663 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:21,666 - app.data_manager - INFO - Acesso registrado: 20260212204521_0b04f7cb53e66e88
+2026-02-12 17:45:21,796 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:21,800 - app.data_manager - INFO - Acesso registrado: 20260212204521_220293d3165c6712
+2026-02-12 17:45:21,933 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:21,936 - app.data_manager - INFO - Acesso registrado: 20260212204521_342efcc66ccf4c2e
+2026-02-12 17:45:21,940 - app.data_manager - INFO - Acesso registrado: 20260212204521_abb0b371620c32d2
+2026-02-12 17:45:21,940 - app.data_manager - INFO - Acesso registrado: 20260212204521_182a6745c799e34c
+2026-02-12 17:45:22,075 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:22,079 - app.data_manager - INFO - Acesso registrado: 20260212204522_12f9b416aac8dca9
+2026-02-12 17:45:22,211 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:22,213 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-12T17:45:22.213015', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-02-12 17:45:22,402 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:22,547 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-12T17:45:22.547900', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin'}}
+2026-02-12 17:45:22,686 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:22,813 - app.security - WARNING - SECURITY: admin_login_failed - {'timestamp': '2026-02-12T17:45:22.813596', 'event_type': 'admin_login_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin', 'ip': '127.0.0.1'}}
+2026-02-12 17:45:22,943 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:23,077 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-12T17:45:23.077424', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin'}}
+2026-02-12 17:45:23,213 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:23,361 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:23,492 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:23,492 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-12T17:45:23.492424', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin_search', 'path': '/admin/search'}}
+2026-02-12 17:45:23,624 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:23,628 - app.security - WARNING - SECURITY: weak_password_attempt - {'timestamp': '2026-02-12T17:45:23.628379', 'event_type': 'weak_password_attempt', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': '', 'password_length': 0}}
+2026-02-12 17:45:23,628 - app.security - WARNING - SECURITY: admin_login_failed - {'timestamp': '2026-02-12T17:45:23.628379', 'event_type': 'admin_login_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': '', 'ip': '127.0.0.1'}}
+2026-02-12 17:45:23,763 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:23,763 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-12T17:45:23.763326', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin_stats', 'path': '/admin/stats'}}
+2026-02-12 17:45:23,887 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:23,917 - app.data_manager - ERROR - Erro ao gerar estatísticas: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2026-02-12 17:45:24,046 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:24,181 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:24,183 - app.data_manager - INFO - Acesso registrado: 20260212204524_07e217b465ace842
+2026-02-12 17:45:24,186 - app.data_manager - INFO - Acesso registrado: 20260212204524_e2f6d828756ba9af
+2026-02-12 17:45:24,187 - app.data_manager - INFO - Acesso registrado: 20260212204524_9e83d912330072c6
+2026-02-12 17:45:24,189 - app.data_manager - INFO - Acesso registrado: 20260212204524_01d8cfa37cd50e36
+2026-02-12 17:45:24,190 - app.data_manager - INFO - Acesso registrado: 20260212204524_22a03935d4c1f03f
+2026-02-12 17:45:24,322 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:24,327 - app.data_manager - INFO - Acesso registrado: 20260212204524_e6dc6b7c7f925ea8
+2026-02-12 17:45:24,329 - app.data_manager - INFO - Acesso registrado: 20260212204524_5303eb7c21dc816e
+2026-02-12 17:45:24,331 - app.data_manager - INFO - Acesso registrado: 20260212204524_119ae0351fc8acfa
+2026-02-12 17:45:24,462 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:24,465 - app.data_manager - INFO - Acesso registrado: 20260212204524_9f4fb587dc578971
+2026-02-12 17:45:24,467 - app.data_manager - INFO - Acesso registrado: 20260212204524_737c2a73523b2634
+2026-02-12 17:45:24,469 - app.data_manager - INFO - Acesso registrado: 20260212204524_26a77c92d342a8f7
+2026-02-12 17:45:24,600 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:24,602 - app.data_manager - INFO - Acesso registrado: 20260212204524_168539921103995d
+2026-02-12 17:45:24,737 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:24,741 - app.data_manager - INFO - Acesso registrado: 20260212204524_7758e5deae648b73
+2026-02-12 17:45:24,743 - app.data_manager - INFO - Acesso registrado: 20260212204524_3dd19609a3bd6ad5
+2026-02-12 17:45:24,744 - app.data_manager - INFO - Acesso registrado: 20260212204524_7bc09e63eb8ab784
+2026-02-12 17:45:24,752 - app.data_manager - ERROR - Erro ao gerar estatísticas: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2026-02-12 17:45:24,880 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:24,884 - app.data_manager - INFO - Acesso registrado: 20260212204524_199950a6e5ac6636
+2026-02-12 17:45:24,885 - app.data_manager - INFO - Acesso registrado: 20260212204524_712a2baefee8142c
+2026-02-12 17:45:24,887 - app.data_manager - INFO - Acesso registrado: 20260212204524_53b72ed6eb2d56c5
+2026-02-12 17:45:24,889 - app.data_manager - INFO - Acesso registrado: 20260212204524_3dd025479c15e3e9
+2026-02-12 17:45:24,891 - app.data_manager - INFO - Acesso registrado: 20260212204524_a1ab3f9297bbc980
+2026-02-12 17:45:24,893 - app.data_manager - INFO - Acesso registrado: 20260212204524_57831b834e934cb6
+2026-02-12 17:45:24,894 - app.data_manager - INFO - Acesso registrado: 20260212204524_77c17ff1d30c241b
+2026-02-12 17:45:24,896 - app.data_manager - INFO - Acesso registrado: 20260212204524_75eadb09f6d5bb5e
+2026-02-12 17:45:24,897 - app.data_manager - INFO - Acesso registrado: 20260212204524_ef4381b481d3dcfe
+2026-02-12 17:45:24,899 - app.data_manager - INFO - Acesso registrado: 20260212204524_2b99613a8aec63e6
+2026-02-12 17:45:24,901 - app.data_manager - INFO - Acesso registrado: 20260212204524_acc1492ca992bc60
+2026-02-12 17:45:24,903 - app.data_manager - INFO - Acesso registrado: 20260212204524_c2c8f6590c15fc93
+2026-02-12 17:45:24,903 - app.data_manager - INFO - Acesso registrado: 20260212204524_b86a9fbbd06c5b5a
+2026-02-12 17:45:24,906 - app.data_manager - INFO - Acesso registrado: 20260212204524_ec7e0657a127178c
+2026-02-12 17:45:24,906 - app.data_manager - INFO - Acesso registrado: 20260212204524_e9bf880017c42d57
+2026-02-12 17:45:24,910 - app.data_manager - INFO - Acesso registrado: 20260212204524_2e5ed06a3fad68cf
+2026-02-12 17:45:24,910 - app.data_manager - INFO - Acesso registrado: 20260212204524_84257ecc462a214a
+2026-02-12 17:45:24,913 - app.data_manager - INFO - Acesso registrado: 20260212204524_8e1efc3e5d13daab
+2026-02-12 17:45:24,913 - app.data_manager - INFO - Acesso registrado: 20260212204524_6ff3d9312d47b6a6
+2026-02-12 17:45:24,913 - app.data_manager - INFO - Acesso registrado: 20260212204524_182fd72abdce3327
+2026-02-12 17:45:24,917 - app.data_manager - INFO - Acesso registrado: 20260212204524_8cf9517ec34425f5
+2026-02-12 17:45:24,917 - app.data_manager - INFO - Acesso registrado: 20260212204524_1b18cf5ac1d5564c
+2026-02-12 17:45:24,917 - app.data_manager - INFO - Acesso registrado: 20260212204524_0433c367329364cf
+2026-02-12 17:45:24,924 - app.data_manager - INFO - Acesso registrado: 20260212204524_2f7ba1456555f07b
+2026-02-12 17:45:24,924 - app.data_manager - INFO - Acesso registrado: 20260212204524_5f175bc6366b5a18
+2026-02-12 17:45:24,924 - app.data_manager - INFO - Acesso registrado: 20260212204524_ae37694ae1446409
+2026-02-12 17:45:24,928 - app.data_manager - INFO - Acesso registrado: 20260212204524_1f463819c273f7e1
+2026-02-12 17:45:24,928 - app.data_manager - INFO - Acesso registrado: 20260212204524_40a1663d56428adf
+2026-02-12 17:45:24,928 - app.data_manager - INFO - Acesso registrado: 20260212204524_0fc4d7aca60cc5bc
+2026-02-12 17:45:24,933 - app.data_manager - INFO - Acesso registrado: 20260212204524_c449d54508707b24
+2026-02-12 17:45:24,934 - app.data_manager - INFO - Acesso registrado: 20260212204524_c8f6339b8a8a3703
+2026-02-12 17:45:24,934 - app.data_manager - INFO - Acesso registrado: 20260212204524_6e6504bb372bd8d1
+2026-02-12 17:45:24,934 - app.data_manager - INFO - Acesso registrado: 20260212204524_5ddfbe7a5f04f9f1
+2026-02-12 17:45:24,934 - app.data_manager - INFO - Acesso registrado: 20260212204524_027b00b790cc0e51
+2026-02-12 17:45:24,934 - app.data_manager - INFO - Acesso registrado: 20260212204524_f4fd083a53e1bc97
+2026-02-12 17:45:24,944 - app.data_manager - INFO - Acesso registrado: 20260212204524_6deb3e3e3b76fdbc
+2026-02-12 17:45:24,945 - app.data_manager - INFO - Acesso registrado: 20260212204524_b54830007d924f33
+2026-02-12 17:45:24,946 - app.data_manager - INFO - Acesso registrado: 20260212204524_c730460175190675
+2026-02-12 17:45:24,948 - app.data_manager - INFO - Acesso registrado: 20260212204524_d08ddb7a70bb37ad
+2026-02-12 17:45:24,950 - app.data_manager - INFO - Acesso registrado: 20260212204524_d7bdf96e2e8681e9
+2026-02-12 17:45:24,952 - app.data_manager - INFO - Acesso registrado: 20260212204524_97b7d087880daf0d
+2026-02-12 17:45:24,953 - app.data_manager - INFO - Acesso registrado: 20260212204524_4981dce4e7aeadfd
+2026-02-12 17:45:24,956 - app.data_manager - INFO - Acesso registrado: 20260212204524_b1fd2c93c6ab818d
+2026-02-12 17:45:24,958 - app.data_manager - INFO - Acesso registrado: 20260212204524_9657de5f210e5c63
+2026-02-12 17:45:24,959 - app.data_manager - INFO - Acesso registrado: 20260212204524_84f51a1e094896af
+2026-02-12 17:45:24,961 - app.data_manager - INFO - Acesso registrado: 20260212204524_b1422b2c4e82ea85
+2026-02-12 17:45:24,962 - app.data_manager - INFO - Acesso registrado: 20260212204524_7f0d7f064b2f0325
+2026-02-12 17:45:24,964 - app.data_manager - INFO - Acesso registrado: 20260212204524_d4f2123ae34d37af
+2026-02-12 17:45:24,966 - app.data_manager - INFO - Acesso registrado: 20260212204524_0c3df1a8a8cfc69a
+2026-02-12 17:45:24,967 - app.data_manager - INFO - Acesso registrado: 20260212204524_f8d685f28a37b885
+2026-02-12 17:45:25,104 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:25,246 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:25,248 - app.security - WARNING - SECURITY: csrf_token_invalid - {'timestamp': '2026-02-12T17:45:25.248256', 'event_type': 'csrf_token_invalid', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'session_token': False, 'form_token': False}}
+2026-02-12 17:45:25,249 - app.security - WARNING - SECURITY: csrf_validation_failed - {'timestamp': '2026-02-12T17:45:25.249255', 'event_type': 'csrf_validation_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'login', 'method': 'POST'}}
+2026-02-12 17:45:25,379 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:25,382 - app.security - WARNING - SECURITY: csrf_token_invalid - {'timestamp': '2026-02-12T17:45:25.380813', 'event_type': 'csrf_token_invalid', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'session_token': False, 'form_token': True}}
+2026-02-12 17:45:25,382 - app.security - WARNING - SECURITY: csrf_validation_failed - {'timestamp': '2026-02-12T17:45:25.382156', 'event_type': 'csrf_validation_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'login', 'method': 'POST'}}
+2026-02-12 17:45:25,512 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:25,519 - app.data_manager - INFO - Acesso registrado: 20260212204525_740a758db5855df9
+2026-02-12 17:45:25,519 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:45:25.519767', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.1.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:45:25,648 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:25,781 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:25,783 - app.security - WARNING - SECURITY: csrf_token_invalid - {'timestamp': '2026-02-12T17:45:25.783364', 'event_type': 'csrf_token_invalid', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'session_token': False, 'form_token': False}}
+2026-02-12 17:45:25,783 - app.security - WARNING - SECURITY: csrf_validation_failed - {'timestamp': '2026-02-12T17:45:25.783364', 'event_type': 'csrf_validation_failed', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'endpoint': 'admin_login', 'method': 'POST'}}
+2026-02-12 17:45:25,916 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:26,042 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-12T17:45:26.042272', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'username': 'admin'}}
+2026-02-12 17:45:26,175 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:26,313 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:26,323 - app.data_manager - INFO - Acesso registrado: 20260212204526_53054899cbedb309
+2026-02-12 17:45:26,324 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:45:26.323682', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.88.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:45:26,562 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:26,568 - app.data_manager - INFO - Acesso registrado: 20260212204526_764e25682d047460
+2026-02-12 17:45:26,569 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:45:26.569372', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.88.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:45:26,810 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:26,813 - app.data_manager - INFO - Acesso registrado: 20260212204526_50ee1af36b8803a4
+2026-02-12 17:45:26,944 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:26,948 - app.data_manager - INFO - Acesso registrado: 20260212204526_a4e930f01ae5566b
+2026-02-12 17:45:26,949 - app.data_manager - INFO - Acesso registrado: 20260212204526_3bb443ba52e7e90d
+2026-02-12 17:45:26,950 - app.data_manager - INFO - Acesso registrado: 20260212204526_070dd2a540c58fe2
+2026-02-12 17:45:27,086 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:27,090 - app.data_manager - INFO - Acesso registrado: 20260212204527_46893b83328229d8
+2026-02-12 17:45:27,229 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:27,237 - app.data_manager - INFO - Acesso registrado: 20260212204527_133e8cbc57d167b6
+2026-02-12 17:45:27,238 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:45:27.238015', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.88.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:45:27,475 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:27,482 - app.data_manager - INFO - Acesso registrado: 20260212204527_b341409aa6c6b137
+2026-02-12 17:45:27,482 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:45:27.482951', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '10.0.0.50', 'mac': 'DE:AD:BE:EF:CA:FE', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:45:27,753 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:27,753 - app.data_manager - INFO - Acesso registrado: 20260212204527_5b278b0289fd26bb
+2026-02-12 17:45:27,891 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:27,898 - app.data_manager - INFO - Acesso registrado: 20260212204527_19845d8612ff6b16
+2026-02-12 17:45:28,043 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:28,189 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:28,193 - app.security - WARNING - SECURITY: suspicious_form_submission - {'timestamp': '2026-02-12T17:45:28.193718', 'event_type': 'suspicious_form_submission', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:45:28,326 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:28,470 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:28,473 - app.security - WARNING - SECURITY: suspicious_form_submission - {'timestamp': '2026-02-12T17:45:28.473786', 'event_type': 'suspicious_form_submission', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:45:28,606 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:28,618 - app.data_manager - INFO - Acesso registrado: 20260212204528_42fc999f9191315f
+2026-02-12 17:45:28,619 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-02-12T17:45:28.619135', 'event_type': 'access_registered', 'ip': '127.0.0.1', 'user_agent': 'Werkzeug/3.1.5', 'details': {'ip': '192.168.88.100', 'mac': 'AA:BB:CC:DD:EE:FF', 'user_agent': 'Werkzeug/3.1.5'}}
+2026-02-12 17:45:28,751 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:28,892 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:29,048 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:29,186 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:29,328 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:29,475 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:29,610 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:29,747 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:30,129 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:30,392 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:30,643 - app_simple - INFO - Default admin user created
+2026-02-12 17:45:30,652 - app_simple - ERROR - Failed to send reset email: Working outside of request context.
+
+This typically means that you attempted to use functionality that needed
+an active HTTP request. Consult the documentation on testing for
+information about how to avoid this problem.
