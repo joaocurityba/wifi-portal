@@ -73,13 +73,6 @@ def sanitize_input(text):
         return str(text).strip().replace('<', '<').replace('>', '>')
     return ''
 
-def validate_phone(phone):
-    """Valida formato básico de telefone"""
-    if not phone:
-        return False
-    clean_phone = ''.join(c for c in phone if c.isdigit())
-    return len(clean_phone) >= 8 and len(clean_phone) <= 15
-
 def validate_email(email):
     """Valida formato de email"""
     if not email:
@@ -87,19 +80,6 @@ def validate_email(email):
     import re
     email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     return re.match(email_pattern, email) is not None
-
-def validate_birth_date(birth_date):
-    """Valida data de nascimento (mínimo 13 anos)"""
-    if not birth_date:
-        return False
-    try:
-        from datetime import datetime, date
-        birth = datetime.strptime(birth_date, '%Y-%m-%d').date()
-        today = date.today()
-        age = today.year - birth.year - ((today.month, today.day) < (birth.month, birth.day))
-        return age >= 13 and birth <= today
-    except ValueError:
-        return False
 
 # Funções de gerenciamento de usuários
 def create_default_user():
