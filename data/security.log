@@ -4229,3 +4229,118 @@ with app.app_context(). See the documentation for more information.
 2026-02-12 11:47:14,978 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 11:47:14] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
 2026-02-12 11:47:15,137 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 11:47:15] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
 2026-02-12 11:47:15,235 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 11:47:15] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-02-12 17:07:54,555 - app.security - INFO - Rate limiting configured with Redis
+2026-02-12 17:07:54,640 - app.models - INFO - Encryption cipher configured: True
+2026-02-12 17:07:54,696 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-12 17:07:54,696 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-12 17:07:59,394 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:07:59] "[32mGET / HTTP/1.1[0m" 302 -
+2026-02-12 17:07:59,498 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:07:59] "GET /login HTTP/1.1" 200 -
+2026-02-12 17:07:59,778 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:07:59] "GET /static/images/logo.svg HTTP/1.1" 200 -
+2026-02-12 17:07:59,786 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:07:59] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-02-12 17:07:59,790 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:07:59] "GET /static/js/main.js HTTP/1.1" 200 -
+2026-02-12 17:07:59,803 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:07:59] "GET /static/images/centro-cultural-pb.png HTTP/1.1" 200 -
+2026-02-12 17:07:59,937 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:07:59] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-02-12 17:08:10,060 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-12T17:08:10.060522', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-02-12 17:08:10,060 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:08:10] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-02-12 17:08:10,085 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:08:10] "GET /admin/login HTTP/1.1" 200 -
+2026-02-12 17:08:10,102 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:08:10] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:08:16,093 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-12T17:08:16.093661', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'username': 'admin'}}
+2026-02-12 17:08:16,093 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:08:16] "[32mPOST /admin/login HTTP/1.1[0m" 302 -
+2026-02-12 17:08:16,135 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:08:16] "GET /admin HTTP/1.1" 200 -
+2026-02-12 17:08:16,149 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:08:16] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:08:18,488 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:08:18] "GET /admin/profile HTTP/1.1" 200 -
+2026-02-12 17:08:18,499 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:08:18] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:08:46,003 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:08:46] "POST /admin/profile HTTP/1.1" 200 -
+2026-02-12 17:08:46,017 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:08:46] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:08:57,532 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:08:57] "[32mPOST /admin/profile HTTP/1.1[0m" 302 -
+2026-02-12 17:08:57,543 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:08:57] "GET /admin/profile HTTP/1.1" 200 -
+2026-02-12 17:08:57,553 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:08:57] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:09:03,465 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:09:03] "GET /admin/reset-password HTTP/1.1" 200 -
+2026-02-12 17:09:03,480 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:09:03] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:09:27,607 - __main__ - ERROR - SMTP credentials not configured
+2026-02-12 17:09:27,609 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:09:27] "[32mPOST /admin/reset-password HTTP/1.1[0m" 302 -
+2026-02-12 17:09:27,616 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:09:27] "GET /admin/login HTTP/1.1" 200 -
+2026-02-12 17:09:27,634 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:09:27] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:09:42,563 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:09:42] "GET /admin/reset-password HTTP/1.1" 200 -
+2026-02-12 17:09:42,575 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:09:42] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:11:40,295 - app.security - INFO - Rate limiting configured with Redis
+2026-02-12 17:11:40,345 - app.models - INFO - Encryption cipher configured: True
+2026-02-12 17:11:40,382 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-12 17:11:40,382 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-12 17:11:44,575 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:11:44] "GET /admin/reset-password HTTP/1.1" 200 -
+2026-02-12 17:11:44,643 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:11:44] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:11:52,544 - __main__ - ERROR - SMTP credentials not configured
+2026-02-12 17:11:52,545 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:11:52] "[32mPOST /admin/reset-password HTTP/1.1[0m" 302 -
+2026-02-12 17:11:52,557 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:11:52] "GET /admin/login HTTP/1.1" 200 -
+2026-02-12 17:11:52,577 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:11:52] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:17:06,980 - app.security - INFO - Rate limiting configured with Redis
+2026-02-12 17:17:07,045 - app.models - INFO - Encryption cipher configured: True
+2026-02-12 17:17:07,076 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-12 17:17:07,076 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-12 17:17:10,380 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:17:10] "GET /admin/reset-password HTTP/1.1" 200 -
+2026-02-12 17:17:10,449 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:17:10] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:17:10,459 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:17:10] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-12 17:17:18,009 - __main__ - INFO - Reset email sent to jcurityba@gmail.com
+2026-02-12 17:17:18,019 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:17:18] "[32mPOST /admin/reset-password HTTP/1.1[0m" 302 -
+2026-02-12 17:17:18,047 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:17:18] "GET /admin/login HTTP/1.1" 200 -
+2026-02-12 17:17:18,069 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:17:18] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:17:45,696 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:17:45] "GET /admin/reset/JN0EcpB6-ao4CAwNH4RZFg083-_PE6Xujgh2FFqvNUk HTTP/1.1" 200 -
+2026-02-12 17:17:45,714 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:17:45] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:17:45,728 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:17:45] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-12 17:18:04,584 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:18:04] "[32mPOST /admin/reset/JN0EcpB6-ao4CAwNH4RZFg083-_PE6Xujgh2FFqvNUk HTTP/1.1[0m" 302 -
+2026-02-12 17:18:04,591 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:18:04] "GET /admin/login HTTP/1.1" 200 -
+2026-02-12 17:18:04,604 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:18:04] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:18:12,264 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-12T17:18:12.264588', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'username': 'admin'}}
+2026-02-12 17:18:12,265 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:18:12] "[32mPOST /admin/login HTTP/1.1[0m" 302 -
+2026-02-12 17:18:12,276 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:18:12] "GET /admin HTTP/1.1" 200 -
+2026-02-12 17:18:12,301 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:18:12] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:18:15,505 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:18:15] "[32mGET /admin/logout HTTP/1.1[0m" 302 -
+2026-02-12 17:18:15,514 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:18:15] "GET /admin/login HTTP/1.1" 200 -
+2026-02-12 17:18:15,526 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:18:15] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:18:20,768 - app.security - WARNING - SECURITY: admin_login_failed - {'timestamp': '2026-02-12T17:18:20.768153', 'event_type': 'admin_login_failed', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'username': 'admin', 'ip': '127.0.0.1'}}
+2026-02-12 17:18:20,769 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:18:20] "POST /admin/login HTTP/1.1" 200 -
+2026-02-12 17:18:20,776 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:18:20] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:18:24,270 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:18:24] "GET /admin/reset-password HTTP/1.1" 200 -
+2026-02-12 17:18:24,278 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:18:24] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:18:30,359 - __main__ - INFO - Reset email sent to jcurityba@gmail.com
+2026-02-12 17:18:30,360 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:18:30] "[32mPOST /admin/reset-password HTTP/1.1[0m" 302 -
+2026-02-12 17:18:30,381 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:18:30] "GET /admin/login HTTP/1.1" 200 -
+2026-02-12 17:18:30,404 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:18:30] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:18:49,780 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:18:49] "GET /admin/reset/3MTkuzkM6NKBsLcEXU1nbtsWuXBGTc3wiQObp-8beEA HTTP/1.1" 200 -
+2026-02-12 17:18:49,839 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:18:49] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:18:49,848 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:18:49] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-12 17:19:26,716 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:19:26] "[32mPOST /admin/reset/3MTkuzkM6NKBsLcEXU1nbtsWuXBGTc3wiQObp-8beEA HTTP/1.1[0m" 302 -
+2026-02-12 17:19:26,725 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:19:26] "GET /admin/login HTTP/1.1" 200 -
+2026-02-12 17:19:26,735 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:19:26] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:19:33,855 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-12T17:19:33.855188', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'username': 'admin'}}
+2026-02-12 17:19:33,856 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:19:33] "[32mPOST /admin/login HTTP/1.1[0m" 302 -
+2026-02-12 17:19:33,864 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:19:33] "GET /admin HTTP/1.1" 200 -
+2026-02-12 17:19:33,878 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:19:33] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:26:09,681 - app.security - INFO - Rate limiting configured with Redis
+2026-02-12 17:26:09,740 - app.models - INFO - Encryption cipher configured: True
+2026-02-12 17:26:23,865 - app.security - INFO - Rate limiting configured with Redis
+2026-02-12 17:26:23,930 - app.models - INFO - Encryption cipher configured: True
+2026-02-12 17:26:23,960 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-12 17:26:23,960 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-12 17:26:30,622 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:26:30] "GET /admin/login HTTP/1.1" 200 -
+2026-02-12 17:26:30,758 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:26:30] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:26:30,765 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:26:30] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-12 17:26:35,517 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-12T17:26:35.517669', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'username': 'admin'}}
+2026-02-12 17:26:35,518 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:26:35] "[32mPOST /admin/login HTTP/1.1[0m" 302 -
+2026-02-12 17:26:35,555 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:26:35] "GET /admin HTTP/1.1" 200 -
+2026-02-12 17:26:35,572 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:26:35] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-12 17:26:37,286 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:26:37] "[32mGET /admin/logout HTTP/1.1[0m" 302 -
+2026-02-12 17:26:37,294 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:26:37] "GET /admin/login HTTP/1.1" 200 -
+2026-02-12 17:26:37,305 - werkzeug - INFO - 127.0.0.1 - - [12/Feb/2026 17:26:37] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -

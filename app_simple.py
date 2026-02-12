@@ -15,7 +15,7 @@ from flask_migrate import Migrate
 from dotenv import load_dotenv
 
 # Carrega variáveis de ambiente
-load_dotenv('.env.local')
+load_dotenv('.env.local.dev')
 
 # Importa modelos SQLAlchemy
 from app.models import db, User, AccessLog
@@ -181,12 +181,17 @@ def validate_current_password(username, password):
 def send_reset_email(email, username, token):
     """Envia email de recuperação de senha"""
     try:
-        smtp_server = os.getenv('SMTP_SERVER', 'smtp.gmail.com')
-        smtp_port = int(os.getenv('SMTP_PORT', '587'))
-        smtp_username = os.getenv('SMTP_USERNAME')
-        smtp_password = os.getenv('SMTP_PASSWORD')
-        use_tls = os.getenv('SMTP_USE_TLS', 'True').lower() == 'true'
-        from_email = os.getenv('FROM_EMAIL', smtp_username)
+        smtp_server = os.getenv('SMTP_SERVER') or os.getenv('MAIL_SERVER') or 'smtp.gmail.com'
+        smtp_port = int(os.getenv('SMTP_PORT') or os.getenv('MAIL_PORT') or '587')
+        smtp_username = os.getenv('SMTP_USERNAME') or os.getenv('SMTP_USER') or os.getenv('MAIL_USERNAME')
+        smtp_password = os.getenv('SMTP_PASSWORD') or os.getenv('MAIL_PASSWORD')
+        use_tls = (os.getenv('SMTP_USE_TLS') or os.getenv('MAIL_USE_TLS') or 'True').lower() == 'true'
+        from_email = (
+            os.getenv('FROM_EMAIL')
+            or os.getenv('SMTP_FROM')
+            or os.getenv('MAIL_DEFAULT_SENDER')
+            or smtp_username
+        )
         from_name = os.getenv('FROM_NAME', 'Wi-Fi Portal Admin')
 
         if not smtp_username or not smtp_password:
