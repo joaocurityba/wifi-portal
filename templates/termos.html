@@ -9,58 +9,60 @@
 </head>
 <body>
     <div class="container" style="max-width: 800px;">
-        <div class="logo-section">
-            <div class="logo">
-                <img 
-                    src="{{ url_for('static', filename='images/logo.svg') }}" 
-                    alt="Logo Wi-Fi Público Municipal"
-                    width="160"
-                    height="auto"
-                >
+        <div class="container-terms">
+            <div class="logo-section">
+                <div class="logo">
+                    <img 
+                        src="{{ url_for('static', filename='images/logo.svg') }}" 
+                        alt="Logo Wi-Fi Público Municipal"
+                        width="160"
+                        height="auto"
+                    >
+                </div>
+                <h1>Termos de Uso</h1>
+                <p class="subtitle">Wi-Fi Público Municipal</p>
             </div>
-            <h1>Termos de Uso</h1>
-            <p class="subtitle">Wi-Fi Público Municipal</p>
-        </div>
 
-        <div class="terms-content">
-            <h2>1. Aceitação dos Termos</h2>
-            <p>Ao utilizar o Wi-Fi Público Municipal, você concorda com todos os termos e condições descritos neste documento.</p>
+            <div class="terms-content">
+                <h2>1. Aceitação dos Termos</h2>
+                <p>Ao utilizar o Wi-Fi Público Municipal, você concorda com todos os termos e condições descritos neste documento.</p>
 
-            <h2>2. Uso do Serviço</h2>
-            <p>O Wi-Fi Público Municipal é um serviço gratuito oferecido pela Prefeitura para acesso à internet em áreas públicas. O uso do serviço é responsabilidade exclusiva do usuário.</p>
+                <h2>2. Uso do Serviço</h2>
+                <p>O Wi-Fi Público Municipal é um serviço gratuito oferecido pela Prefeitura para acesso à internet em áreas públicas. O uso do serviço é responsabilidade exclusiva do usuário.</p>
 
-            <h2>3. Responsabilidades do Usuário</h2>
-            <ul>
-                <li>Não utilizar o serviço para atividades ilegais ou que violem direitos de terceiros</li>
-                <li>Não realizar ataques, invasões ou tentativas de acesso não autorizado</li>
-                <li>Não disseminar conteúdo ofensivo, difamatório ou que incite violência</li>
-                <li>Não utilizar o serviço para download ou compartilhamento de arquivos protegidos por direitos autorais</li>
-                <li>Não sobrecarregar a rede com tráfego excessivo ou automático</li>
-            </ul>
+                <h2>3. Responsabilidades do Usuário</h2>
+                <ul>
+                    <li>Não utilizar o serviço para atividades ilegais ou que violem direitos de terceiros</li>
+                    <li>Não realizar ataques, invasões ou tentativas de acesso não autorizado</li>
+                    <li>Não disseminar conteúdo ofensivo, difamatório ou que incite violência</li>
+                    <li>Não utilizar o serviço para download ou compartilhamento de arquivos protegidos por direitos autorais</li>
+                    <li>Não sobrecarregar a rede com tráfego excessivo ou automático</li>
+                </ul>
 
-            <h2>4. Limitações de Uso</h2>
-            <p>A Prefeitura se reserva o direito de:</p>
-            <ul>
-                <li>Limitar o acesso de usuários que violarem estes termos</li>
-                <li>Interromper o serviço temporariamente para manutenção</li>
-                <li>Monitorar o tráfego para fins de segurança e qualidade do serviço</li>
-                <li>Alterar estas condições de uso a qualquer momento</li>
-            </ul>
+                <h2>4. Limitações de Uso</h2>
+                <p>A Prefeitura se reserva o direito de:</p>
+                <ul>
+                    <li>Limitar o acesso de usuários que violarem estes termos</li>
+                    <li>Interromper o serviço temporariamente para manutenção</li>
+                    <li>Monitorar o tráfego para fins de segurança e qualidade do serviço</li>
+                    <li>Alterar estas condições de uso a qualquer momento</li>
+                </ul>
 
-            <h2>5. Segurança</h2>
-            <p>O usuário reconhece que:</p>
-            <ul>
-                <li>O Wi-Fi público não oferece criptografia de dados</li>
-                <li>É recomendável evitar transações financeiras e acesso a dados sensíveis</li>
-                <li>O uso de VPN é recomendado para maior segurança</li>
-                <li>A Prefeitura não se responsabiliza por perdas ou danos decorrentes do uso do serviço</li>
-            </ul>
+                <h2>5. Segurança</h2>
+                <p>O usuário reconhece que:</p>
+                <ul>
+                    <li>O Wi-Fi público não oferece criptografia de dados</li>
+                    <li>É recomendável evitar transações financeiras e acesso a dados sensíveis</li>
+                    <li>O uso de VPN é recomendado para maior segurança</li>
+                    <li>A Prefeitura não se responsabiliza por perdas ou danos decorrentes do uso do serviço</li>
+                </ul>
 
-            <h2>6. Disposições Finais</h2>
-            <p>Este serviço é oferecido "como está" e "conforme disponível". A Prefeitura não garante a disponibilidade contínua, ininterrupta ou livre de erros do serviço.</p>
+                <h2>6. Disposições Finais</h2>
+                <p>Este serviço é oferecido "como está" e "conforme disponível". A Prefeitura não garante a disponibilidade contínua, ininterrupta ou livre de erros do serviço.</p>
 
-            <div class="terms-actions">
-                <a href="{{ url_for('login') }}" class="btn-secondary">Voltar ao Portal</a>
+                <div class="terms-actions">
+                    <a href="{{ url_for('login') }}" class="btn-secondary">Voltar ao Portal</a>
+                </div>
             </div>
         </div>
     </div>

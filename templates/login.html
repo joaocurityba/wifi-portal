@@ -11,83 +11,85 @@
 </head>
 <body>
     <div class="container">
-        <div class="logo-section">
-            <div class="logo">
-                <img 
-                    src="{{ url_for('static', filename='images/logo.svg') }}" 
-                    alt="Logo Wi-Fi Público Municipal"
-                    width="160"
-                    height="auto"
-                >
+        <div class="container-login">
+            <div class="logo-section">
+                <div class="logo">
+                    <img 
+                        src="{{ url_for('static', filename='images/logo.svg') }}" 
+                        alt="Logo Wi-Fi Público Municipal"
+                        width="160"
+                        height="auto"
+                    >
+                </div>
+                <h1>Wi-Fi Público Municipal</h1>
+                <p class="subtitle">Conexão segura e gratuita em Paty do Alferes.</p>
             </div>
-            <h1>Wi-Fi Público Municipal</h1>
-            <p class="subtitle">Conexão segura e gratuita nas praças da cidade</p>
-        </div>
 
-        <div class="form-section">
-            <form method="POST" action="{{ url_for('login') }}" novalidate>
-                <!-- CSRF Token -->
-                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-                <!-- Campos ocultos para parâmetros do MikroTik -->
-                <input type="hidden" name="ip" value="{{ ip }}">
-                <input type="hidden" name="mac" value="{{ mac }}">
-                <input type="hidden" name="link-orig" value="{{ link_orig }}">
+            <div class="form-section">
+                <form method="POST" action="{{ url_for('login') }}" novalidate>
+                    <!-- CSRF Token -->
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <!-- Campos ocultos para parâmetros do MikroTik -->
+                    <input type="hidden" name="ip" value="{{ ip }}">
+                    <input type="hidden" name="mac" value="{{ mac }}">
+                    <input type="hidden" name="link-orig" value="{{ link_orig }}">
 
-                <!-- Mensagens de erro -->
-                {% with messages = get_flashed_messages(category_filter=['error']) %}
-                    {% if messages %}
-                        <div class="alert alert-error">
-                            {% for message in messages %}
-                                <p>{{ message }}</p>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                {% endwith %}
+                    <!-- Mensagens de erro -->
+                    {% with messages = get_flashed_messages(category_filter=['error']) %}
+                        {% if messages %}
+                            <div class="alert alert-error">
+                                {% for message in messages %}
+                                    <p>{{ message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
 
-                <div class="form-group">
-                    <label for="nome">Nome Completo *</label>
-                    <input type="text" id="nome" name="nome" value="{{ nome }}" required 
-                           placeholder="Digite seu nome completo">
-                    <span class="error-message" id="nome-error"></span>
-                </div>
+                    <div class="form-group">
+                        <label for="nome">Nome Completo *</label>
+                        <input type="text" id="nome" name="nome" value="{{ nome }}" required 
+                            placeholder="Digite seu nome completo">
+                        <span class="error-message" id="nome-error"></span>
+                    </div>
 
-                <div class="form-group">
-                    <label for="email">Email *</label>
-                    <input type="email" id="email" name="email" value="{{ email }}" required 
-                           placeholder="seu@email.com" maxlength="100">
-                    <span class="error-message" id="email-error"></span>
-                </div>
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" value="{{ email }}" required 
+                            placeholder="seu@email.com" maxlength="100">
+                        <span class="error-message" id="email-error"></span>
+                    </div>
 
-                <div class="form-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="termos" name="termos" required>
-                        <span class="checkmark"></span>
-                        <p class="subtitle">Li e aceito os <a href="{{ url_for('termos') }}" target="_blank">Termos de Uso</a> *</p>
-                    </label>
-                    <span class="error-message" id="termos-error"></span>
-                </div>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="termos" name="termos" required>
+                            <span class="checkmark"></span>
+                            <p class="subtitle">Li e aceito os <a href="{{ url_for('termos') }}" target="_blank">Termos de Uso</a> *</p>
+                        </label>
+                        <span class="error-message" id="termos-error"></span>
+                    </div>
 
-                <div class="form-actions">
-                    <button type="submit" class="btn-primary">
-                        <span class="btn-text">Acessar Internet</span>
-                        <span class="btn-icon">→</span>
-                    </button>
-                </div>
-            </form>
-        </div>
-
-        <div class="info-section">
-            <div class="info-item">
-                <span class="info-icon">🔒</span>
-                <span class="info-text">Compatível com todos os dispositivos</span>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">
+                            <span class="btn-text">Acessar Internet</span>
+                            <span class="btn-icon">→</span>
+                        </button>
+                    </div>
+                </form>
             </div>
-            <div class="info-item">
-                <span class="info-icon">📱</span>
-                <span class="info-text">Conexão segura e protegida</span>
-            </div>
-            <div class="info-item">
-                <span class="info-icon">⚡</span>
-                <span class="info-text">Velocidade garantida</span>
+
+            <div class="info-section">
+                <div class="info-item">
+                    <span class="info-icon">🔒</span>
+                    <span class="info-text">Compatível com todos os dispositivos</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">📱</span>
+                    <span class="info-text">Conexão segura e protegida</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">⚡</span>
+                    <span class="info-text">Velocidade garantida</span>
+                </div>
             </div>
         </div>
     </div>

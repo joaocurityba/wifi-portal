@@ -5723,3 +5723,213 @@ information about how to avoid this problem.
 2026-02-13 14:23:21,287 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:23:21] "GET /static/css/style.css HTTP/1.1" 200 -
 2026-02-13 14:23:21,507 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:23:21] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
 2026-02-13 14:23:21,611 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:23:21] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:25:27,509 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 14:25:27,585 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 14:25:27,611 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 14:25:27,611 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 14:25:29,572 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:25:29] "GET /admin/reset-password HTTP/1.1" 200 -
+2026-02-13 14:25:29,654 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:25:29] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-02-13 14:25:29,800 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:25:29] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:26:03,010 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:26:03] "GET /admin/reset-password HTTP/1.1" 200 -
+2026-02-13 14:26:03,024 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:26:03] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 14:26:03,925 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:26:03] "GET /admin/reset-password HTTP/1.1" 200 -
+2026-02-13 14:26:04,249 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:26:04] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 14:26:08,913 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 14:26:08,971 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 14:26:09,000 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 14:26:09,000 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 14:26:10,851 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:26:10] "GET /admin/reset-password HTTP/1.1" 200 -
+2026-02-13 14:26:10,913 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:26:10] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 14:26:11,044 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:26:11] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:27:05,253 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 14:27:05,315 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 14:27:05,340 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 14:27:05,341 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 14:27:09,378 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:27:09] "GET /admin/reset-password HTTP/1.1" 200 -
+2026-02-13 14:27:09,436 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:27:09] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 14:27:09,575 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:27:09] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:27:17,963 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:27:17] "GET /admin/login HTTP/1.1" 200 -
+2026-02-13 14:27:18,008 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:27:18] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 14:27:18,196 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:27:18] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:27:22,456 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:27:22] "GET /admin/reset-password HTTP/1.1" 200 -
+2026-02-13 14:27:22,761 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:27:22] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 14:27:22,777 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:27:22] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:27:43,343 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:27:43] "GET /admin/login HTTP/1.1" 200 -
+2026-02-13 14:28:13,310 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:28:13] "GET /login HTTP/1.1" 200 -
+2026-02-13 14:28:13,318 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:28:13] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 14:28:13,629 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:28:13] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:28:13,633 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:28:13] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-02-13 14:28:13,634 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:28:13] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:31:11,964 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:31:11] "GET /login HTTP/1.1" 200 -
+2026-02-13 14:31:11,993 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:31:11] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-02-13 14:31:12,279 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:31:12] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:31:12,280 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:31:12] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-02-13 14:31:12,303 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:31:12] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:31:24,624 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:31:24] "GET /login HTTP/1.1" 200 -
+2026-02-13 14:31:24,636 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:31:24] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 14:31:24,893 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:31:24] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:31:24,944 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:31:24] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-02-13 14:31:32,877 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 14:31:32,937 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 14:31:32,962 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 14:31:32,962 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 14:31:35,164 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:31:35] "GET /login HTTP/1.1" 200 -
+2026-02-13 14:31:35,230 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:31:35] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 14:31:35,413 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:31:35] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:31:35,478 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:31:35] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-02-13 14:32:51,012 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 14:32:51,074 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 14:32:51,108 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 14:32:51,108 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 14:32:53,089 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:32:53] "GET /login HTTP/1.1" 200 -
+2026-02-13 14:32:53,165 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:32:53] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-02-13 14:32:53,339 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:32:53] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:32:53,409 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:32:53] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-02-13 14:32:53,476 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:32:53] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:33:11,300 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:33:11] "GET /login HTTP/1.1" 200 -
+2026-02-13 14:33:11,319 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:33:11] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-02-13 14:33:11,556 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:33:11] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:33:11,618 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:33:11] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-02-13 14:33:11,629 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:33:11] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:37:08,531 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 14:37:08,611 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 14:37:08,651 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 14:37:08,652 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 14:37:11,868 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:37:11] "GET /admin/login HTTP/1.1" 200 -
+2026-02-13 14:37:11,937 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:37:11] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-02-13 14:37:12,109 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:37:12] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:37:12,258 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:37:12] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:37:14,298 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:37:14] "GET /admin/reset-password HTTP/1.1" 200 -
+2026-02-13 14:37:14,306 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:37:14] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 14:37:14,548 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:37:14] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:37:16,731 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:37:16] "GET /termos HTTP/1.1" 200 -
+2026-02-13 14:37:16,746 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:37:16] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-02-13 14:37:16,979 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:37:16] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:37:17,060 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:37:17] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:37:19,393 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:37:19] "GET /login HTTP/1.1" 200 -
+2026-02-13 14:37:19,407 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:37:19] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 14:37:19,645 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:37:19] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:37:19,724 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:37:19] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:37:19,724 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:37:19] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-02-13 14:37:35,392 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:37:35] "GET /login HTTP/1.1" 200 -
+2026-02-13 14:37:35,641 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:37:35] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-02-13 14:37:35,728 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:37:35] "GET /static/images/logo.svg HTTP/1.1" 200 -
+2026-02-13 14:37:35,728 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:37:35] "GET /static/js/main.js HTTP/1.1" 200 -
+2026-02-13 14:37:35,729 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:37:35] "GET /static/images/centro-cultural-pb.png HTTP/1.1" 200 -
+2026-02-13 14:42:05,774 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 14:42:05,840 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 14:42:05,874 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 14:42:05,874 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 14:42:11,482 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:42:11] "GET /login HTTP/1.1" 200 -
+2026-02-13 14:42:11,547 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:42:11] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-02-13 14:42:11,739 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:42:11] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:42:11,808 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:42:11] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-02-13 14:42:11,861 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:42:11] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:42:16,935 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:42:16] "GET /termos HTTP/1.1" 200 -
+2026-02-13 14:42:16,950 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:42:16] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 14:42:17,190 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:42:17] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:42:17,273 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:42:17] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:42:19,022 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:42:19] "GET /login HTTP/1.1" 200 -
+2026-02-13 14:42:19,030 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:42:19] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 14:42:19,274 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:42:19] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:42:19,344 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:42:19] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-02-13 14:42:21,572 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:42:21] "GET /admin/login HTTP/1.1" 200 -
+2026-02-13 14:42:21,582 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:42:21] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-02-13 14:42:21,830 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:42:21] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:42:21,898 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:42:21] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:45:14,921 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 14:45:14,985 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 14:45:15,012 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 14:45:15,012 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 14:45:17,178 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:45:17] "GET /login HTTP/1.1" 200 -
+2026-02-13 14:45:17,243 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:45:17] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-02-13 14:45:17,440 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:45:17] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:45:17,494 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:45:17] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-02-13 14:45:17,559 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:45:17] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:45:22,036 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:45:22] "GET /termos HTTP/1.1" 200 -
+2026-02-13 14:45:22,045 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:45:22] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 14:45:22,289 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:45:22] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:45:22,375 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:45:22] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:45:24,390 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:45:24] "GET /admin/login HTTP/1.1" 200 -
+2026-02-13 14:45:24,408 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:45:24] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-02-13 14:45:24,664 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:45:24] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:45:24,724 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:45:24] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:45:26,431 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:45:26] "GET /admin/reset-password HTTP/1.1" 200 -
+2026-02-13 14:45:26,445 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:45:26] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 14:45:26,658 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:45:26] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:47:29,170 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 14:47:29,229 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 14:47:29,254 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 14:47:29,255 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 14:47:35,527 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:47:35] "GET /termos HTTP/1.1" 200 -
+2026-02-13 14:47:35,598 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:47:35] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 14:47:35,773 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:47:35] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:47:35,911 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:47:35] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:48:43,853 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 14:48:43,909 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 14:48:43,929 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 14:48:43,929 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 14:48:50,990 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:48:50] "GET /login HTTP/1.1" 200 -
+2026-02-13 14:48:51,087 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:48:51] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-02-13 14:48:51,247 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:48:51] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:48:51,313 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:48:51] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-02-13 14:48:51,405 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:48:51] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:48:54,213 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:48:54] "GET /termos HTTP/1.1" 200 -
+2026-02-13 14:48:54,227 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:48:54] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 14:48:54,457 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:48:54] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:48:54,555 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:48:54] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:49:35,754 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 14:49:35,814 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 14:49:35,842 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 14:49:35,842 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 14:49:53,950 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:49:53] "GET /login HTTP/1.1" 200 -
+2026-02-13 14:49:54,239 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:49:54] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-02-13 14:49:54,274 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:49:54] "GET /static/images/logo.svg HTTP/1.1" 200 -
+2026-02-13 14:49:54,276 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:49:54] "GET /static/images/centro-cultural-pb.png HTTP/1.1" 200 -
+2026-02-13 14:49:54,276 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:49:54] "GET /static/js/main.js HTTP/1.1" 200 -
+2026-02-13 14:49:54,554 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:49:54] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-02-13 14:49:56,099 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:49:56] "GET /termos HTTP/1.1" 200 -
+2026-02-13 14:49:56,419 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:49:56] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:49:56,421 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:49:56] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 14:49:56,689 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:49:56] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:50:06,129 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:50:06] "GET /admin/login HTTP/1.1" 200 -
+2026-02-13 14:50:06,463 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:50:06] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 14:50:06,465 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:50:06] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:50:06,717 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:50:06] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:50:13,296 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:50:13] "GET /admin/reset-password HTTP/1.1" 200 -
+2026-02-13 14:50:13,659 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:50:13] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 14:50:13,659 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:50:13] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:50:13,917 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:50:13] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
