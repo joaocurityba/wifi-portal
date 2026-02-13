@@ -27,10 +27,10 @@ body {
 }
 
 .container {
-    background: white;
+    background: linear-gradient(135deg, #0D7A92 0%, #0F4593 100%);
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
+    padding: 1rem;
     width: 100%;
     max-width: 480px;
     margin: 2rem;
