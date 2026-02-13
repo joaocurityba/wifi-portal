@@ -452,6 +452,11 @@ def termos():
     """Página de termos de uso"""
     return render_template('termos.html')
 
+@app.route('/politica-privacidade')
+def politica_privacidade():
+    """Página de política de privacidade"""
+    return render_template('politica_privacidade.html')
+
 @app.route('/')
 def index():
     """Redireciona para a página de login"""
