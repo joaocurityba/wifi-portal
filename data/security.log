@@ -6159,3 +6159,40 @@ information about how to avoid this problem.
 2026-02-13 15:17:43,551 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:17:43] "GET /admin HTTP/1.1" 200 -
 2026-02-13 15:17:48,646 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:17:48] "[33mGET /admin_search HTTP/1.1[0m" 404 -
 2026-02-13 15:17:50,948 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:17:50] "GET /admin HTTP/1.1" 200 -
+2026-02-13 15:18:39,319 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:18:39,365 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:18:39,399 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:18:39,399 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:19:37,162 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:19:37] "GET /admin/profile HTTP/1.1" 200 -
+2026-02-13 15:19:37,450 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:19:37] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:19:37,467 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:19:37] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 15:19:37,467 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:19:37] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 15:20:23,615 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:20:23,666 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:20:23,700 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:20:23,700 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:20:26,187 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:20:26] "GET /admin/login HTTP/1.1" 200 -
+2026-02-13 15:20:26,530 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:20:26] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:20:26,538 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:20:26] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 15:20:26,564 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:20:26] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 15:20:29,968 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:20:29] "GET /admin/login HTTP/1.1" 200 -
+2026-02-13 15:20:30,229 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:20:30] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:20:30,288 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:20:30] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 15:20:33,393 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:20:33] "GET /admin HTTP/1.1" 200 -
+2026-02-13 15:20:33,716 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:20:33] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:20:44,157 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:20:44,216 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:20:44,260 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:20:44,260 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:20:49,673 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:20:49] "GET /admin/profile HTTP/1.1" 200 -
+2026-02-13 15:20:49,948 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:20:49] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:20:49,993 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:20:49] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
