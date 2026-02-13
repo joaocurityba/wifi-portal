@@ -6480,3 +6480,33 @@ jinja2.exceptions.UndefinedError: 'str object' has no attribute 'strftime'
 2026-02-13 15:44:48,199 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
 2026-02-13 15:44:50,407 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:44:50] "GET /admin/search HTTP/1.1" 200 -
 2026-02-13 15:44:50,711 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:44:50] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:48:25,146 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:48:25,209 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:48:25,229 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:48:25,229 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:48:30,566 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:48:30] "GET /admin HTTP/1.1" 200 -
+2026-02-13 15:48:30,831 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:48:30] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:48:30,884 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:48:30] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 15:50:41,986 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:50:42,055 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:50:42,082 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:50:42,083 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:50:45,150 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:50:45] "GET /admin HTTP/1.1" 200 -
+2026-02-13 15:50:45,410 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:50:45] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:50:45,462 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:50:45] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 15:51:16,788 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:51:16,862 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:51:16,910 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:51:16,910 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:51:19,876 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:51:19] "GET /admin HTTP/1.1" 200 -
+2026-02-13 15:51:20,149 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:51:20] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:51:20,198 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:51:20] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
