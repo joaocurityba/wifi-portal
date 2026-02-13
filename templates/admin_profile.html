@@ -11,12 +11,22 @@
     <style>
         /* Estilos específicos para perfil admin */
         .profile-container {
-            max-width: 600px;
+            max-width: 800px;
             background: white;
             border-radius: 16px;
             padding: 2rem;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             border: 1px solid #e5e7eb;
+        }
+
+        .container-adm {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem;
         }
         
         .profile-header {
@@ -29,7 +39,7 @@
         .profile-header h2 {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #2563eb;
+            color: #0F4593;
             margin-bottom: 0.5rem;
         }
         
@@ -64,6 +74,7 @@
             padding: 1rem;
             border-radius: 8px;
             border: 1px solid #e5e7eb;
+            max-width: 100%;
         }
         
         .info-label {
@@ -147,15 +158,16 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container-adm">
         <div class="profile-container">
             <div class="profile-header">
                 <div class="logo">
-                    <svg width="48" height="48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="32" cy="32" r="30" stroke="#2563eb" stroke-width="4"/>
-                        <path d="M16 32l8-8 16 16 8-8" stroke="#2563eb" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                        <circle cx="32" cy="32" r="8" fill="#2563eb"/>
-                    </svg>
+                    <img 
+                        src="{{ url_for('static', filename='images/logo.svg') }}" 
+                        alt="Logo Wi-Fi Público Municipal"
+                        width="160"
+                        height="auto"
+                    >
                 </div>
                 <h2>Perfil Administrativo</h2>
                 <p>Gerencie suas credenciais e informações de acesso</p>

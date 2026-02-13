@@ -6030,3 +6030,132 @@ information about how to avoid this problem.
 2026-02-13 14:59:49,837 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:59:49] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
 2026-02-13 14:59:49,837 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:59:49] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
 2026-02-13 14:59:49,897 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:59:49] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 15:07:06,522 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:07:06,584 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:07:06,623 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:07:06,624 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:07:24,799 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:07:24] "GET /admin/login HTTP/1.1" 200 -
+2026-02-13 15:07:25,084 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:07:25] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:07:25,125 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:07:25] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 15:07:25,125 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:07:25] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 15:07:30,217 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-13T15:07:30.217107', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'details': {'username': 'admin'}}
+2026-02-13 15:07:30,217 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:07:30] "[32mPOST /admin/login HTTP/1.1[0m" 302 -
+2026-02-13 15:07:30,586 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:07:30] "GET /admin HTTP/1.1" 200 -
+2026-02-13 15:07:30,805 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:07:30] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:07:51,073 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:07:51] "GET /admin/profile HTTP/1.1" 200 -
+2026-02-13 15:07:51,388 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:07:51] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:07:53,939 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:07:53] "GET /admin HTTP/1.1" 200 -
+2026-02-13 15:09:40,183 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:09:40,241 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:09:40,269 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:09:40,269 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:09:43,478 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:09:43] "GET /admin HTTP/1.1" 200 -
+2026-02-13 15:09:43,691 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:09:43] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:10:53,105 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:10:53] "GET /admin HTTP/1.1" 200 -
+2026-02-13 15:10:53,374 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:10:53] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:11:00,201 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:11:00,251 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:11:00,290 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:11:00,290 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:11:03,805 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:11:03] "GET /admin HTTP/1.1" 200 -
+2026-02-13 15:11:04,066 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:11:04] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:11:06,400 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:11:06] "GET /admin HTTP/1.1" 200 -
+2026-02-13 15:11:06,741 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:11:06] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:11:46,907 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:11:46,966 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:11:46,985 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:11:46,985 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:11:49,008 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:11:49] "GET /admin HTTP/1.1" 200 -
+2026-02-13 15:11:49,250 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:11:49] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:12:20,817 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:12:20] "GET /admin HTTP/1.1" 200 -
+2026-02-13 15:12:21,144 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:12:21] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:12:26,384 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:12:26,451 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:12:26,474 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:12:26,474 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:12:29,003 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:12:29] "GET /admin HTTP/1.1" 200 -
+2026-02-13 15:12:29,265 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:12:29] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:12:40,706 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:12:40] "GET /admin/profile HTTP/1.1" 200 -
+2026-02-13 15:12:41,021 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:12:41] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:12:43,139 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:12:43] "GET /admin HTTP/1.1" 200 -
+2026-02-13 15:12:45,192 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:12:45] "GET /admin/profile HTTP/1.1" 200 -
+2026-02-13 15:12:45,468 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:12:45] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:13:33,993 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:13:34,051 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:13:34,072 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:13:34,072 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:13:37,045 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:13:37] "GET /admin/profile HTTP/1.1" 200 -
+2026-02-13 15:13:37,305 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:13:37] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:13:37,369 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:13:37] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 15:14:49,949 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:14:50,000 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:14:50,038 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:14:50,038 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:14:52,205 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:14:52] "GET /admin/profile HTTP/1.1" 200 -
+2026-02-13 15:14:52,444 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:14:52] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:14:52,517 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:14:52] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 15:15:15,766 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:15:15,833 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:15:15,862 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:15:15,862 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:15:17,994 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:15:17] "GET /admin/profile HTTP/1.1" 200 -
+2026-02-13 15:15:18,283 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:15:18] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:15:18,305 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:15:18] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 15:15:21,098 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:15:21] "GET /admin/profile HTTP/1.1" 200 -
+2026-02-13 15:15:21,428 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:15:21] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:15:21,431 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:15:21] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 15:16:32,009 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:16:32,081 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:16:32,107 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:16:32,107 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:16:34,568 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:16:34] "GET /admin/profile HTTP/1.1" 200 -
+2026-02-13 15:16:34,832 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:16:34] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:16:34,881 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:16:34] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 15:17:04,166 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:17:04,216 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:17:04,257 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:17:04,257 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:17:06,983 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:17:06] "GET /admin/profile HTTP/1.1" 200 -
+2026-02-13 15:17:07,250 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:17:07] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:17:07,317 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:17:07] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 15:17:27,018 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:17:27] "GET /admin HTTP/1.1" 200 -
+2026-02-13 15:17:27,335 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:17:27] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:17:28,855 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:17:28] "GET /admin/profile HTTP/1.1" 200 -
+2026-02-13 15:17:29,173 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:17:29] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:17:29,174 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:17:29] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 15:17:33,311 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:17:33] "GET /admin HTTP/1.1" 200 -
+2026-02-13 15:17:33,637 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:17:33] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:17:41,713 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:17:41] "[33mGET /search HTTP/1.1[0m" 404 -
+2026-02-13 15:17:43,551 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:17:43] "GET /admin HTTP/1.1" 200 -
+2026-02-13 15:17:48,646 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:17:48] "[33mGET /admin_search HTTP/1.1[0m" 404 -
+2026-02-13 15:17:50,948 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:17:50] "GET /admin HTTP/1.1" 200 -
