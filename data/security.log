@@ -6196,3 +6196,220 @@ information about how to avoid this problem.
 2026-02-13 15:20:49,673 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:20:49] "GET /admin/profile HTTP/1.1" 200 -
 2026-02-13 15:20:49,948 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:20:49] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
 2026-02-13 15:20:49,993 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:20:49] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 15:22:54,944 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:22:55,002 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:22:55,019 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:22:55,019 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:23:09,881 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:23:09] "GET /admin HTTP/1.1" 200 -
+2026-02-13 15:23:10,159 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:23:10] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:23:10,196 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:23:10] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 15:23:14,548 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:23:14] "GET /admin/stats HTTP/1.1" 200 -
+2026-02-13 15:23:14,872 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:23:14] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:23:27,299 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:23:27] "GET /admin/search HTTP/1.1" 200 -
+2026-02-13 15:23:27,639 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:23:27] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:23:27,904 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:23:27] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 15:25:32,534 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:25:32,596 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:25:32,617 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:25:32,617 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:25:34,729 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:25:34] "GET /admin/search HTTP/1.1" 200 -
+2026-02-13 15:25:34,989 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:25:34] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:25:43,899 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:25:43] "GET /admin HTTP/1.1" 200 -
+2026-02-13 15:25:44,222 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:25:44] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:25:57,831 - app_simple - ERROR - Exception on /admin/search [POST]
+Traceback (most recent call last):
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\venv\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\venv\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\venv\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\venv\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\app\security.py", line 212, in decorated_function
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\app\security.py", line 259, in decorated_function
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\app_simple.py", line 501, in admin_search
+    return render_template('admin_search.html',
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\venv\Lib\site-packages\flask\templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\venv\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\venv\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\venv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\templates\admin_search.html", line 239, in top-level template code
+    <td>{{ registro.timestamp.strftime('%d/%m/%Y %H:%M') if registro.timestamp else 'N/A' }}</td>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\venv\Lib\site-packages\jinja2\utils.py", line 92, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'str object' has no attribute 'strftime'
+2026-02-13 15:25:57,882 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:25:57] "[35m[1mPOST /admin/search HTTP/1.1[0m" 500 -
+2026-02-13 15:26:07,217 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:26:07] "GET /admin/search HTTP/1.1" 200 -
+2026-02-13 15:27:25,839 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:27:25,905 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:27:25,932 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:27:25,932 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:27:30,248 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:27:30] "GET /admin/stats HTTP/1.1" 200 -
+2026-02-13 15:27:30,548 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:27:30] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:27:30,575 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:27:30] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 15:27:59,547 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:27:59,597 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:27:59,633 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:27:59,633 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:28:02,386 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:28:02] "GET /admin/stats HTTP/1.1" 200 -
+2026-02-13 15:28:02,663 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:28:02] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:28:02,700 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:28:02] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 15:28:27,165 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:28:27,231 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:28:27,255 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:28:27,255 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:28:30,772 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:28:30] "GET /admin/stats HTTP/1.1" 200 -
+2026-02-13 15:28:31,035 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:28:31] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:28:46,637 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:28:46,681 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:28:46,718 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:28:46,718 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:28:49,355 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:28:49] "GET /admin/search HTTP/1.1" 200 -
+2026-02-13 15:28:49,646 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:28:49] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:29:12,500 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:29:12,559 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:29:12,582 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:29:12,582 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:29:14,551 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:29:14] "GET /admin/search HTTP/1.1" 200 -
+2026-02-13 15:29:14,828 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:29:14] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:29:54,765 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:29:54,814 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:29:54,855 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:29:54,856 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:29:56,721 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:29:56] "GET /admin/search HTTP/1.1" 200 -
+2026-02-13 15:29:57,030 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:29:57] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:30:46,893 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:30:46,951 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:30:46,981 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:30:46,981 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:30:49,234 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:30:49] "GET /admin/search HTTP/1.1" 200 -
+2026-02-13 15:30:49,496 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:30:49] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:31:08,656 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:31:08,721 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:31:08,747 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:31:08,747 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:31:11,959 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:31:11] "GET /admin/search HTTP/1.1" 200 -
+2026-02-13 15:31:12,250 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:31:12] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:31:20,669 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:31:20,729 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:31:20,749 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:31:20,749 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:31:22,474 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:31:22] "GET /admin/search HTTP/1.1" 200 -
+2026-02-13 15:31:22,769 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:31:22] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:31:31,669 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:31:31,742 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:31:31,764 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:31:31,764 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:31:33,400 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:31:33] "GET /admin/search HTTP/1.1" 200 -
+2026-02-13 15:31:33,698 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:31:33] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:31:44,270 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:31:44,327 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:31:44,347 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:31:44,347 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:31:46,626 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:31:46] "GET /admin/search HTTP/1.1" 200 -
+2026-02-13 15:31:46,898 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:31:46] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:32:52,448 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:32:52] "POST /admin/search HTTP/1.1" 200 -
+2026-02-13 15:32:52,697 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:32:52] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:33:02,264 - app_simple - ERROR - Exception on /admin/search [POST]
+Traceback (most recent call last):
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\venv\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\venv\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\venv\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\venv\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\app\security.py", line 212, in decorated_function
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\app\security.py", line 259, in decorated_function
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\app_simple.py", line 501, in admin_search
+    return render_template('admin_search.html',
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\venv\Lib\site-packages\flask\templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\venv\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\venv\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\venv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\templates\admin_search.html", line 242, in top-level template code
+    <td>{{ registro.timestamp.strftime('%d/%m/%Y %H:%M') if registro.timestamp else 'N/A' }}</td>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\wifi-portal\wifi-portal-teste\venv\Lib\site-packages\jinja2\utils.py", line 92, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'str object' has no attribute 'strftime'
+2026-02-13 15:33:02,282 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:33:02] "[35m[1mPOST /admin/search HTTP/1.1[0m" 500 -
+2026-02-13 15:33:05,116 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:33:05] "GET /admin/search HTTP/1.1" 200 -
+2026-02-13 15:33:05,440 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:33:05] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:33:05,692 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:33:05] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 15:33:37,753 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:33:37] "[33mGET /healtz HTTP/1.1[0m" 404 -
+2026-02-13 15:34:07,316 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:34:07] "GET /healthz HTTP/1.1" 200 -

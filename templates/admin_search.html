@@ -3,16 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Busca de Logs - Portal Cautivo</title>
+    <title>Busca de Logs - Wi-Fi Público Municipal</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         .admin-container {
-            max-width: 1200px;
+            max-width: 800px;
             background: white;
             border-radius: 12px;
             padding: 2rem;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .container-admin {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem;
         }
         
         .admin-header {
@@ -27,7 +37,7 @@
         .admin-title {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #2563eb;
+            color: #0F4593;
         }
         
         .search-form {
@@ -82,6 +92,7 @@
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
+            margin-bottom: 0.2rem;
         }
         
         .btn-search:hover {
@@ -163,7 +174,7 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container-admin">
         <div class="admin-container">
             <div class="admin-header">
                 <h1 class="admin-title">🔍 Busca de Logs de Acesso</h1>
@@ -197,7 +208,9 @@
                         </select>
                     </div>
                     
-                    <button type="submit" class="btn-search">🔎 Buscar</button>
+                    <div class="form-group">
+                        <button type="submit" class="btn-search">🔎 Buscar</button>
+                    </div>
                 </div>
             </form>
 
