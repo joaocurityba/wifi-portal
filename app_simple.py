@@ -487,24 +487,6 @@ def admin_stats():
         logger.error(f"Erro ao carregar estatísticas: {e}")
         return f"Erro ao carregar estatísticas: {str(e)}", 500
 
-@app.route('/admin/search', methods=['GET', 'POST'])
-@require_admin
-@require_csrf_token
-def admin_search():
-    """Busca em logs de acesso"""
-    if request.method == 'POST':
-        search_term = security_manager.sanitize_input_advanced(request.form.get('search_term', ''))
-        search_field = request.form.get('search_field', 'nome')
-        
-        if search_term:
-            results = data_manager.search_access_logs(search_term, search_field)
-            return render_template('admin_search.html', 
-                                 results=results, 
-                                 search_term=search_term,
-                                 search_field=search_field)
-    
-    return render_template('admin_search.html', results=[], search_term='', search_field='nome')
-
 @app.route('/admin/profile', methods=['GET', 'POST'])
 @require_csrf_token
 def admin_profile():

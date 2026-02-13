@@ -148,16 +148,6 @@ def test_admin_profile_requires_authentication(client):
 
 
 @pytest.mark.security
-def test_admin_search_requires_authentication(client):
-    """
-    Busca deve exigir autenticação
-    """
-    response = client.get('/admin/search')
-    
-    assert response.status_code == 302, "Busca deve exigir autenticação"
-
-
-@pytest.mark.security
 def test_admin_login_with_empty_credentials(client):
     """
     Credenciais vazias devem ser rejeitadas
