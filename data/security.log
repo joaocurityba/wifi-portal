@@ -6413,3 +6413,70 @@ jinja2.exceptions.UndefinedError: 'str object' has no attribute 'strftime'
 2026-02-13 15:33:05,692 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:33:05] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
 2026-02-13 15:33:37,753 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:33:37] "[33mGET /healtz HTTP/1.1[0m" 404 -
 2026-02-13 15:34:07,316 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:34:07] "GET /healthz HTTP/1.1" 200 -
+2026-02-13 15:35:39,122 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:35:39,191 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:35:39,218 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:35:39,218 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:40:37,912 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:40:37,979 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:40:38,000 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:40:38,000 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:40:40,945 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:40:40] "GET /admin/stats HTTP/1.1" 200 -
+2026-02-13 15:40:41,228 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:40:41] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:40:41,281 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:40:41] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 15:40:59,460 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:40:59,524 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:40:59,545 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:40:59,545 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:41:01,803 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:41:01] "GET /admin/stats HTTP/1.1" 200 -
+2026-02-13 15:41:02,085 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:41:02] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:41:48,962 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:41:49,029 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:41:49,050 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:41:49,050 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:41:51,452 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:41:51] "GET /admin/search HTTP/1.1" 200 -
+2026-02-13 15:41:51,728 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:41:51] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:41:51,765 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:41:51] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 15:43:03,427 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:43:03,487 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:43:03,517 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:43:03,518 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:43:06,935 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:43:06] "GET /admin/search HTTP/1.1" 200 -
+2026-02-13 15:43:07,183 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:43:07] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:43:07,259 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:43:07] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 15:44:24,030 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:44:24,081 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:44:24,111 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:44:24,111 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:44:26,825 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:44:26] "GET /admin/search HTTP/1.1" 200 -
+2026-02-13 15:44:27,129 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:44:27] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:44:27,138 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:44:27] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 15:44:29,514 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:44:29] "GET /admin/search HTTP/1.1" 200 -
+2026-02-13 15:44:29,795 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:44:29] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 15:44:48,126 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 15:44:48,185 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 15:44:48,199 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 15:44:48,199 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 15:44:50,407 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:44:50] "GET /admin/search HTTP/1.1" 200 -
+2026-02-13 15:44:50,711 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 15:44:50] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -

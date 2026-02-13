@@ -81,23 +81,6 @@
             letter-spacing: 0.05em;
         }
         
-        .btn-back {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            background-color: #2563eb;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-back:hover {
-            background-color: #1d4ed8;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-        }
-        
         .section-title {
             font-size: 1.25rem;
             font-weight: 600;
@@ -122,7 +105,7 @@
         <div class="admin-container">
             <div class="admin-header">
                 <h1 class="admin-title">📊 Estatísticas Detalhadas</h1>
-                <a href="{{ url_for('admin') }}" class="btn-back">← Voltar</a>
+                <a href="{{ url_for('admin') }}" class="btn-secondary">← Voltar</a>
             </div>
 
             {% if stats %}
