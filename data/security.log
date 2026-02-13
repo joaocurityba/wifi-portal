@@ -6658,3 +6658,38 @@ jinja2.exceptions.UndefinedError: 'str object' has no attribute 'strftime'
 2026-02-13 16:24:05,741 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:24:05] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
 2026-02-13 16:24:05,822 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:24:05] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
 2026-02-13 16:24:05,822 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:24:05] "[36mGET /static/images/favicon.png HTTP/1.1[0m" 304 -
+2026-02-13 16:35:26,217 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 16:35:26,272 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 16:35:26,309 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 16:35:26,310 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 16:35:30,001 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:30] "GET /login HTTP/1.1" 200 -
+2026-02-13 16:35:30,302 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:30] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 16:35:30,322 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:30] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 16:35:30,324 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:30] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-02-13 16:35:30,328 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:30] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 16:35:30,628 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:30] "[36mGET /static/images/favicon.png HTTP/1.1[0m" 304 -
+2026-02-13 16:35:32,187 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:32] "GET /politica-privacidade HTTP/1.1" 200 -
+2026-02-13 16:35:32,503 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:32] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 16:35:32,503 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:32] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 16:35:32,757 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:32] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 16:35:32,824 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:32] "[36mGET /static/images/favicon.png HTTP/1.1[0m" 304 -
+2026-02-13 16:35:34,090 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:34] "GET /termos HTTP/1.1" 200 -
+2026-02-13 16:35:34,404 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:34] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 16:35:34,404 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:34] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 16:35:34,675 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:34] "[36mGET /static/images/favicon.png HTTP/1.1[0m" 304 -
+2026-02-13 16:35:34,723 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:34] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 16:35:36,046 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:36] "GET /admin/login HTTP/1.1" 200 -
+2026-02-13 16:35:36,371 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:36] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 16:35:36,373 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:36] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 16:35:36,627 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:36] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 16:35:36,690 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:36] "[36mGET /static/images/favicon.png HTTP/1.1[0m" 304 -
+2026-02-13 16:35:38,370 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:38] "GET /admin/reset-password HTTP/1.1" 200 -
+2026-02-13 16:35:38,697 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:38] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-13 16:35:38,697 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:38] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 16:35:38,956 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:38] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 16:35:39,028 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:39] "[36mGET /static/images/favicon.png HTTP/1.1[0m" 304 -
+2026-02-13 16:35:46,623 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:46] "GET /admin/login HTTP/1.1" 200 -
+2026-02-13 16:35:46,955 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 16:35:46] "[36mGET /static/images/favicon.png HTTP/1.1[0m" 304 -
