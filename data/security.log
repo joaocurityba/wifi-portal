@@ -5704,3 +5704,22 @@ information about how to avoid this problem.
 2026-02-13 14:18:48,043 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:18:48] "GET /static/css/style.css HTTP/1.1" 200 -
 2026-02-13 14:18:48,279 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:18:48] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
 2026-02-13 14:18:48,361 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:18:48] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:21:54,071 - app.security - INFO - Rate limiting configured with Redis
+2026-02-13 14:21:54,134 - app.models - INFO - Encryption cipher configured: True
+2026-02-13 14:21:54,167 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-13 14:21:54,167 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-13 14:21:57,345 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:21:57] "GET /termos HTTP/1.1" 200 -
+2026-02-13 14:21:57,423 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:21:57] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-02-13 14:21:57,594 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:21:57] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:21:57,742 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:21:57] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:22:50,616 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:22:50] "GET /termos HTTP/1.1" 200 -
+2026-02-13 14:22:50,643 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:22:50] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-02-13 14:22:50,874 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:22:50] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:22:50,961 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:22:50] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-13 14:23:21,251 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:23:21] "GET /termos HTTP/1.1" 200 -
+2026-02-13 14:23:21,287 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:23:21] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-02-13 14:23:21,507 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:23:21] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-13 14:23:21,611 - werkzeug - INFO - 127.0.0.1 - - [13/Feb/2026 14:23:21] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -

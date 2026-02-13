@@ -239,10 +239,75 @@ input[type="date"]:focus {
     font-size: 1.2rem;
 }
 
-.terms-actions a {
-    color: #2563eb;
+/* Estilos da página de termos */
+.terms-content {
+    padding-top: 0.8rem;
+}
+
+.terms-content h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0F4593;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.terms-content h2:first-child {
+    margin-top: 0;
+}
+
+.terms-content p {
+    margin-bottom: 1rem;
+    color: #4b5563;
+    line-height: 1.7;
+    font-size: 0.95rem;
+}
+
+.terms-content ul {
+    margin: 1rem 0 1.5rem 1.5rem;
+    color: #4b5563;
+}
+
+.terms-content ul li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+    font-size: 0.9rem;
+    position: relative;
+    padding-left: 0.5rem;
+}
+
+.terms-content ul li::marker {
+    color: #0D7A92;
+}
+
+.terms-actions {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #e5e7eb;
+    text-align: center;
+}
+
+.btn-secondary {
+    display: inline-block;
+    background: linear-gradient(135deg, #0D7A92 0%, #0F4593 100%);
+    color: white;
     text-decoration: none;
-    font-weight: 500;
+    padding: 0.875rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(13, 122, 146, 0.3);
+}
+
+.btn-secondary:active {
+    transform: translateY(0);
 }
 
 /* Responsividade */
@@ -258,6 +323,15 @@ input[type="date"]:focus {
     
     .btn-primary {
         padding: 0.875rem;
+    }
+
+    .terms-content h2 {
+        font-size: 1rem;
+    }
+
+    .terms-content p,
+    .terms-content ul li {
+        font-size: 0.875rem;
     }
 }
 
