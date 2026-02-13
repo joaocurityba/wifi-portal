@@ -12,6 +12,7 @@ body {
     background-image: url("/static/images/centro-cultural-pb.png");
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
     background-repeat: no-repeat;
 
     /* Fallback caso a imagem não carregue */
