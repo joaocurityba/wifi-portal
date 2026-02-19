@@ -27,8 +27,11 @@ venv\Scripts\activate     # Windows
 # Instalar dependências
 pip install -r requirements-dev.txt
 
-# Configurar .env.local
+# Configurar .env.local (Docker)
 cp .env.prod.example .env.local
+
+# Opcional: execução local fora do Docker
+cp .env.local .env.local.dev
 ```
 
 ### 3. Executar Testes
@@ -77,6 +80,7 @@ git push origin feature/minha-feature
 ## 📝 Padrões de Código
 
 ### Python
+- **Versão recomendada:** 3.9+
 - **PEP 8** para formatação
 - **Type hints** quando possível
 - **Docstrings** em funções públicas
