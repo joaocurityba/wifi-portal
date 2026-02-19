@@ -7120,3 +7120,96 @@ with app.app_context(). See the documentation for more information.
 This typically means that you attempted to use functionality that needed
 an active HTTP request. Consult the documentation on testing for
 information about how to avoid this problem.
+2026-02-19 14:01:53,324 - app.security - INFO - Rate limiting configured with Redis
+2026-02-19 14:01:53,393 - app.models - INFO - Encryption cipher configured: True
+2026-02-19 14:01:53,467 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-19 14:01:53,467 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-19 14:02:19,584 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:02:19] "[32mGET / HTTP/1.1[0m" 302 -
+2026-02-19 14:02:19,606 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:02:19] "GET /login HTTP/1.1" 200 -
+2026-02-19 14:02:19,924 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:02:19] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-02-19 14:02:19,942 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:02:19] "GET /static/images/logo.svg HTTP/1.1" 200 -
+2026-02-19 14:02:19,991 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:02:19] "GET /static/js/main.js HTTP/1.1" 200 -
+2026-02-19 14:02:20,298 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:02:20] "GET /static/images/centro-cultural-pb.png HTTP/1.1" 200 -
+2026-02-19 14:02:20,643 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:02:20] "GET /static/images/favicon.png HTTP/1.1" 200 -
+2026-02-19 14:02:40,944 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-02-19T14:02:40.944036', 'event_type': 'unauthorized_admin_access', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-02-19 14:02:40,944 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:02:40] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-02-19 14:02:41,356 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:02:41] "GET /admin/login HTTP/1.1" 200 -
+2026-02-19 14:02:41,364 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:02:41] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-19 14:02:41,515 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:02:41] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-19 14:02:49,692 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-02-19T14:02:49.692643', 'event_type': 'admin_login_success', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0', 'details': {'username': 'admin'}}
+2026-02-19 14:02:49,694 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:02:49] "[32mPOST /admin/login HTTP/1.1[0m" 302 -
+2026-02-19 14:02:49,779 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:02:49] "GET /admin HTTP/1.1" 200 -
+2026-02-19 14:02:49,794 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:02:49] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-19 14:03:04,104 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:03:04] "GET /admin/profile HTTP/1.1" 200 -
+2026-02-19 14:03:04,144 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:03:04] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-19 14:03:04,327 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:03:04] "[36mGET /static/images/logo.svg HTTP/1.1[0m" 304 -
+2026-02-19 14:03:08,860 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:03:08] "GET /admin HTTP/1.1" 200 -
+2026-02-19 14:03:09,164 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:03:09] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-19 14:15:36,810 - app.security - INFO - Rate limiting configured with Redis
+2026-02-19 14:15:36,884 - app.models - INFO - Encryption cipher configured: True
+2026-02-19 14:15:36,935 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-19 14:15:36,935 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-19 14:15:40,736 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:15:40] "GET /admin HTTP/1.1" 200 -
+2026-02-19 14:15:40,809 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:15:40] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-19 14:15:40,961 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:15:40] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-19 14:15:41,316 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:15:41] "[36mGET /static/images/favicon.png HTTP/1.1[0m" 304 -
+2026-02-19 14:17:33,770 - app.security - INFO - Rate limiting configured with Redis
+2026-02-19 14:17:33,835 - app.models - INFO - Encryption cipher configured: True
+2026-02-19 14:17:33,860 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-19 14:17:33,860 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-19 14:17:36,931 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:17:36] "GET /admin HTTP/1.1" 200 -
+2026-02-19 14:17:36,989 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:17:36] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-19 14:17:37,106 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:17:37] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-19 14:17:37,433 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:17:37] "[36mGET /static/images/favicon.png HTTP/1.1[0m" 304 -
+2026-02-19 14:19:50,114 - app.security - INFO - Rate limiting configured with Redis
+2026-02-19 14:19:50,174 - app.models - INFO - Encryption cipher configured: True
+2026-02-19 14:19:50,198 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-19 14:19:50,198 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-19 14:19:54,418 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:19:54] "GET /admin HTTP/1.1" 200 -
+2026-02-19 14:19:54,480 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:19:54] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-19 14:19:54,619 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:19:54] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-19 14:19:54,940 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:19:54] "[36mGET /static/images/favicon.png HTTP/1.1[0m" 304 -
+2026-02-19 14:22:45,177 - app.security - INFO - Rate limiting configured with Redis
+2026-02-19 14:22:45,239 - app.models - INFO - Encryption cipher configured: True
+2026-02-19 14:22:45,267 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-19 14:22:45,267 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-19 14:22:49,129 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:22:49] "GET /admin HTTP/1.1" 200 -
+2026-02-19 14:22:49,198 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:22:49] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-19 14:22:49,330 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:22:49] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-19 14:22:49,649 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:22:49] "[36mGET /static/images/favicon.png HTTP/1.1[0m" 304 -
+2026-02-19 14:25:08,070 - app.security - INFO - Rate limiting configured with Redis
+2026-02-19 14:25:08,129 - app.models - INFO - Encryption cipher configured: True
+2026-02-19 14:25:08,156 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-19 14:25:08,156 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-19 14:25:11,889 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:25:11] "GET /admin HTTP/1.1" 200 -
+2026-02-19 14:25:11,953 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:25:11] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-19 14:25:12,120 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:25:12] "[36mGET /static/images/centro-cultural-pb.png HTTP/1.1[0m" 304 -
+2026-02-19 14:25:12,453 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:25:12] "[36mGET /static/images/favicon.png HTTP/1.1[0m" 304 -
+2026-02-19 14:25:36,201 - app.security - INFO - Rate limiting configured with Redis
+2026-02-19 14:25:36,267 - app.models - INFO - Encryption cipher configured: True
+2026-02-19 14:25:36,289 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.100.100.44:5000
+2026-02-19 14:25:36,289 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-19 14:25:38,271 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:25:38] "GET /admin HTTP/1.1" 200 -
+2026-02-19 14:25:38,335 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:25:38] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-19 14:25:38,459 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 14:25:38] "[36mGET /static/images/favicon.png HTTP/1.1[0m" 304 -

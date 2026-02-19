@@ -23,6 +23,32 @@
             margin-bottom: 2rem;
             border-bottom: 2px solid #e5e7eb;
             padding-bottom: 1rem;
+            gap: 1rem;
+        }
+
+        .admin-header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .admin-user-badge {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 1rem;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            position: relative;
         }
         
         .admin-title {
@@ -62,12 +88,14 @@
             overflow-x: auto;
             border-radius: 8px;
             border: 1px solid #e5e7eb;
+            -webkit-overflow-scrolling: touch;
         }
         
         table {
             width: 100%;
             border-collapse: collapse;
             background: white;
+            min-width: 920px;
         }
         
         th, td {
@@ -75,6 +103,7 @@
             text-align: left;
             border-bottom: 1px solid #e5e7eb;
             font-size: 0.875rem;
+            white-space: nowrap;
         }
         
         th {
@@ -112,22 +141,175 @@
             max-width: 300px;
             font-size: 0.875rem;
         }
+
+        .mobile-menu-wrapper {
+            display: none;
+            position: relative;
+            width: 100%;
+        }
+
+        .mobile-menu-toggle {
+            width: 100%;
+            text-align: center;
+        }
+
+        .mobile-menu-panel {
+            display: none;
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            right: 0;
+            width: 100%;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+            z-index: 20;
+            overflow: hidden;
+        }
+
+        .mobile-menu-panel.is-open {
+            display: block;
+        }
+
+        .mobile-menu-item {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            color: #1f2937;
+            text-decoration: none;
+            border: none;
+            background: white;
+            cursor: pointer;
+        }
+
+        .mobile-menu-item + .mobile-menu-item {
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .mobile-menu-item.logout {
+            color: #dc2626;
+            background: #fff5f5;
+        }
+
+        .cell-truncate {
+            max-width: 220px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @media (max-width: 1080px) {
+            .admin-container {
+                width: 100%;
+                border-radius: 0;
+                padding: 1rem;
+            }
+
+            .stats-grid {
+                display: none;
+            }
+
+            .admin-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .admin-header-left {
+                align-items: flex-start;
+            }
+
+            .admin-user-badge {
+                margin-right: 0;
+            }
+
+            .admin-actions {
+                width: 100%;
+            }
+
+            .action-secondary {
+                display: none;
+            }
+
+            .action-primary-mobile {
+                width: 100%;
+                text-align: center;
+                display: inline-block;
+                padding: 0.65rem 1rem;
+            }
+
+            .mobile-menu-wrapper {
+                display: block;
+            }
+
+            .search-box {
+                max-width: 100%;
+            }
+
+            th, td {
+                padding: 0.625rem 0.5rem;
+                font-size: 0.8rem;
+            }
+
+            .name-col,
+            .email-col,
+            .ip-col,
+            .mac-col,
+            .date-col {
+                max-width: 120px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .time-col,
+            .ua-col {
+                max-width: 180px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .admin-title {
+                font-size: 1.25rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-card {
+                padding: 1rem;
+            }
+
+            .stat-number {
+                font-size: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="admin-container">
         <div class="admin-header">
-            <div style="display: flex; align-items: center; gap: 1rem;">
+            <div class="admin-header-left">
                 <h1 class="admin-title">Painel de Administração</h1>
-                <span style="background: #e0f2fe; color: #0369a1; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; margin-right: 1rem;">
+                <span class="admin-user-badge">
                     👤 {{ session.username or 'Administrador' }}
                 </span>
             </div>
-            <div style="display: flex; gap: 1rem;">
-                <button class="btn-export" onclick="exportCSV()">Exportar CSV</button>
-                <a href="{{ url_for('admin_profile') }}" class="btn-secondary" style="background: #e0f2fe; color: #0369a1; border-color: #bfdbfe;">Perfil</a>
-                <a href="{{ url_for('login') }}" class="btn-secondary">Voltar ao Portal</a>
-                <a href="{{ url_for('admin_logout') }}" class="btn-secondary" style="background: #fee2e2; color: #dc2626; border-color: #fecaca;">Sair</a>
+            <div class="admin-actions">
+                <button class="btn-export action-secondary" onclick="exportCSV()">Exportar CSV</button>
+                <a href="{{ url_for('admin_profile') }}" class="btn-secondary action-primary-mobile" style="background: #e0f2fe; color: #0369a1; border-color: #bfdbfe;">Perfil</a>
+                <a href="{{ url_for('login') }}" class="btn-secondary action-secondary">Voltar ao Portal</a>
+                <a href="{{ url_for('admin_logout') }}" class="btn-secondary action-secondary" style="background: #fee2e2; color: #dc2626; border-color: #fecaca;">Sair</a>
+                <div class="mobile-menu-wrapper">
+                    <button type="button" id="mobileMenuBtn" class="btn-secondary mobile-menu-toggle" aria-expanded="false" aria-controls="mobileMenuPanel">Mais opções</button>
+                    <div id="mobileMenuPanel" class="mobile-menu-panel">
+                        <button type="button" class="mobile-menu-item" onclick="exportCSV(); closeMobileMenu();">Exportar CSV</button>
+                        <a href="{{ url_for('login') }}" class="mobile-menu-item">Voltar ao Portal</a>
+                        <a href="{{ url_for('admin_logout') }}" class="mobile-menu-item logout">Sair</a>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -154,25 +336,25 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Email</th>
-                        <th>IP</th>
-                        <th>MAC</th>
-                        <th>Data</th>
-                        <th>Hora</th>
-                        <th>User Agent</th>
+                        <th class="name-col">Nome</th>
+                        <th class="email-col">Email</th>
+                        <th class="ip-col">IP</th>
+                        <th class="mac-col">MAC</th>
+                        <th class="date-col">Data</th>
+                        <th class="time-col">Hora</th>
+                        <th class="ua-col">User Agent</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
                     {% for registro in registros %}
                     <tr>
-                        <td>{{ registro.nome }}</td>
-                        <td>{{ registro.email }}</td>
-                        <td>{{ registro.ip }}</td>
-                        <td>{{ registro.mac }}</td>
-                        <td>{{ registro.data }}</td>
-                        <td>{{ registro.hora }}</td>
-                        <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        <td class="name-col cell-truncate">{{ registro.nome }}</td>
+                        <td class="email-col cell-truncate">{{ registro.email }}</td>
+                        <td class="ip-col">{{ registro.ip }}</td>
+                        <td class="mac-col">{{ registro.mac }}</td>
+                        <td class="date-col">{{ registro.data }}</td>
+                        <td class="time-col">{{ registro.hora }}</td>
+                        <td class="ua-col cell-truncate">
                             {{ registro.user_agent }}
                         </td>
                     </tr>
@@ -228,6 +410,40 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+        }
+
+        function closeMobileMenu() {
+            const menuPanel = document.getElementById('mobileMenuPanel');
+            const menuButton = document.getElementById('mobileMenuBtn');
+
+            if (!menuPanel || !menuButton) {
+                return;
+            }
+
+            menuPanel.classList.remove('is-open');
+            menuButton.setAttribute('aria-expanded', 'false');
+        }
+
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenuPanel = document.getElementById('mobileMenuPanel');
+
+        if (mobileMenuBtn && mobileMenuPanel) {
+            mobileMenuBtn.addEventListener('click', function() {
+                const isOpen = mobileMenuPanel.classList.toggle('is-open');
+                mobileMenuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+
+            document.addEventListener('click', function(event) {
+                if (!mobileMenuPanel.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
+                    closeMobileMenu();
+                }
+            });
+
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    closeMobileMenu();
+                }
+            });
         }
     </script>
 </body>
