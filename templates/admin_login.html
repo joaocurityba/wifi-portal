@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administração - Portal Cautivo</title>
+    <title>Administração - Wi-Fi Público Municipal</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* Estilos específicos para login admin */
         .admin-login-container {
-            max-width: 400px;
+            max-width: 450px;
             background: white;
             border-radius: 16px;
             padding: 2rem;
@@ -27,7 +28,7 @@
         .admin-login-header h2 {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #2563eb;
+            color: #0F4593;
             margin-bottom: 0.5rem;
         }
         
@@ -100,18 +101,20 @@
         <div class="admin-login-container">
             <div class="admin-login-header">
                 <div class="logo">
-                    <svg width="48" height="48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="32" cy="32" r="30" stroke="#2563eb" stroke-width="4"/>
-                        <path d="M16 32l8-8 16 16 8-8" stroke="#2563eb" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                        <circle cx="32" cy="32" r="8" fill="#2563eb"/>
-                    </svg>
+                    <img 
+                        src="{{ url_for('static', filename='images/logo.svg') }}" 
+                        alt="Logo Wi-Fi Público Municipal"
+                        width="160"
+                        height="auto"
+                    >
                 </div>
                 <h2>Painel Administrativo</h2>
                 <p>Área restrita para administradores</p>
             </div>
 
             <form method="POST" action="{{ url_for('admin_login') }}" novalidate>
-                <!-- Mensagens de erro -->
+                <!-- CSRF Token -->
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                 {% with messages = get_flashed_messages(category_filter=['error']) %}
                     {% if messages %}
                         <div class="alert alert-error">
@@ -155,6 +158,10 @@
 
             <div class="admin-links">
                 <a href="{{ url_for('reset_password_request') }}">Esqueci minha senha</a>
+                <span> | </span>
+                <a href="{{ url_for('termos') }}" target="_blank">Termos de Uso</a>
+                <span> | </span>
+                <a href="{{ url_for('politica_privacidade') }}" target="_blank">Política de Privacidade</a>
             </div>
 
             <div class="admin-footer">

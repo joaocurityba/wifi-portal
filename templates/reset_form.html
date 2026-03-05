@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redefinir Senha - Administração</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -27,7 +28,7 @@
         .reset-form-header h2 {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #2563eb;
+            color: #0F4593;
             margin-bottom: 0.5rem;
         }
         
@@ -104,11 +105,12 @@
         <div class="reset-form-container">
             <div class="reset-form-header">
                 <div class="logo">
-                    <svg width="48" height="48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="32" cy="32" r="30" stroke="#2563eb" stroke-width="4"/>
-                        <path d="M16 32l8-8 16 16 8-8" stroke="#2563eb" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                        <circle cx="32" cy="32" r="8" fill="#2563eb"/>
-                    </svg>
+                    <img 
+                        src="{{ url_for('static', filename='images/logo.svg') }}" 
+                        alt="Logo Wi-Fi Público Municipal"
+                        width="160"
+                        height="auto"
+                    >
                 </div>
                 <h2>Redefinir Senha</h2>
                 <p>Crie uma nova senha segura</p>
@@ -124,7 +126,8 @@
             </div>
 
             <form method="POST" action="{{ url_for('reset_password_form', token=token) }}" novalidate>
-                <!-- Mensagens de erro -->
+                <!-- CSRF Token -->
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                 {% with messages = get_flashed_messages(category_filter=['error']) %}
                     {% if messages %}
                         <div class="alert alert-error">

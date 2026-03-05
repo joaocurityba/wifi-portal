@@ -15,6 +15,11 @@ from typing import Optional, Dict, Any
 from flask import request, session, flash, redirect, url_for, current_app
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+try:
+    import redis
+    REDIS_AVAILABLE = True
+except ImportError:
+    REDIS_AVAILABLE = False
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
@@ -50,11 +55,31 @@ class SecurityManager:
         
     def setup_limiter(self):
         """Configura o rate limiting"""
-        self.limiter = Limiter(
-            app=self.app,
-            key_func=get_remote_address,
-            default_limits=["1000 per hour", "100 per minute"]
-        )
+        storage_uri = os.getenv('REDIS_URL', 'redis://localhost:6379/0')
+        
+        if REDIS_AVAILABLE:
+            try:
+                self.limiter = Limiter(
+                    app=self.app,
+                    key_func=get_remote_address,
+                    storage_uri=storage_uri,
+                    default_limits=["1000 per hour", "100 per minute"]
+                )
+                logger.info("Rate limiting configured with Redis")
+            except Exception as e:
+                logger.warning(f"Redis not available, falling back to in-memory: {e}")
+                self.limiter = Limiter(
+                    app=self.app,
+                    key_func=get_remote_address,
+                    default_limits=["1000 per hour", "100 per minute"]
+                )
+        else:
+            logger.warning("Redis not available, using in-memory storage")
+            self.limiter = Limiter(
+                app=self.app,
+                key_func=get_remote_address,
+                default_limits=["1000 per hour", "100 per minute"]
+            )
         
     def setup_encryption(self):
         """Configura a criptografia para dados sensíveis"""
@@ -219,6 +244,20 @@ def validate_csrf_token():
         flash('Token de segurança inválido. Por favor, tente novamente.', 'error')
         return False
     return True
+
+def require_csrf_token(f):
+    """Decorator para enforçar validação de CSRF token em POST requests"""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if request.method == 'POST':
+            if not validate_csrf_token():
+                security_manager.log_security_event('csrf_validation_failed', {
+                    'endpoint': request.endpoint,
+                    'method': request.method
+                })
+                return redirect(request.referrer or url_for('admin_login'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 def generate_csrf_token():
     """Gera token CSRF"""

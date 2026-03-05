@@ -1,0 +1,86 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: wifi-portal-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-wifi_portal}
+      - POSTGRES_USER=${POSTGRES_USER:-portal_user}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-portal_password_2026}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - wifi-portal-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-portal_user} -d ${POSTGRES_DB:-wifi_portal}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:alpine
+    container_name: wifi-portal-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-I4J6qgGLCOcG5hR4bmaLEic_QJ6A1OUG0lf1AztDJ-A}
+    networks:
+      - wifi-portal-network
+    healthcheck:
+      test: ["CMD", "sh", "-c", "redis-cli -a $${REDIS_PASSWORD:-I4J6qgGLCOcG5hR4bmaLEic_QJ6A1OUG0lf1AztDJ-A} ping | grep PONG"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wifi-portal-app
+    expose:
+      - "5000"
+    env_file:
+      - .env.local
+    environment:
+      - REDIS_URL=redis://:${REDIS_PASSWORD:-I4J6qgGLCOcG5hR4bmaLEic_QJ6A1OUG0lf1AztDJ-A}@redis:6379/0
+      - FLASK_ENV=production
+      - DATABASE_URL=${DATABASE_URL:-postgresql://portal_user:portal_password_2026@postgres:5432/wifi_portal}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    volumes:
+      - ./logs:/app/logs
+      - ./uploads:/app/uploads
+    restart: unless-stopped
+    networks:
+      - wifi-portal-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: wifi-portal-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./deploy/nginx.docker.conf:/etc/nginx/nginx.conf:ro
+      - ./static:/var/www/static:ro
+      - ./uploads:/var/www/uploads:ro
+      - ./logs/nginx:/var/log/nginx
+    depends_on:
+      - app
+    restart: unless-stopped
+    networks:
+      - wifi-portal-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  wifi-portal-network:
+    driver: bridge
