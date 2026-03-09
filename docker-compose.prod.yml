@@ -1,15 +1,14 @@
-# Docker Compose for Production with SSL
-# Usage: docker-compose -f docker-compose.prod.yml up -d
+# Docker Compose - Produção (sem Nginx/Certbot no Docker)
+# Nginx do HOST faz proxy para http://127.0.0.1:8003
 
 services:
   postgres:
     image: postgres:15-alpine
     container_name: wifi-portal-postgres
-    # Porta removida em produção - acesso apenas interno via rede Docker
     environment:
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
@@ -18,13 +17,13 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1.0'
+          cpus: "1.0"
           memory: 768M
         reservations:
-          cpus: '0.25'
+          cpus: "0.25"
           memory: 256M
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"]
+      test: ["CMD-SHELL", "pg_isready -U \"$POSTGRES_USER\" -d \"$POSTGRES_DB\""]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -32,41 +31,45 @@ services:
   redis:
     image: redis:alpine
     container_name: wifi-portal-redis
-    # Porta removida em produção - acesso apenas interno
     volumes:
       - redis_data:/data
     restart: unless-stopped
-    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD} --maxmemory 200mb --maxmemory-policy allkeys-lru
+    # IMPORTANTE: usar $$ para a variável ser expandida NO CONTAINER (não no host)
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    command: ["sh", "-lc", "redis-server --appendonly yes --requirepass \"$$REDIS_PASSWORD\" --maxmemory 200mb --maxmemory-policy allkeys-lru"]
     networks:
       - wifi-portal-network
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 256M
         reservations:
-          cpus: '0.1'
+          cpus: "0.1"
           memory: 64M
     healthcheck:
-      test: ["CMD", "sh", "-c", "redis-cli -a $${REDIS_PASSWORD} ping | grep PONG"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      test: ["CMD-SHELL", "redis-cli -a \"$$REDIS_PASSWORD\" ping | grep -q PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
   app:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: wifi-portal-app
-    expose:
-      - "5000"
+    # Expor SOMENTE local para o Nginx do host (proxy_pass)
+    ports:
+      - "127.0.0.1:8003:5000"
     env_file:
       - .env.local
     environment:
-      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
-      - FLASK_ENV=production
-      - SECRET_KEY=${SECRET_KEY}
-      - DATABASE_URL=${DATABASE_URL}
+      # Aqui pode ficar com ${REDIS_PASSWORD} pq o Compose vai resolver via env_file
+      REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379/0
+      FLASK_ENV: production
+      SECRET_KEY: ${SECRET_KEY}
+      DATABASE_URL: ${DATABASE_URL}
     depends_on:
       postgres:
         condition: service_healthy
@@ -81,72 +84,17 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1.0'
+          cpus: "1.0"
           memory: 512M
         reservations:
-          cpus: '0.25'
+          cpus: "0.25"
           memory: 128M
     healthcheck:
-      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:5000/healthz')"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      test: ["CMD-SHELL", "python -c \"import requests; r=requests.get('http://localhost:5000/healthz', timeout=3); raise SystemExit(0 if r.ok else 1)\""]
+      interval: 15s
+      timeout: 5s
+      retries: 10
       start_period: 40s
-
-  nginx:
-    image: nginx:alpine
-    container_name: wifi-portal-nginx
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./deploy/nginx.docker.prod.conf:/etc/nginx/nginx.conf:ro
-      - ./static:/var/www/static:ro
-      - ./uploads:/var/www/uploads:ro
-      - ./logs/nginx:/var/log/nginx
-      # Certificados SSL (gerados no host)
-      - /etc/letsencrypt:/etc/letsencrypt:ro
-      - /etc/ssl/certs:/etc/ssl/certs:ro
-      # Para renovação Let's Encrypt
-      - ./certbot/www:/var/www/certbot:ro
-    depends_on:
-      app:
-        condition: service_healthy
-    restart: unless-stopped
-    networks:
-      - wifi-portal-network
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 256M
-        reservations:
-          cpus: '0.1'
-          memory: 32M
-    healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/healthz", "||", "exit", "1"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
-  # Container para renovação automática de certificados SSL
-  certbot:
-    image: certbot/certbot:latest
-    container_name: wifi-portal-certbot
-    volumes:
-      - /etc/letsencrypt:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
-    # Renova certificados a cada 12 horas
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot --quiet; sleep 12h & wait $${!}; done;'"
-    restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          cpus: '0.25'
-          memory: 128M
-        reservations:
-          cpus: '0.05'
-          memory: 16M
 
 volumes:
   postgres_data:
@@ -155,3 +103,4 @@ volumes:
 networks:
   wifi-portal-network:
     driver: bridge
+

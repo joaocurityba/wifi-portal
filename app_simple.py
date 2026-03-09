@@ -10,6 +10,7 @@ import secrets
 import logging
 from datetime import datetime, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.middleware.proxy_fix import ProxyFix
 from flask import Flask, request, render_template, redirect, url_for, flash, session
 from flask_migrate import Migrate
 from dotenv import load_dotenv
@@ -65,6 +66,14 @@ data_manager.init_app(app)
 # Configura encriptação nos modelos
 from app.models import set_encryption_cipher
 set_encryption_cipher(security_manager.cipher_suite)
+
+app.wsgi_app = ProxyFix(
+    app.wsgi_app,
+    x_for=1,
+    x_proto=1,
+    x_host=1,
+    x_port=1,
+)
 
 def sanitize_input(text):
     """Sanitiza input para prevenir XSS"""
@@ -460,7 +469,7 @@ def politica_privacidade():
 @app.route('/')
 def index():
     """Redireciona para a página de login"""
-    return redirect(url_for('login'))
+    return redirect(url_for('login', **request.args))
 
 @app.route('/admin')
 @require_admin
