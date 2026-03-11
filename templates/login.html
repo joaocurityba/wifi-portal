@@ -30,10 +30,12 @@
                 <form method="POST" action="{{ url_for('login') }}" novalidate>
                     <!-- CSRF Token -->
                     <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-                    <!-- Campos ocultos para parâmetros do MikroTik -->
-                    <input type="hidden" name="ip" value="{{ ip }}">
-                    <input type="hidden" name="mac" value="{{ mac }}">
-                    <input type="hidden" name="link-orig" value="{{ link_orig }}">
+                    <!-- Campos ocultos para parâmetros do UniFi -->
+                    <input type="hidden" name="id" value="{{ client_mac }}">
+                    <input type="hidden" name="ap" value="{{ ap_mac }}">
+                    <input type="hidden" name="url" value="{{ redirect_url }}">
+                    <input type="hidden" name="ssid" value="{{ ssid }}">
+                    <input type="hidden" name="t" value="{{ timestamp }}">
 
                     <!-- Mensagens de erro -->
                     {% with messages = get_flashed_messages(category_filter=['error']) %}

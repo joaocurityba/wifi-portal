@@ -300,12 +300,14 @@
             <div class="admin-actions">
                 <button class="btn-export action-secondary" onclick="exportCSV()">Exportar CSV</button>
                 <a href="{{ url_for('admin_profile') }}" class="btn-secondary action-primary-mobile" style="background: #e0f2fe; color: #0369a1; border-color: #bfdbfe;">Perfil</a>
+                <a href="{{ url_for('admin_unifi_settings') }}" class="btn-secondary action-secondary" style="background: #f0fdf4; color: #166534; border-color: #bbf7d0;">UniFi</a>
                 <a href="{{ url_for('login') }}" class="btn-secondary action-secondary">Voltar ao Portal</a>
                 <a href="{{ url_for('admin_logout') }}" class="btn-secondary action-secondary" style="background: #fee2e2; color: #dc2626; border-color: #fecaca;">Sair</a>
                 <div class="mobile-menu-wrapper">
                     <button type="button" id="mobileMenuBtn" class="btn-secondary mobile-menu-toggle" aria-expanded="false" aria-controls="mobileMenuPanel">Mais opções</button>
                     <div id="mobileMenuPanel" class="mobile-menu-panel">
                         <button type="button" class="mobile-menu-item" onclick="exportCSV(); closeMobileMenu();">Exportar CSV</button>
+                        <a href="{{ url_for('admin_unifi_settings') }}" class="mobile-menu-item">Configurações UniFi</a>
                         <a href="{{ url_for('login') }}" class="mobile-menu-item">Voltar ao Portal</a>
                         <a href="{{ url_for('admin_logout') }}" class="mobile-menu-item logout">Sair</a>
                     </div>

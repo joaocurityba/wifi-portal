@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações UniFi - Wi-Fi Público Municipal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .settings-container {
+            max-width: 800px;
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+
+        .container-adm {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem;
+        }
+
+        .settings-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 1rem;
+        }
+
+        .settings-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0F4593;
+            margin-bottom: 0.5rem;
+        }
+
+        .settings-header p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .settings-section {
+            background-color: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .settings-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 1rem;
+        }
+
+        .settings-form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .settings-form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+
+        .settings-form-group .help-text {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            margin-top: 0.25rem;
+        }
+
+        .settings-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #fafafa;
+            box-sizing: border-box;
+        }
+
+        .settings-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            background-color: white;
+        }
+
+        .settings-actions {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .settings-links {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .settings-links a {
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .settings-links a:hover {
+            text-decoration: underline;
+        }
+
+        .security-note {
+            background-color: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #92400e;
+        }
+
+        .security-note strong {
+            color: #b45309;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-configured {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-not-configured {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .test-result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .test-success {
+            background-color: #d1fae5;
+            border: 1px solid #10b981;
+            color: #065f46;
+        }
+
+        .test-error {
+            background-color: #fee2e2;
+            border: 1px solid #ef4444;
+            color: #991b1b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-adm">
+        <div class="settings-container">
+            <div class="settings-header">
+                <div class="logo">
+                    <img
+                        src="{{ url_for('static', filename='images/logo.svg') }}"
+                        alt="Logo Wi-Fi Público Municipal"
+                        width="160"
+                        height="auto"
+                    >
+                </div>
+                <h2>Configurações UniFi Controller</h2>
+                <p>Configure os parâmetros de conexão com o UniFi Controller para autorização de dispositivos</p>
+            </div>
+
+            {% if is_configured %}
+                <div class="status-badge status-configured">✅ UniFi Controller configurado</div>
+            {% else %}
+                <div class="status-badge status-not-configured">❌ UniFi Controller não configurado</div>
+            {% endif %}
+
+            <!-- Mensagens -->
+            {% with messages = get_flashed_messages(category_filter=['error']) %}
+                {% if messages %}
+                    <div class="alert alert-error">
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            {% with messages = get_flashed_messages(category_filter=['success']) %}
+                {% if messages %}
+                    <div class="alert alert-success">
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            {% with messages = get_flashed_messages(category_filter=['info']) %}
+                {% if messages %}
+                    <div class="alert alert-info" style="background-color: #e0f2fe; border: 1px solid #0ea5e9; color: #0c4a6e; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <div class="security-note">
+                <strong>🔒 Segurança:</strong> As credenciais do UniFi Controller são armazenadas de forma segura no servidor.
+                A senha é mascarada após ser salva.
+            </div>
+
+            <form method="POST" action="{{ url_for('admin_unifi_settings') }}" novalidate>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                <div class="settings-section">
+                    <h3>Conexão com o Controller</h3>
+
+                    <div class="settings-form-group">
+                        <label for="controller_url">URL do Controller</label>
+                        <input type="text" id="controller_url" name="controller_url" class="settings-input"
+                               value="{{ settings.controller_url }}"
+                               placeholder="https://192.168.1.1:8443">
+                        <div class="help-text">Endereço completo com porta (geralmente 8443 para self-hosted ou 443 para UniFi Cloud)</div>
+                    </div>
+
+                    <div class="settings-form-group">
+                        <label for="username">Usuário do Controller</label>
+                        <input type="text" id="username" name="username" class="settings-input"
+                               value="{{ settings.username }}"
+                               placeholder="portal-user">
+                        <div class="help-text">Recomendado: crie um usuário dedicado com permissões limitadas</div>
+                    </div>
+
+                    <div class="settings-form-group">
+                        <label for="password">Senha do Controller</label>
+                        <input type="password" id="password" name="password" class="settings-input"
+                               placeholder="{% if settings.has_password %}••••••••  (deixe em branco para manter){% else %}Digite a senha{% endif %}">
+                        <div class="help-text">{% if settings.has_password %}Senha já configurada. Deixe em branco para manter a atual.{% else %}Informe a senha do usuário do Controller.{% endif %}</div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Configurações do Site</h3>
+
+                    <div class="settings-form-group">
+                        <label for="site">Nome do Site</label>
+                        <input type="text" id="site" name="site" class="settings-input"
+                               value="{{ settings.site }}"
+                               placeholder="default">
+                        <div class="help-text">Nome do site no UniFi Controller (geralmente "default")</div>
+                    </div>
+
+                    <div class="settings-form-group">
+                        <label for="auth_minutes">Tempo de Autorização (minutos)</label>
+                        <input type="number" id="auth_minutes" name="auth_minutes" class="settings-input"
+                               value="{{ settings.auth_minutes }}"
+                               placeholder="480" min="1" max="14400">
+                        <div class="help-text">Tempo em minutos que o dispositivo ficará autorizado (padrão: 480 = 8 horas)</div>
+                    </div>
+                </div>
+
+                <div class="settings-actions">
+                    <button type="submit" class="btn-primary">
+                        <span class="btn-text">Salvar Configurações</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                    <button type="submit" name="action" value="test" class="btn-secondary" style="background: #e0f2fe; color: #0369a1; border-color: #bfdbfe;">
+                        Testar Conexão
+                    </button>
+                    <a href="{{ url_for('admin') }}" class="btn-secondary">Voltar</a>
+                </div>
+            </form>
+
+            <div class="settings-links">
+                <a href="{{ url_for('admin') }}">Painel de Administração</a> |
+                <a href="{{ url_for('admin_profile') }}">Perfil</a> |
+                <a href="{{ url_for('admin_logout') }}">Sair</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
