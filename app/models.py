@@ -107,6 +107,12 @@ class AccessLog(db.Model):
     ip_hash = db.Column(String(64), nullable=True, index=True)  # SHA-256 hash for queries
     mac = db.Column(String(17), nullable=True)
     mac_hash = db.Column(String(64), nullable=True, index=True)  # SHA-256 hash for queries
+    controller_type = db.Column(String(20), nullable=True, default='unifi')
+    controller_site = db.Column(String(100), nullable=True)
+    ap_mac = db.Column(String(17), nullable=True)
+    gateway_mac = db.Column(String(17), nullable=True)
+    vlan_id = db.Column(String(20), nullable=True)
+    ssid = db.Column(String(100), nullable=True)
     user_agent = db.Column(Text, nullable=True)
     
     # Metadata
@@ -135,6 +141,12 @@ class AccessLog(db.Model):
             'ip_hash': self.ip_hash,
             'mac': self.mac,
             'mac_hash': self.mac_hash,
+            'controller_type': self.controller_type,
+            'controller_site': self.controller_site,
+            'ap_mac': self.ap_mac,
+            'gateway_mac': self.gateway_mac,
+            'vlan_id': self.vlan_id,
+            'ssid': self.ssid,
             'user_agent': self.user_agent,
             'access_id': self.access_id,
             'timestamp': self.timestamp.isoformat() if self.timestamp else None,

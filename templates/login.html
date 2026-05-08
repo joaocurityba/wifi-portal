@@ -30,12 +30,21 @@
                 <form method="POST" action="{{ url_for('login') }}" novalidate>
                     <!-- CSRF Token -->
                     <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-                    <!-- Campos ocultos para parâmetros do UniFi -->
+                    <!-- Campos ocultos para parâmetros dos controladores -->
+                    <input type="hidden" name="portal_provider" value="{{ portal_provider }}">
                     <input type="hidden" name="id" value="{{ client_mac }}">
                     <input type="hidden" name="ap" value="{{ ap_mac }}">
                     <input type="hidden" name="url" value="{{ redirect_url }}">
                     <input type="hidden" name="ssid" value="{{ ssid }}">
                     <input type="hidden" name="t" value="{{ timestamp }}">
+                    <input type="hidden" name="clientMac" value="{{ omada_params.clientMac if omada_params else '' }}">
+                    <input type="hidden" name="apMac" value="{{ omada_params.apMac if omada_params else '' }}">
+                    <input type="hidden" name="gatewayMac" value="{{ omada_params.gatewayMac if omada_params else '' }}">
+                    <input type="hidden" name="ssidName" value="{{ omada_params.ssidName if omada_params else '' }}">
+                    <input type="hidden" name="radioId" value="{{ omada_params.radioId if omada_params else '' }}">
+                    <input type="hidden" name="site" value="{{ omada_params.site if omada_params else '' }}">
+                    <input type="hidden" name="redirectUrl" value="{{ omada_params.redirectUrl if omada_params else '' }}">
+                    <input type="hidden" name="vid" value="{{ omada_params.vid if omada_params else '' }}">
 
                     <!-- Mensagens de erro -->
                     {% with messages = get_flashed_messages(category_filter=['error']) %}

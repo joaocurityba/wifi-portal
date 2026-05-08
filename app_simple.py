@@ -80,6 +80,7 @@ app.wsgi_app = ProxyFix(
 )
 
 UNIFI_SETTINGS_FILE = os.path.join('data', 'unifi_settings.json')
+OMADA_SETTINGS_FILE = os.path.join('data', 'omada_settings.json')
 
 def load_unifi_settings():
     """Carrega configurações do UniFi do arquivo JSON ou variáveis de ambiente"""
@@ -110,6 +111,88 @@ def save_unifi_settings(settings):
     except Exception as e:
         logger.error(f"Error saving UniFi settings: {e}")
         return False
+
+def load_omada_settings():
+    """Carrega configuracoes do Omada do arquivo JSON ou variaveis de ambiente"""
+    settings = {
+        'controller_url': os.getenv('OMADA_CONTROLLER_URL', ''),
+        'controller_id': os.getenv('OMADA_CONTROLLER_ID', ''),
+        'operator_username': os.getenv('OMADA_OPERATOR_USERNAME', ''),
+        'operator_password': os.getenv('OMADA_OPERATOR_PASSWORD', ''),
+        'default_site': os.getenv('OMADA_DEFAULT_SITE', 'Default'),
+        'auth_minutes': int(os.getenv('OMADA_AUTH_MINUTES', os.getenv('GUEST_AUTH_MINUTES', '480'))),
+    }
+    if os.path.exists(OMADA_SETTINGS_FILE):
+        try:
+            with open(OMADA_SETTINGS_FILE, 'r') as f:
+                saved = json.load(f)
+            settings.update({k: v for k, v in saved.items() if v})
+        except Exception as e:
+            logger.error(f"Error loading Omada settings: {e}")
+    return settings
+
+def save_omada_settings(settings):
+    """Salva configuracoes do Omada no arquivo JSON"""
+    ensure_directory('data', mode=0o750)
+    try:
+        with open(OMADA_SETTINGS_FILE, 'w') as f:
+            json.dump(settings, f, indent=2)
+        os.chmod(OMADA_SETTINGS_FILE, 0o600)
+        return True
+    except Exception as e:
+        logger.error(f"Error saving Omada settings: {e}")
+        return False
+
+def normalize_mac(mac):
+    """Normaliza enderecos MAC usados pelos controladores."""
+    if not mac:
+        return ''
+    return str(mac).strip().lower().replace('-', ':').replace('.', ':')
+
+def get_request_value(*names):
+    """Busca um parametro em GET ou POST e sanitiza o valor."""
+    for name in names:
+        value = request.args.get(name, '') or request.form.get(name, '')
+        if value:
+            return security_manager.sanitize_input_advanced(value)
+    return ''
+
+def build_portal_context():
+    """Monta parametros de portal para UniFi e Omada."""
+    unifi_client_mac = get_request_value('id')
+    unifi_ap_mac = get_request_value('ap')
+    unifi_redirect_url = get_request_value('url')
+    unifi_ssid = get_request_value('ssid')
+
+    omada_client_mac = get_request_value('clientMac')
+    omada_ap_mac = get_request_value('apMac')
+    omada_gateway_mac = get_request_value('gatewayMac')
+    omada_ssid = get_request_value('ssidName')
+    omada_radio_id = get_request_value('radioId')
+    omada_site = get_request_value('site')
+    omada_redirect_url = get_request_value('redirectUrl')
+    omada_vid = get_request_value('vid')
+
+    provider = 'omada' if omada_client_mac else 'unifi'
+
+    return {
+        'provider': provider,
+        'client_mac': omada_client_mac or unifi_client_mac,
+        'ap_mac': omada_ap_mac or unifi_ap_mac,
+        'redirect_url': omada_redirect_url or unifi_redirect_url,
+        'ssid': omada_ssid or unifi_ssid,
+        'timestamp': get_request_value('t'),
+        'omada': {
+            'clientMac': omada_client_mac,
+            'apMac': omada_ap_mac,
+            'gatewayMac': omada_gateway_mac,
+            'ssidName': omada_ssid,
+            'radioId': omada_radio_id,
+            'site': omada_site,
+            'redirectUrl': omada_redirect_url,
+            'vid': omada_vid,
+        }
+    }
 
 def authorize_unifi_guest(client_mac, minutes=480, ap_mac=None):
     """Autoriza dispositivo no UniFi Controller"""
@@ -217,6 +300,126 @@ def authorize_unifi_guest(client_mac, minutes=480, ap_mac=None):
     except Exception as e:
         logger.error(f"UniFi authorization error: {e}")
         return False
+
+def authorize_omada_guest(omada_params, minutes=480):
+    """Autoriza dispositivo no Omada Controller via External Portal API."""
+    settings = load_omada_settings()
+    controller_url = settings.get('controller_url', '').rstrip('/')
+    controller_id = settings.get('controller_id', '').strip('/')
+    operator_username = settings.get('operator_username', '')
+    operator_password = settings.get('operator_password', '')
+    default_site = settings.get('default_site', 'Default')
+
+    if not controller_url or not controller_id or not operator_username or not operator_password:
+        logger.error("Omada Controller credentials not configured")
+        return False
+
+    client_mac = normalize_mac(omada_params.get('clientMac'))
+    ap_mac = normalize_mac(omada_params.get('apMac'))
+    gateway_mac = normalize_mac(omada_params.get('gatewayMac'))
+    ssid_name = omada_params.get('ssidName', '')
+    radio_id = omada_params.get('radioId', '')
+    site = omada_params.get('site') or default_site
+    vlan_id = omada_params.get('vid', '')
+
+    if not client_mac:
+        logger.error("Omada client MAC not received")
+        return False
+
+    is_gateway_auth = bool(gateway_mac)
+    if is_gateway_auth:
+        if not vlan_id:
+            logger.error("Omada gateway auth missing VLAN ID")
+            return False
+    elif not ap_mac or not ssid_name or radio_id == '':
+        logger.error("Omada EAP auth missing AP MAC, SSID or radio ID")
+        return False
+
+    hotspot_base = f"{controller_url}/{controller_id}/api/v2/hotspot"
+    headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'User-Agent': 'WiFi-Portal/1.0'
+    }
+
+    try:
+        s = requests.Session()
+        login_resp = s.post(
+            f"{hotspot_base}/login",
+            json={
+                'name': operator_username,
+                'password': operator_password
+            },
+            headers=headers,
+            verify=False,
+            timeout=10
+        )
+
+        try:
+            login_data = login_resp.json()
+        except ValueError:
+            logger.error(f"Omada login returned invalid JSON: {login_resp.text[:200]}")
+            return False
+
+        if login_resp.status_code != 200 or login_data.get('errorCode') != 0:
+            logger.error(f"Omada login failed: {login_resp.status_code} - {login_data}")
+            return False
+
+        csrf_token = (login_data.get('result') or {}).get('token')
+        if not csrf_token:
+            logger.error("Omada login did not return CSRF token")
+            return False
+
+        auth_payload = {
+            'clientMac': client_mac,
+            'site': site,
+            'time': int(minutes) * 60 * 1000 * 1000,
+            'authType': 4
+        }
+
+        if is_gateway_auth:
+            auth_payload.update({
+                'gatewayMac': gateway_mac,
+                'vid': vlan_id
+            })
+        else:
+            auth_payload.update({
+                'apMac': ap_mac,
+                'ssidName': ssid_name,
+                'radioId': radio_id
+            })
+
+        auth_headers = headers.copy()
+        auth_headers['Csrf-Token'] = csrf_token
+
+        auth_resp = s.post(
+            f"{hotspot_base}/extPortal/auth",
+            json=auth_payload,
+            headers=auth_headers,
+            verify=False,
+            timeout=10
+        )
+
+        try:
+            auth_data = auth_resp.json()
+        except ValueError:
+            logger.error(f"Omada auth returned invalid JSON: {auth_resp.text[:200]}")
+            return False
+
+        if auth_resp.status_code == 200 and auth_data.get('errorCode') == 0:
+            logger.info(f"Omada guest authorized: {client_mac}")
+            return True
+
+        logger.error(f"Omada auth failed: {auth_resp.status_code} - {auth_data}")
+        return False
+
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Omada authorization request error: {e}")
+        return False
+    except Exception as e:
+        logger.error(f"Omada authorization error: {e}")
+        return False
+
 def sanitize_input(text):
     """Sanitiza input para prevenir XSS"""
     if text:
@@ -510,12 +713,29 @@ def reset_password_form(token):
 def login():
     """Rota principal do portal cativo com criptografia"""
     
-    # Captura parâmetros do UniFi Controller (GET ou POST)
-    client_mac = security_manager.sanitize_input_advanced(request.args.get('id', '')) or security_manager.sanitize_input_advanced(request.form.get('id', ''))
-    ap_mac = security_manager.sanitize_input_advanced(request.args.get('ap', '')) or security_manager.sanitize_input_advanced(request.form.get('ap', ''))
-    redirect_url = security_manager.sanitize_input_advanced(request.args.get('url', '')) or security_manager.sanitize_input_advanced(request.form.get('url', ''))
-    ssid = security_manager.sanitize_input_advanced(request.args.get('ssid', '')) or security_manager.sanitize_input_advanced(request.form.get('ssid', ''))
-    timestamp = security_manager.sanitize_input_advanced(request.args.get('t', '')) or security_manager.sanitize_input_advanced(request.form.get('t', ''))
+    # Captura parâmetros do UniFi ou Omada Controller (GET ou POST)
+    portal_context = build_portal_context()
+    portal_provider = portal_context['provider']
+    client_mac = portal_context['client_mac']
+    ap_mac = portal_context['ap_mac']
+    redirect_url = portal_context['redirect_url']
+    ssid = portal_context['ssid']
+    timestamp = portal_context['timestamp']
+    omada_params = portal_context['omada']
+
+    def render_login_form(**extra):
+        context = {
+            'client_mac': client_mac,
+            'ap_mac': ap_mac,
+            'redirect_url': redirect_url,
+            'ssid': ssid,
+            'timestamp': timestamp,
+            'portal_provider': portal_provider,
+            'omada_params': omada_params,
+            'csrf_token': generate_csrf_token()
+        }
+        context.update(extra)
+        return render_template('login.html', **context)
     
     if request.method == 'POST':
         nome = security_manager.sanitize_input_advanced(request.form.get('nome', ''))
@@ -553,26 +773,32 @@ def login():
         if errors:
             for error in errors:
                 flash(error, 'error')
-            return render_template('login.html', 
-                                 client_mac=client_mac, ap_mac=ap_mac,
-                                 redirect_url=redirect_url, ssid=ssid,
-                                 timestamp=timestamp,
-                                 nome=nome, email=email)
+            return render_login_form(nome=nome, email=email)
         
         user_agent = request.headers.get('User-Agent', 'Desconhecido')
         now = datetime.now()
         data = now.strftime('%Y-%m-%d')
         hora = now.strftime('%H:%M:%S')
+        controller_settings = load_omada_settings() if portal_provider == 'omada' else load_unifi_settings()
+        controller_site = (
+            omada_params.get('site') or controller_settings.get('default_site', 'Default')
+            if portal_provider == 'omada'
+            else controller_settings.get('site', 'default')
+        )
         
         access_data = {
             'nome': nome,
             'ip': request.remote_addr,
             'mac': client_mac,
+            'controller_type': portal_provider,
+            'controller_site': controller_site,
             'user_agent': user_agent,
             'data': data,
             'hora': hora,
             'email': email,
             'ap_mac': ap_mac,
+            'gateway_mac': omada_params.get('gatewayMac') if portal_provider == 'omada' else None,
+            'vlan_id': omada_params.get('vid') if portal_provider == 'omada' else None,
             'ssid': ssid
         }
         
@@ -583,6 +809,7 @@ def login():
             security_manager.log_security_event('access_registered', {
                 'client_mac': client_mac,
                 'ap_mac': ap_mac,
+                'controller_type': portal_provider,
                 'ssid': ssid,
                 'user_agent': user_agent[:100]  # Limita tamanho
             })
@@ -590,42 +817,29 @@ def login():
         except Exception as e:
             logger.error(f"Erro ao registrar acesso: {e}")
             flash('Erro ao registrar acesso. Por favor, tente novamente.', 'error')
-            return render_template('login.html', 
-                                 client_mac=client_mac, ap_mac=ap_mac,
-                                 redirect_url=redirect_url, ssid=ssid,
-                                 timestamp=timestamp,
-                                 nome=nome, email=email)
+            return render_login_form(nome=nome, email=email)
         
-        # Autoriza o dispositivo no UniFi Controller
-        settings = load_unifi_settings()
-        auth_minutes = settings.get('auth_minutes', 480)
+        # Autoriza o dispositivo no controlador de origem
+        auth_minutes = controller_settings.get('auth_minutes', 480)
         if client_mac:
-            auth_result = authorize_unifi_guest(client_mac, minutes=auth_minutes, ap_mac=ap_mac)
+            if portal_provider == 'omada':
+                auth_result = authorize_omada_guest(omada_params, minutes=auth_minutes)
+            else:
+                auth_result = authorize_unifi_guest(client_mac, minutes=auth_minutes, ap_mac=ap_mac)
             if not auth_result:
-                logger.error(f"Failed to authorize MAC {client_mac} on UniFi Controller")
+                logger.error(f"Failed to authorize MAC {client_mac} on {portal_provider} controller")
                 flash('Não foi possível liberar o acesso à internet. Tente novamente.', 'error')
-                return render_template('login.html',
-                                     client_mac=client_mac, ap_mac=ap_mac,
-                                     redirect_url=redirect_url, ssid=ssid,
-                                     timestamp=timestamp,
-                                     nome=nome, email=email)
+                return render_login_form(nome=nome, email=email)
         else:
-            logger.warning("No client MAC received — cannot authorize on UniFi")
+            logger.warning(f"No client MAC received — cannot authorize on {portal_provider}")
             flash('Dispositivo não identificado. Tente reconectar à rede Wi-Fi.', 'error')
-            return render_template('login.html',
-                                 client_mac=client_mac, ap_mac=ap_mac,
-                                 redirect_url=redirect_url, ssid=ssid,
-                                 timestamp=timestamp,
-                                 nome=nome, email=email)
+            return render_login_form(nome=nome, email=email)
         
         # Redireciona para a URL original ou site padrão
         final_url = redirect_url or 'https://www.patydoalferes.rj.gov.br'
         return redirect(final_url)
     
-    csrf_token = generate_csrf_token()
-    return render_template('login.html', client_mac=client_mac, ap_mac=ap_mac,
-                         redirect_url=redirect_url, ssid=ssid,
-                         timestamp=timestamp, csrf_token=csrf_token)
+    return render_login_form()
 
 @app.route('/healthz')
 def health_check():
@@ -874,6 +1088,113 @@ def admin_unifi_settings():
     is_configured = bool(settings.get('controller_url') and settings.get('username') and settings.get('password'))
 
     return render_template('admin_unifi.html',
+                         settings=display_settings,
+                         is_configured=is_configured,
+                         csrf_token=csrf_token)
+
+@app.route('/admin/omada', methods=['GET', 'POST'])
+@require_csrf_token
+def admin_omada_settings():
+    """Página de configurações do Omada Controller"""
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('admin_login'))
+
+    settings = load_omada_settings()
+    csrf_token = generate_csrf_token()
+
+    if request.method == 'POST':
+        action = request.form.get('action', 'save')
+
+        controller_url = sanitize_input(request.form.get('controller_url', '')).rstrip('/')
+        controller_id = sanitize_input(request.form.get('controller_id', '')).strip('/')
+        operator_username = sanitize_input(request.form.get('operator_username', ''))
+        operator_password = request.form.get('operator_password', '')
+        default_site = sanitize_input(request.form.get('default_site', '')) or 'Default'
+        auth_minutes = request.form.get('auth_minutes', '480')
+
+        try:
+            auth_minutes = int(auth_minutes)
+            if auth_minutes < 1 or auth_minutes > 14400:
+                auth_minutes = 480
+        except ValueError:
+            auth_minutes = 480
+
+        new_settings = {
+            'controller_url': controller_url,
+            'controller_id': controller_id,
+            'operator_username': operator_username,
+            'operator_password': operator_password if operator_password else settings.get('operator_password', ''),
+            'default_site': default_site,
+            'auth_minutes': auth_minutes,
+        }
+
+        if action == 'test':
+            if not controller_url or not controller_id or not operator_username or not (operator_password or settings.get('operator_password')):
+                flash('Preencha todos os campos de conexão antes de testar.', 'error')
+            else:
+                try:
+                    s = requests.Session()
+                    s.headers.update({
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'User-Agent': 'WiFi-Portal/1.0'
+                    })
+                    test_password = operator_password if operator_password else settings.get('operator_password', '')
+                    login_resp = s.post(
+                        f"{controller_url}/{controller_id}/api/v2/hotspot/login",
+                        json={
+                            'name': operator_username,
+                            'password': test_password
+                        },
+                        verify=False,
+                        timeout=10
+                    )
+
+                    try:
+                        login_data = login_resp.json()
+                    except ValueError:
+                        login_data = {}
+
+                    token = (login_data.get('result') or {}).get('token')
+                    if login_resp.status_code == 200 and login_data.get('errorCode') == 0 and token:
+                        flash('Login na API Hotspot do Omada realizado com sucesso!', 'success')
+                    elif login_resp.status_code == 200 and login_data.get('errorCode') == 0:
+                        flash('Login OK, mas o Omada não retornou token CSRF. Verifique a versão e permissões do operador.', 'warning')
+                    else:
+                        flash('Falha na autenticação do Omada. Verifique operador, senha e Controller ID.', 'error')
+                except requests.exceptions.ConnectionError:
+                    flash('Não foi possível conectar ao Omada Controller. Verifique URL, porta e firewall.', 'error')
+                except Exception as e:
+                    flash(f'Erro ao testar conexão Omada: {str(e)}', 'error')
+
+            settings = new_settings
+        else:
+            if save_omada_settings(new_settings):
+                flash('Configurações Omada salvas com sucesso!', 'success')
+                security_manager.log_security_event('omada_settings_updated', {
+                    'username': session.get('username'),
+                    'controller_url': controller_url
+                })
+                settings = new_settings
+            else:
+                flash('Erro ao salvar configurações Omada.', 'error')
+
+    display_settings = {
+        'controller_url': settings.get('controller_url', ''),
+        'controller_id': settings.get('controller_id', ''),
+        'operator_username': settings.get('operator_username', ''),
+        'default_site': settings.get('default_site', 'Default'),
+        'auth_minutes': settings.get('auth_minutes', 480),
+        'has_password': bool(settings.get('operator_password')),
+    }
+    is_configured = bool(
+        settings.get('controller_url')
+        and settings.get('controller_id')
+        and settings.get('operator_username')
+        and settings.get('operator_password')
+    )
+
+    return render_template('admin_omada.html',
                          settings=display_settings,
                          is_configured=is_configured,
                          csrf_token=csrf_token)

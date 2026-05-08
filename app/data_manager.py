@@ -54,6 +54,12 @@ class EncryptedDataManager:
                 ip_hash=self.AccessLog.hash_value(ip) if ip else None,
                 mac=mac if mac else None,
                 mac_hash=self.AccessLog.hash_value(mac) if mac else None,
+                controller_type=data.get('controller_type', 'unifi'),
+                controller_site=data.get('controller_site'),
+                ap_mac=data.get('ap_mac'),
+                gateway_mac=data.get('gateway_mac'),
+                vlan_id=data.get('vlan_id'),
+                ssid=data.get('ssid'),
                 user_agent=data.get('user_agent'),
                 access_id=self.AccessLog.generate_access_id(),
                 timestamp=datetime.utcnow()
@@ -95,7 +101,7 @@ class EncryptedDataManager:
         """
         try:
             # Para campos não encriptados (ip, mac, user_agent), pode fazer busca direta
-            if field in ['ip', 'mac', 'user_agent']:
+            if field in ['ip', 'mac', 'user_agent', 'controller_type', 'controller_site', 'ssid']:
                 if field == 'ip':
                     logs = self.AccessLog.query.filter(
                         self.AccessLog.ip.ilike(f'%{search_term}%')
@@ -107,6 +113,18 @@ class EncryptedDataManager:
                 elif field == 'user_agent':
                     logs = self.AccessLog.query.filter(
                         self.AccessLog.user_agent.ilike(f'%{search_term}%')
+                    ).order_by(desc(self.AccessLog.timestamp)).limit(1000).all()
+                elif field == 'controller_type':
+                    logs = self.AccessLog.query.filter(
+                        self.AccessLog.controller_type.ilike(f'%{search_term}%')
+                    ).order_by(desc(self.AccessLog.timestamp)).limit(1000).all()
+                elif field == 'controller_site':
+                    logs = self.AccessLog.query.filter(
+                        self.AccessLog.controller_site.ilike(f'%{search_term}%')
+                    ).order_by(desc(self.AccessLog.timestamp)).limit(1000).all()
+                elif field == 'ssid':
+                    logs = self.AccessLog.query.filter(
+                        self.AccessLog.ssid.ilike(f'%{search_term}%')
                     ).order_by(desc(self.AccessLog.timestamp)).limit(1000).all()
                 
                 return [log.to_dict(decrypt=True) for log in logs]
