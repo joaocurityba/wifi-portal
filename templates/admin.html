@@ -95,7 +95,7 @@
             width: 100%;
             border-collapse: collapse;
             background: white;
-            min-width: 920px;
+            min-width: 1040px;
         }
         
         th, td {
@@ -255,6 +255,8 @@
             .email-col,
             .ip-col,
             .mac-col,
+            .controller-col,
+            .ssid-col,
             .date-col {
                 max-width: 120px;
                 overflow: hidden;
@@ -300,12 +302,16 @@
             <div class="admin-actions">
                 <button class="btn-export action-secondary" onclick="exportCSV()">Exportar CSV</button>
                 <a href="{{ url_for('admin_profile') }}" class="btn-secondary action-primary-mobile" style="background: #e0f2fe; color: #0369a1; border-color: #bfdbfe;">Perfil</a>
+                <a href="{{ url_for('admin_unifi_settings') }}" class="btn-secondary action-secondary" style="background: #f0fdf4; color: #166534; border-color: #bbf7d0;">UniFi</a>
+                <a href="{{ url_for('admin_omada_settings') }}" class="btn-secondary action-secondary" style="background: #fff7ed; color: #c2410c; border-color: #fed7aa;">Omada</a>
                 <a href="{{ url_for('login') }}" class="btn-secondary action-secondary">Voltar ao Portal</a>
                 <a href="{{ url_for('admin_logout') }}" class="btn-secondary action-secondary" style="background: #fee2e2; color: #dc2626; border-color: #fecaca;">Sair</a>
                 <div class="mobile-menu-wrapper">
                     <button type="button" id="mobileMenuBtn" class="btn-secondary mobile-menu-toggle" aria-expanded="false" aria-controls="mobileMenuPanel">Mais opções</button>
                     <div id="mobileMenuPanel" class="mobile-menu-panel">
                         <button type="button" class="mobile-menu-item" onclick="exportCSV(); closeMobileMenu();">Exportar CSV</button>
+                        <a href="{{ url_for('admin_unifi_settings') }}" class="mobile-menu-item">Configurações UniFi</a>
+                        <a href="{{ url_for('admin_omada_settings') }}" class="mobile-menu-item">Configurações Omada</a>
                         <a href="{{ url_for('login') }}" class="mobile-menu-item">Voltar ao Portal</a>
                         <a href="{{ url_for('admin_logout') }}" class="mobile-menu-item logout">Sair</a>
                     </div>
@@ -329,7 +335,7 @@
         </div>
 
         <div style="margin-bottom: 1rem;">
-            <input type="text" id="searchInput" class="search-box" placeholder="Buscar por nome, email ou IP...">
+            <input type="text" id="searchInput" class="search-box" placeholder="Buscar por nome, email, IP ou controlador...">
         </div>
 
         <div class="table-container">
@@ -340,6 +346,8 @@
                         <th class="email-col">Email</th>
                         <th class="ip-col">IP</th>
                         <th class="mac-col">MAC</th>
+                        <th class="controller-col">Controlador</th>
+                        <th class="ssid-col">SSID</th>
                         <th class="date-col">Data</th>
                         <th class="time-col">Hora</th>
                         <th class="ua-col">User Agent</th>
@@ -352,6 +360,8 @@
                         <td class="email-col cell-truncate">{{ registro.email }}</td>
                         <td class="ip-col">{{ registro.ip }}</td>
                         <td class="mac-col">{{ registro.mac }}</td>
+                        <td class="controller-col">{{ registro.controller_type or 'unifi' }}</td>
+                        <td class="ssid-col cell-truncate">{{ registro.ssid or '-' }}</td>
                         <td class="date-col">{{ registro.data }}</td>
                         <td class="time-col">{{ registro.hora }}</td>
                         <td class="ua-col cell-truncate">

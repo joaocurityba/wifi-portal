@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações Omada - Wi-Fi Público Municipal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .settings-container {
+            max-width: 800px;
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+
+        .container-adm {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem;
+        }
+
+        .settings-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 1rem;
+        }
+
+        .settings-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0F4593;
+            margin-bottom: 0.5rem;
+        }
+
+        .settings-header p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .settings-section {
+            background-color: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .settings-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 1rem;
+        }
+
+        .settings-form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .settings-form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+
+        .settings-form-group .help-text {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            margin-top: 0.25rem;
+        }
+
+        .settings-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #fafafa;
+            box-sizing: border-box;
+        }
+
+        .settings-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            background-color: white;
+        }
+
+        .settings-actions {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .settings-links {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .settings-links a {
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .settings-links a:hover {
+            text-decoration: underline;
+        }
+
+        .security-note {
+            background-color: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #92400e;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .status-configured {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-not-configured {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .alert-warning {
+            background-color: #fef3c7;
+            border: 1px solid #f59e0b;
+            color: #92400e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-adm">
+        <div class="settings-container">
+            <div class="settings-header">
+                <div class="logo">
+                    <img
+                        src="{{ url_for('static', filename='images/logo.svg') }}"
+                        alt="Logo Wi-Fi Público Municipal"
+                        width="160"
+                        height="auto"
+                    >
+                </div>
+                <h2>Configurações Omada Controller</h2>
+                <p>Configure a API Hotspot do Omada para autorização de clientes pelo portal externo.</p>
+            </div>
+
+            {% if is_configured %}
+                <div class="status-badge status-configured">Omada Controller configurado</div>
+            {% else %}
+                <div class="status-badge status-not-configured">Omada Controller não configurado</div>
+            {% endif %}
+
+            {% for category in ['error', 'success', 'warning', 'info'] %}
+                {% with messages = get_flashed_messages(category_filter=[category]) %}
+                    {% if messages %}
+                        <div class="alert alert-{{ category }}">
+                            {% for message in messages %}
+                                <p>{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+            {% endfor %}
+
+            <div class="security-note">
+                Use credenciais de operador do Hotspot, não a conta administrativa principal do Omada Controller.
+                O Omada 5.x exige o Controller ID na URL da API.
+            </div>
+
+            <form method="POST" action="{{ url_for('admin_omada_settings') }}" novalidate>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                <div class="settings-section">
+                    <h3>Conexão com o Controller</h3>
+
+                    <div class="settings-form-group">
+                        <label for="controller_url">URL do Controller</label>
+                        <input type="text" id="controller_url" name="controller_url" class="settings-input"
+                               value="{{ settings.controller_url }}"
+                               placeholder="https://192.168.1.10:8043">
+                        <div class="help-text">Endereço completo do Omada Controller, normalmente usando HTTPS e porta 8043.</div>
+                    </div>
+
+                    <div class="settings-form-group">
+                        <label for="controller_id">Controller ID</label>
+                        <input type="text" id="controller_id" name="controller_id" class="settings-input"
+                               value="{{ settings.controller_id }}"
+                               placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx">
+                        <div class="help-text">Identificador usado na URL da API Hotspot do Omada 5.x.</div>
+                    </div>
+
+                    <div class="settings-form-group">
+                        <label for="operator_username">Operador Hotspot</label>
+                        <input type="text" id="operator_username" name="operator_username" class="settings-input"
+                               value="{{ settings.operator_username }}"
+                               placeholder="portal-user">
+                        <div class="help-text">Usuário criado em Hotspot Manager/Operator para uso do portal externo.</div>
+                    </div>
+
+                    <div class="settings-form-group">
+                        <label for="operator_password">Senha do Operador</label>
+                        <input type="password" id="operator_password" name="operator_password" class="settings-input"
+                               placeholder="{% if settings.has_password %}••••••••  (deixe em branco para manter){% else %}Digite a senha{% endif %}">
+                        <div class="help-text">{% if settings.has_password %}Senha já configurada. Deixe em branco para manter a atual.{% else %}Informe a senha do operador Hotspot.{% endif %}</div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Configurações do Portal</h3>
+
+                    <div class="settings-form-group">
+                        <label for="default_site">Site padrão</label>
+                        <input type="text" id="default_site" name="default_site" class="settings-input"
+                               value="{{ settings.default_site }}"
+                               placeholder="Default">
+                        <div class="help-text">Usado apenas se o Omada não enviar o parâmetro site no redirecionamento.</div>
+                    </div>
+
+                    <div class="settings-form-group">
+                        <label for="auth_minutes">Tempo de Autorização (minutos)</label>
+                        <input type="number" id="auth_minutes" name="auth_minutes" class="settings-input"
+                               value="{{ settings.auth_minutes }}"
+                               placeholder="480" min="1" max="14400">
+                        <div class="help-text">Tempo que o cliente ficará autorizado após preencher o portal.</div>
+                    </div>
+                </div>
+
+                <div class="settings-actions">
+                    <button type="submit" class="btn-primary">
+                        <span class="btn-text">Salvar Configurações</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                    <button type="submit" name="action" value="test" class="btn-secondary" style="background: #e0f2fe; color: #0369a1; border-color: #bfdbfe;">
+                        Testar Conexão
+                    </button>
+                    <a href="{{ url_for('admin') }}" class="btn-secondary">Voltar</a>
+                </div>
+            </form>
+
+            <div class="settings-links">
+                <a href="{{ url_for('admin') }}">Painel de Administração</a> |
+                <a href="{{ url_for('admin_unifi_settings') }}">UniFi</a> |
+                <a href="{{ url_for('admin_profile') }}">Perfil</a> |
+                <a href="{{ url_for('admin_logout') }}">Sair</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

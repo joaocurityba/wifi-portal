@@ -7571,3 +7571,150 @@ with app.app_context(). See the documentation for more information.
 This typically means that you attempted to use functionality that needed
 an active HTTP request. Consult the documentation on testing for
 information about how to avoid this problem.
+2026-03-10 13:11:43,458 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 13:11:44,053 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 13:11:44,555 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 13:11:45,359 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 13:11:45,557 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 13:11:46,247 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 13:11:47,147 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 13:11:47,655 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 13:11:47,756 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 13:11:48,150 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 13:11:48,546 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 13:11:48,549 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 13:11:48,647 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 13:11:49,451 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 13:11:49,546 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 13:11:49,755 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 13:11:50,390 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 13:11:50,573 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 13:12:20,596 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-03-10T13:12:20.596618', 'event_type': 'admin_login_success', 'ip': '177.155.184.62', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'details': {'username': 'admin'}}
+2026-03-10 16:34:16,619 - app.data_manager - INFO - Acesso registrado: 20260310163416_097a36acb915743e
+2026-03-10 16:34:16,619 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-03-10T16:34:16.619643', 'event_type': 'access_registered', 'ip': '177.155.184.62', 'user_agent': 'Mozilla/5.0 (Linux; Android 13; SM-M526B Build/TP1A.220624.014; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/145.0.7632.120 Mobile Safari/537.36', 'details': {'client_mac': '1e:4e:1d:6b:b6:c6', 'ap_mac': 'e4:38:83:16:c5:2f', 'ssid': 'teste 1', 'user_agent': 'Mozilla/5.0 (Linux; Android 13; SM-M526B Build/TP1A.220624.014; wv) AppleWebKit/537.36 (KHTML, like '}}
+2026-03-10 16:34:16,619 - app_simple - ERROR - UniFi Controller credentials not configured
+2026-03-10 16:34:16,619 - app_simple - ERROR - Failed to authorize MAC 1e:4e:1d:6b:b6:c6 on UniFi Controller
+2026-03-10 16:34:25,172 - app.security - WARNING - SECURITY: csrf_token_invalid - {'timestamp': '2026-03-10T16:34:25.172279', 'event_type': 'csrf_token_invalid', 'ip': '177.155.184.62', 'user_agent': 'Mozilla/5.0 (Linux; Android 13; SM-M526B Build/TP1A.220624.014; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/145.0.7632.120 Mobile Safari/537.36', 'details': {'session_token': True, 'form_token': True}}
+2026-03-10 16:34:25,172 - app.security - WARNING - SECURITY: csrf_validation_failed - {'timestamp': '2026-03-10T16:34:25.172840', 'event_type': 'csrf_validation_failed', 'ip': '177.155.184.62', 'user_agent': 'Mozilla/5.0 (Linux; Android 13; SM-M526B Build/TP1A.220624.014; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/145.0.7632.120 Mobile Safari/537.36', 'details': {'endpoint': 'login', 'method': 'POST'}}
+2026-03-10 16:35:51,925 - app.security - WARNING - SECURITY: unifi_settings_updated - {'timestamp': '2026-03-10T16:35:51.925507', 'event_type': 'unifi_settings_updated', 'ip': '177.155.184.62', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'details': {'username': 'admin', 'controller_url': 'https://177.155.184.60:11443'}}
+2026-03-10 16:59:28,077 - app.security - WARNING - SECURITY: unifi_settings_updated - {'timestamp': '2026-03-10T16:59:28.076883', 'event_type': 'unifi_settings_updated', 'ip': '177.155.184.62', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'details': {'username': 'admin', 'controller_url': 'https://177.155.184.60:11443'}}
+2026-03-10 16:59:58,013 - app.security - WARNING - SECURITY: unifi_settings_updated - {'timestamp': '2026-03-10T16:59:58.013443', 'event_type': 'unifi_settings_updated', 'ip': '177.155.184.62', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'details': {'username': 'admin', 'controller_url': 'http://177.155.184.60:11443'}}
+2026-03-10 17:10:02,940 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:10:03,640 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:10:04,141 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:10:05,146 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:10:06,147 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:10:06,251 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:10:06,248 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:10:06,948 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:10:07,546 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:10:07,645 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:10:07,744 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:10:08,650 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:10:09,141 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:10:09,353 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:10:09,552 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:10:09,760 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:10:10,252 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:10:10,644 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:10:26,887 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-03-10T17:10:26.887553', 'event_type': 'admin_login_success', 'ip': '177.155.184.62', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'details': {'username': 'admin'}}
+2026-03-10 17:15:03,508 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-03-10T17:15:03.508198', 'event_type': 'admin_login_success', 'ip': '177.155.184.62', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'details': {'username': 'admin'}}
+2026-03-10 17:17:01,631 - app.security - WARNING - SECURITY: unifi_settings_updated - {'timestamp': '2026-03-10T17:17:01.631419', 'event_type': 'unifi_settings_updated', 'ip': '177.155.184.62', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'details': {'username': 'admin', 'controller_url': 'http://177.155.184.60:11443'}}
+2026-03-10 17:18:59,836 - app.security - WARNING - SECURITY: unifi_settings_updated - {'timestamp': '2026-03-10T17:18:59.836143', 'event_type': 'unifi_settings_updated', 'ip': '177.155.184.62', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'details': {'username': 'admin', 'controller_url': 'https://177.155.184.60:11443'}}
+2026-03-10 17:20:22,616 - app.security - WARNING - SECURITY: csrf_token_invalid - {'timestamp': '2026-03-10T17:20:22.616781', 'event_type': 'csrf_token_invalid', 'ip': '177.155.184.62', 'user_agent': 'Mozilla/5.0 (Linux; Android 16; SM-G990E Build/BP2A.250605.031.A3; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/145.0.7632.120 Mobile Safari/537.36', 'details': {'session_token': False, 'form_token': True}}
+2026-03-10 17:20:22,617 - app.security - WARNING - SECURITY: csrf_validation_failed - {'timestamp': '2026-03-10T17:20:22.617320', 'event_type': 'csrf_validation_failed', 'ip': '177.155.184.62', 'user_agent': 'Mozilla/5.0 (Linux; Android 16; SM-G990E Build/BP2A.250605.031.A3; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/145.0.7632.120 Mobile Safari/537.36', 'details': {'endpoint': 'login', 'method': 'POST'}}
+2026-03-10 17:21:00,830 - app.data_manager - INFO - Acesso registrado: 20260310172100_14de478430f8f1f1
+2026-03-10 17:21:00,831 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-03-10T17:21:00.831114', 'event_type': 'access_registered', 'ip': '177.155.184.62', 'user_agent': 'Mozilla/5.0 (Linux; Android 16; SM-G990E Build/BP2A.250605.031.A3; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/145.0.7632.120 Mobile Safari/537.36', 'details': {'client_mac': 'c6:ba:0d:1c:80:c1', 'ap_mac': 'e4:38:83:16:c5:2f', 'ssid': 'teste 1', 'user_agent': 'Mozilla/5.0 (Linux; Android 16; SM-G990E Build/BP2A.250605.031.A3; wv) AppleWebKit/537.36 (KHTML, li'}}
+2026-03-10 17:21:00,956 - app_simple - INFO - UniFi login attempt /api/auth/login: status 200
+2026-03-10 17:21:00,957 - app_simple - INFO - UniFi login successful via /api/auth/login
+2026-03-10 17:21:00,970 - app_simple - ERROR - UniFi auth failed: 403 - {"error":{"code":403,"message":"Forbidden"}}
+2026-03-10 17:21:00,973 - app_simple - ERROR - Failed to authorize MAC c6:ba:0d:1c:80:c1 on UniFi Controller
+2026-03-10 17:33:43,908 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:33:45,103 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:33:47,303 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:33:48,811 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:33:49,110 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:33:50,102 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:33:50,113 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:33:52,005 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:33:52,303 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:33:52,717 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:33:53,502 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:33:53,911 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:33:54,124 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:33:54,408 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:33:54,918 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:33:55,234 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:33:55,350 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:33:55,432 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:36:03,453 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:36:04,254 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:36:05,949 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:36:06,254 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:36:06,545 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:36:06,954 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:36:07,045 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:36:08,850 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:36:08,954 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:36:09,156 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:36:09,557 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:36:09,850 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:36:09,853 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:36:10,858 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:36:10,947 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:36:10,948 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:36:11,452 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:36:11,980 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:38:27,268 - app.data_manager - INFO - Acesso registrado: 20260310173827_551adf888234081c
+2026-03-10 17:38:27,268 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-03-10T17:38:27.268634', 'event_type': 'access_registered', 'ip': '177.155.184.62', 'user_agent': 'Mozilla/5.0 (Linux; Android 15; 23021RAAEG Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/146.0.7680.65 Mobile Safari/537.36', 'details': {'client_mac': '6e:d8:c2:8c:22:40', 'ap_mac': 'e4:38:83:16:c5:2f', 'ssid': 'teste 1', 'user_agent': 'Mozilla/5.0 (Linux; Android 15; 23021RAAEG Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, lik'}}
+2026-03-10 17:38:27,424 - app_simple - INFO - UniFi login attempt /api/auth/login: status 200
+2026-03-10 17:38:27,425 - app_simple - INFO - UniFi login successful via /api/auth/login
+2026-03-10 17:38:27,425 - app_simple - INFO - CSRF token found in response headers
+2026-03-10 17:38:27,425 - app_simple - INFO - Trying authorize at: https://177.155.184.60:11443/proxy/network/api/s/default/cmd/stamgr
+2026-03-10 17:38:27,460 - app_simple - INFO - UniFi guest authorized: 6e:d8:c2:8c:22:40
+2026-03-10 17:52:33,512 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-03-10T17:52:33.512236', 'event_type': 'unauthorized_admin_access', 'ip': '177.155.184.62', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-03-10 17:52:37,614 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-03-10T17:52:37.614088', 'event_type': 'admin_login_success', 'ip': '177.155.184.62', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'details': {'username': 'admin'}}
+2026-03-10 18:10:37,940 - app.data_manager - INFO - Acesso registrado: 20260310181037_2a48d34a6699ae8f
+2026-03-10 18:10:37,941 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-03-10T18:10:37.941003', 'event_type': 'access_registered', 'ip': '177.155.184.62', 'user_agent': 'Mozilla/5.0 (Linux; Android 13; SM-M526B Build/TP1A.220624.014; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/145.0.7632.120 Mobile Safari/537.36', 'details': {'client_mac': '1e:4e:1d:6b:b6:c6', 'ap_mac': 'e4:38:83:16:c5:2f', 'ssid': 'teste 1', 'user_agent': 'Mozilla/5.0 (Linux; Android 13; SM-M526B Build/TP1A.220624.014; wv) AppleWebKit/537.36 (KHTML, like '}}
+2026-03-10 18:10:38,117 - app_simple - INFO - UniFi login attempt /api/auth/login: status 200
+2026-03-10 18:10:38,117 - app_simple - INFO - UniFi login successful via /api/auth/login
+2026-03-10 18:10:38,117 - app_simple - INFO - CSRF token found in response headers
+2026-03-10 18:10:38,118 - app_simple - INFO - Trying authorize at: https://177.155.184.60:11443/proxy/network/api/s/default/cmd/stamgr
+2026-03-10 18:10:38,152 - app_simple - INFO - UniFi guest authorized: 1e:4e:1d:6b:b6:c6
+2026-03-10 18:16:28,416 - app.data_manager - INFO - Acesso registrado: 20260310181628_d07671272f125941
+2026-03-10 18:16:28,416 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-03-10T18:16:28.416607', 'event_type': 'access_registered', 'ip': '177.155.184.62', 'user_agent': 'Mozilla/5.0 (Linux; Android 15; 24094RAD4G Build/AP3A.240905.015.A2; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/145.0.7632.120 Mobile Safari/537.36', 'details': {'client_mac': 'b2:89:e4:09:d9:33', 'ap_mac': 'e4:38:83:16:c5:2f', 'ssid': 'GRANJA CALIFÒRNIA', 'user_agent': 'Mozilla/5.0 (Linux; Android 15; 24094RAD4G Build/AP3A.240905.015.A2; wv) AppleWebKit/537.36 (KHTML, '}}
+2026-03-10 18:16:28,580 - app_simple - INFO - UniFi login attempt /api/auth/login: status 200
+2026-03-10 18:16:28,581 - app_simple - INFO - UniFi login successful via /api/auth/login
+2026-03-10 18:16:28,581 - app_simple - INFO - CSRF token found in response headers
+2026-03-10 18:16:28,581 - app_simple - INFO - Trying authorize at: https://177.155.184.60:11443/proxy/network/api/s/default/cmd/stamgr
+2026-03-10 18:16:28,610 - app_simple - INFO - UniFi guest authorized: b2:89:e4:09:d9:33
+2026-03-10 18:34:39,709 - app.data_manager - INFO - Acesso registrado: 20260310183439_80b7c98d4edf140e
+2026-03-10 18:34:39,709 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-03-10T18:34:39.709388', 'event_type': 'access_registered', 'ip': '177.155.184.62', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'details': {'client_mac': '', 'ap_mac': '', 'ssid': '', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Sa'}}
+2026-03-10 18:34:39,709 - app_simple - WARNING - No client MAC received — cannot authorize on UniFi
+2026-03-10 18:37:40,943 - app.data_manager - INFO - Acesso registrado: 20260310183740_b3ef60ace94d021e
+2026-03-10 18:37:40,943 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-03-10T18:37:40.943380', 'event_type': 'access_registered', 'ip': '189.40.81.155', 'user_agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5.2 Mobile/15E148 Safari/604.1', 'details': {'client_mac': '', 'ap_mac': '', 'ssid': '', 'user_agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Ve'}}
+2026-03-10 18:37:40,943 - app_simple - WARNING - No client MAC received — cannot authorize on UniFi
+2026-03-10 17:32:27,934 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:32:29,241 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:32:29,837 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:32:31,940 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:32:32,137 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:32:32,336 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:32:32,531 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:32:33,033 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:32:33,040 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:32:33,138 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:32:34,034 - app.data_manager - INFO - Acesso registrado: 20260310203233_7113ddda37fd8ddf
+2026-03-10 17:32:34,035 - app.security - WARNING - SECURITY: access_registered - {'timestamp': '2026-03-10T17:32:34.035768', 'event_type': 'access_registered', 'ip': '177.155.184.62', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'details': {'client_mac': '', 'ap_mac': '', 'ssid': '', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Sa'}}
+2026-03-10 17:32:34,037 - app_simple - WARNING - No client MAC received — cannot authorize on UniFi
+2026-03-10 17:32:34,745 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:32:34,939 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:32:35,337 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:32:35,530 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:32:37,038 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:32:37,346 - app.security - INFO - Rate limiting configured with Redis
+2026-03-10 17:32:37,939 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:32:38,062 - app.models - INFO - Encryption cipher configured: True
+2026-03-10 17:33:12,360 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-03-10T17:33:12.360368', 'event_type': 'admin_login_success', 'ip': '177.155.184.62', 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'details': {'username': 'admin'}}
+2026-03-10 19:55:22,173 - app.security - WARNING - SECURITY: unauthorized_admin_access - {'timestamp': '2026-03-10T19:55:22.173486', 'event_type': 'unauthorized_admin_access', 'ip': '170.233.104.147', 'user_agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5.2 Mobile/15E148 Safari/604.1', 'details': {'endpoint': 'admin', 'path': '/admin'}}
+2026-03-10 19:55:31,114 - app.security - WARNING - SECURITY: admin_login_success - {'timestamp': '2026-03-10T19:55:31.114420', 'event_type': 'admin_login_success', 'ip': '170.233.104.147', 'user_agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5.2 Mobile/15E148 Safari/604.1', 'details': {'username': 'admin'}}
