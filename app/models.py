@@ -3,16 +3,34 @@ SQLAlchemy models for WiFi Portal Application.
 Defines User and AccessLog tables with encryption for sensitive data.
 """
 
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import String, Text, DateTime, Integer, Index, event
 from sqlalchemy.types import TypeDecorator
 import hashlib
 
+try:
+    from zoneinfo import ZoneInfo
+except ImportError:  # pragma: no cover - Python < 3.9 fallback
+    ZoneInfo = None
+
 db = SQLAlchemy()
 
 # Global cipher suite reference (will be set from security_manager)
 _cipher_suite = None
+try:
+    SAO_PAULO_TZ = ZoneInfo("America/Sao_Paulo") if ZoneInfo else timezone(timedelta(hours=-3))
+except Exception:
+    SAO_PAULO_TZ = timezone(timedelta(hours=-3))
+
+
+def _to_sao_paulo(value):
+    """Convert a stored UTC-naive timestamp to Sao Paulo local time."""
+    if not value:
+        return None
+    if value.tzinfo is None:
+        value = value.replace(tzinfo=timezone.utc)
+    return value.astimezone(SAO_PAULO_TZ)
 
 def set_encryption_cipher(cipher):
     """Set the global cipher suite for encryption."""
@@ -134,6 +152,7 @@ class AccessLog(db.Model):
         Args:
             decrypt: If True, returns decrypted sensitive fields
         """
+        local_timestamp = _to_sao_paulo(self.timestamp)
         return {
             'nome': self.nome if decrypt else '[encrypted]',
             'email': self.email if decrypt else '[encrypted]',
@@ -149,9 +168,9 @@ class AccessLog(db.Model):
             'ssid': self.ssid,
             'user_agent': self.user_agent,
             'access_id': self.access_id,
-            'timestamp': self.timestamp.isoformat() if self.timestamp else None,
-            'data': self.timestamp.strftime('%Y-%m-%d') if self.timestamp else None,
-            'hora': self.timestamp.strftime('%H:%M:%S') if self.timestamp else None,
+            'timestamp': local_timestamp.isoformat() if local_timestamp else None,
+            'data': local_timestamp.strftime('%Y-%m-%d') if local_timestamp else None,
+            'hora': local_timestamp.strftime('%H:%M:%S') if local_timestamp else None,
         }
     
     @staticmethod

@@ -5,12 +5,21 @@ Implementa armazenamento seguro de dados sensíveis com criptografia em banco de
 """
 
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Any
 from sqlalchemy import or_, func, desc
 from app.security import security_manager
 
+try:
+    from zoneinfo import ZoneInfo
+except ImportError:  # pragma: no cover - Python < 3.9 fallback
+    ZoneInfo = None
+
 logger = logging.getLogger(__name__)
+try:
+    SAO_PAULO_TZ = ZoneInfo("America/Sao_Paulo") if ZoneInfo else timezone(timedelta(hours=-3))
+except Exception:
+    SAO_PAULO_TZ = timezone(timedelta(hours=-3))
 
 class EncryptedDataManager:
     """Gerenciador de dados com criptografia avançada usando PostgreSQL"""
@@ -91,6 +100,59 @@ class EncryptedDataManager:
         except Exception as e:
             logger.error(f"Erro ao ler logs de acesso: {e}")
             return []
+
+    def get_access_logs_page(self, page: int = 1, per_page: int = 50) -> Dict[str, Any]:
+        """Obtém uma página de logs de acesso com total real do banco."""
+        try:
+            page = max(int(page or 1), 1)
+            per_page = min(max(int(per_page or 50), 1), 200)
+
+            query = self.AccessLog.query.order_by(
+                desc(self.AccessLog.timestamp),
+                desc(self.AccessLog.id)
+            )
+            total = query.order_by(None).count()
+            total_pages = max((total + per_page - 1) // per_page, 1)
+            if page > total_pages:
+                page = total_pages
+
+            offset = (page - 1) * per_page
+            logs = query.offset(offset).limit(per_page).all()
+            items = [log.to_dict(decrypt=True) for log in logs]
+
+            start_index = offset + 1 if total else 0
+            end_index = offset + len(items) if total else 0
+
+            return {
+                'items': items,
+                'total': total,
+                'page': page,
+                'per_page': per_page,
+                'total_pages': total_pages,
+                'has_prev': page > 1,
+                'has_next': page < total_pages,
+                'prev_page': page - 1 if page > 1 else None,
+                'next_page': page + 1 if page < total_pages else None,
+                'start_index': start_index,
+                'end_index': end_index,
+            }
+
+        except Exception as e:
+            logger.error(f"Erro ao paginar logs de acesso: {e}")
+            return {
+                'items': [],
+                'total': 0,
+                'page': 1,
+                'per_page': per_page,
+                'total_pages': 1,
+                'has_prev': False,
+                'has_next': False,
+                'prev_page': None,
+                'next_page': None,
+                'start_index': 0,
+                'end_index': 0,
+                'error': str(e),
+            }
             
     def search_access_logs(self, search_term: str, field: str = 'nome') -> List[Dict[str, Any]]:
         """
@@ -163,7 +225,8 @@ class EncryptedDataManager:
             ).filter(self.AccessLog.mac_hash.isnot(None)).scalar()
             
             # Acessos hoje
-            today_start = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
+            today_local = datetime.now(SAO_PAULO_TZ).replace(hour=0, minute=0, second=0, microsecond=0)
+            today_start = today_local.astimezone(timezone.utc).replace(tzinfo=None)
             today_accesses = self.db.session.query(
                 func.count(self.AccessLog.id)
             ).filter(self.AccessLog.timestamp >= today_start).scalar()

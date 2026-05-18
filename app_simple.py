@@ -866,8 +866,14 @@ def index():
 def admin():
     """Página de administração com criptografia"""
     try:
-        # Obtém logs criptografados
-        encrypted_logs = data_manager.get_access_logs(limit=1000)
+        page = request.args.get('page', 1, type=int)
+        per_page = request.args.get('per_page', 50, type=int)
+        if per_page not in [25, 50, 100, 200]:
+            per_page = 50
+
+        # Obtém logs criptografados paginados
+        pagination = data_manager.get_access_logs_page(page=page, per_page=per_page)
+        encrypted_logs = pagination['items']
         
         # Obtém estatísticas
         stats = data_manager.get_user_stats()
@@ -875,7 +881,9 @@ def admin():
         return render_template('admin.html', 
                              registros=encrypted_logs, 
                              stats=stats,
-                             total_registros=len(encrypted_logs))
+                             pagination=pagination,
+                             total_registros=pagination['total'],
+                             per_page=per_page)
     except Exception as e:
         logger.error(f"Erro ao carregar painel admin: {e}")
         return f"Erro ao carregar painel administrativo: {str(e)}", 500
