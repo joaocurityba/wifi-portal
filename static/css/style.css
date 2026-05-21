@@ -98,6 +98,12 @@ h1 {
     color: #dc2626;
 }
 
+.alert-info {
+    background-color: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1d4ed8;
+}
+
 .form-group {
     margin-bottom: 0.8rem;
 }

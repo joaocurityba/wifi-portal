@@ -46,16 +46,18 @@
                     <input type="hidden" name="redirectUrl" value="{{ omada_params.redirectUrl if omada_params else '' }}">
                     <input type="hidden" name="vid" value="{{ omada_params.vid if omada_params else '' }}">
 
-                    <!-- Mensagens de erro -->
-                    {% with messages = get_flashed_messages(category_filter=['error']) %}
-                        {% if messages %}
-                            <div class="alert alert-error">
-                                {% for message in messages %}
-                                    <p>{{ message }}</p>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    {% endwith %}
+                    <!-- Mensagens do portal -->
+                    {% for category in ['error', 'info'] %}
+                        {% with messages = get_flashed_messages(category_filter=[category]) %}
+                            {% if messages %}
+                                <div class="alert alert-{{ category }}">
+                                    {% for message in messages %}
+                                        <p>{{ message }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    {% endfor %}
 
                     <div class="form-group">
                         <label for="nome">Nome Completo *</label>
@@ -82,7 +84,7 @@
 
                     <div class="form-actions">
                         <button type="submit" class="btn-primary" {% if form_disabled %}disabled{% endif %}>
-                            <span class="btn-text">{% if form_disabled %}Aguarde para acessar{% else %}Acessar Internet{% endif %}</span>
+                            <span class="btn-text">{% if form_disabled %}Novo acesso em breve{% else %}Acessar Internet{% endif %}</span>
                             <span class="btn-icon">→</span>
                         </button>
                     </div>

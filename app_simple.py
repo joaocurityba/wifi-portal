@@ -825,8 +825,10 @@ def login():
         if portal_session_state.get('blocked'):
             remaining = format_duration_pt(portal_session_state.get('remaining_seconds', 0))
             flash(
-                f'Seu tempo de acesso expirou. Aguarde {remaining} para solicitar um novo acesso.',
-                'error'
+                f'Para manter o Wi-Fi disponivel a todos, este acesso possui limite de tempo. '
+                f'Voce podera solicitar um novo acesso em {remaining}. '
+                f'Os dados informados sao tratados conforme a Politica de Privacidade e a LGPD.',
+                'info'
             )
             security_manager.log_security_event('portal_cooldown_blocked', {
                 'client_mac': client_mac,

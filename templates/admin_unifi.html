@@ -290,11 +290,11 @@
                         <div class="help-text">Tempo em minutos que o dispositivo ficará autorizado (padrão: 480 = 8 horas)</div>
                     </div>
                     <div class="settings-form-group">
-                        <label for="cooldown_minutes">Cooldown apos expirar (minutos)</label>
+                        <label for="cooldown_minutes">Intervalo entre acessos (minutos)</label>
                         <input type="number" id="cooldown_minutes" name="cooldown_minutes" class="settings-input"
                                value="{{ settings.cooldown_minutes }}"
                                placeholder="0" min="0" max="14400">
-                        <div class="help-text">Tempo de espera antes do mesmo dispositivo poder solicitar novo acesso. Use 0 para desativar.</div>
+                        <div class="help-text">Periodo de intervalo apos o fim do tempo de acesso. Use 0 para desativar.</div>
                     </div>
                 </div>
 
