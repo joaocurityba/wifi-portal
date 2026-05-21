@@ -257,6 +257,13 @@
                         <div class="help-text">Tempo que o cliente ficará autorizado após preencher o portal.</div>
                     </div>
                     <div class="settings-form-group">
+                        <label for="cooldown_minutes">Cooldown apos expirar (minutos)</label>
+                        <input type="number" id="cooldown_minutes" name="cooldown_minutes" class="settings-input"
+                               value="{{ settings.cooldown_minutes }}"
+                               placeholder="0" min="0" max="14400">
+                        <div class="help-text">Tempo de espera antes do mesmo dispositivo poder solicitar novo acesso. Use 0 para desativar.</div>
+                    </div>
+                    <div class="settings-form-group">
                         <label for="auth_time_unit">Unidade enviada ao Omada</label>
                         <select id="auth_time_unit" name="auth_time_unit" class="settings-input">
                             <option value="milliseconds" {% if settings.auth_time_unit == 'milliseconds' %}selected{% endif %}>

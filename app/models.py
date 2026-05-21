@@ -187,3 +187,53 @@ class AccessLog(db.Model):
         timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S')
         random_part = secrets.token_hex(8)
         return f"{timestamp}_{random_part}"
+
+
+class PortalSession(db.Model):
+    """Authorized portal session used to enforce cooldown windows."""
+    __tablename__ = 'portal_sessions'
+
+    id = db.Column(Integer, primary_key=True)
+    mac = db.Column(String(17), nullable=False)
+    mac_hash = db.Column(String(64), nullable=False, index=True)
+    controller_type = db.Column(String(20), nullable=False, default='unifi')
+    controller_site = db.Column(String(100), nullable=True)
+    ssid = db.Column(String(100), nullable=True)
+    auth_minutes = db.Column(Integer, nullable=False, default=480)
+    cooldown_minutes = db.Column(Integer, nullable=False, default=0)
+    authorized_at = db.Column(DateTime, default=datetime.utcnow, nullable=False, index=True)
+    expires_at = db.Column(DateTime, nullable=False, index=True)
+    cooldown_until = db.Column(DateTime, nullable=False, index=True)
+    created_at = db.Column(DateTime, default=datetime.utcnow, nullable=False)
+
+    __table_args__ = (
+        Index('idx_portal_sessions_lookup', 'mac_hash', 'controller_type', 'controller_site'),
+    )
+
+    def __repr__(self):
+        return f'<PortalSession {self.mac} {self.controller_type} expires {self.expires_at}>'
+
+    def to_dict(self):
+        """Convert session to dictionary with local display timestamps."""
+        authorized_at = _to_sao_paulo(self.authorized_at)
+        expires_at = _to_sao_paulo(self.expires_at)
+        cooldown_until = _to_sao_paulo(self.cooldown_until)
+        return {
+            'mac': self.mac,
+            'mac_hash': self.mac_hash,
+            'controller_type': self.controller_type,
+            'controller_site': self.controller_site,
+            'ssid': self.ssid,
+            'auth_minutes': self.auth_minutes,
+            'cooldown_minutes': self.cooldown_minutes,
+            'authorized_at': authorized_at.isoformat() if authorized_at else None,
+            'expires_at': expires_at.isoformat() if expires_at else None,
+            'cooldown_until': cooldown_until.isoformat() if cooldown_until else None,
+        }
+
+    @staticmethod
+    def hash_value(value):
+        """Generate SHA-256 hash of a value for indexing."""
+        if not value:
+            return None
+        return hashlib.sha256(value.encode()).hexdigest()

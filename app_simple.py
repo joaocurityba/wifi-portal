@@ -110,6 +110,33 @@ def get_omada_auth_time_value(minutes, unit=None):
     auth_time_unit = normalize_omada_auth_time_unit(unit)
     return auth_minutes * OMADA_AUTH_TIME_UNITS[auth_time_unit], auth_time_unit
 
+def parse_minutes(value, default=0, min_value=0, max_value=14400):
+    """Converte e limita valores de tempo em minutos."""
+    try:
+        minutes = int(value)
+    except (TypeError, ValueError):
+        return default
+    if minutes < min_value or minutes > max_value:
+        return default
+    return minutes
+
+def format_duration_pt(seconds):
+    """Formata uma duracao curta para mensagens do portal."""
+    try:
+        remaining_minutes = max((int(seconds) + 59) // 60, 1)
+    except (TypeError, ValueError):
+        remaining_minutes = 1
+
+    if remaining_minutes < 60:
+        return f"{remaining_minutes} minuto" if remaining_minutes == 1 else f"{remaining_minutes} minutos"
+
+    hours, minutes = divmod(remaining_minutes, 60)
+    hour_text = f"{hours} hora" if hours == 1 else f"{hours} horas"
+    if not minutes:
+        return hour_text
+    minute_text = f"{minutes} minuto" if minutes == 1 else f"{minutes} minutos"
+    return f"{hour_text} e {minute_text}"
+
 def load_unifi_settings():
     """Carrega configurações do UniFi do arquivo JSON ou variáveis de ambiente"""
     settings = {
@@ -117,15 +144,18 @@ def load_unifi_settings():
         'username': os.getenv('UNIFI_USERNAME', ''),
         'password': os.getenv('UNIFI_PASSWORD', ''),
         'site': os.getenv('UNIFI_SITE', 'default'),
-        'auth_minutes': int(os.getenv('GUEST_AUTH_MINUTES', '480')),
+        'auth_minutes': parse_minutes(os.getenv('GUEST_AUTH_MINUTES', '480'), 480, 1, 14400),
+        'cooldown_minutes': parse_minutes(os.getenv('GUEST_COOLDOWN_MINUTES', '0'), 0, 0, 14400),
     }
     if os.path.exists(UNIFI_SETTINGS_FILE):
         try:
             with open(UNIFI_SETTINGS_FILE, 'r') as f:
                 saved = json.load(f)
-            settings.update({k: v for k, v in saved.items() if v})
+            settings.update({k: v for k, v in saved.items() if v is not None and v != ''})
         except Exception as e:
             logger.error(f"Error loading UniFi settings: {e}")
+    settings['auth_minutes'] = parse_minutes(settings.get('auth_minutes'), 480, 1, 14400)
+    settings['cooldown_minutes'] = parse_minutes(settings.get('cooldown_minutes'), 0, 0, 14400)
     return settings
 
 def save_unifi_settings(settings):
@@ -148,16 +178,19 @@ def load_omada_settings():
         'operator_username': os.getenv('OMADA_OPERATOR_USERNAME', ''),
         'operator_password': os.getenv('OMADA_OPERATOR_PASSWORD', ''),
         'default_site': os.getenv('OMADA_DEFAULT_SITE', 'Default'),
-        'auth_minutes': int(os.getenv('OMADA_AUTH_MINUTES', os.getenv('GUEST_AUTH_MINUTES', '480'))),
+        'auth_minutes': parse_minutes(os.getenv('OMADA_AUTH_MINUTES', os.getenv('GUEST_AUTH_MINUTES', '480')), 480, 1, 14400),
+        'cooldown_minutes': parse_minutes(os.getenv('OMADA_COOLDOWN_MINUTES', os.getenv('GUEST_COOLDOWN_MINUTES', '0')), 0, 0, 14400),
         'auth_time_unit': os.getenv('OMADA_AUTH_TIME_UNIT', DEFAULT_OMADA_AUTH_TIME_UNIT),
     }
     if os.path.exists(OMADA_SETTINGS_FILE):
         try:
             with open(OMADA_SETTINGS_FILE, 'r') as f:
                 saved = json.load(f)
-            settings.update({k: v for k, v in saved.items() if v})
+            settings.update({k: v for k, v in saved.items() if v is not None and v != ''})
         except Exception as e:
             logger.error(f"Error loading Omada settings: {e}")
+    settings['auth_minutes'] = parse_minutes(settings.get('auth_minutes'), 480, 1, 14400)
+    settings['cooldown_minutes'] = parse_minutes(settings.get('cooldown_minutes'), 0, 0, 14400)
     settings['auth_time_unit'] = normalize_omada_auth_time_unit(settings.get('auth_time_unit'))
     return settings
 
@@ -759,6 +792,14 @@ def login():
     ssid = portal_context['ssid']
     timestamp = portal_context['timestamp']
     omada_params = portal_context['omada']
+    controller_settings = load_omada_settings() if portal_provider == 'omada' else load_unifi_settings()
+    controller_site = (
+        omada_params.get('site') or controller_settings.get('default_site', 'Default')
+        if portal_provider == 'omada'
+        else controller_settings.get('site', 'default')
+    )
+    auth_minutes = parse_minutes(controller_settings.get('auth_minutes'), 480, 1, 14400)
+    cooldown_minutes = parse_minutes(controller_settings.get('cooldown_minutes'), 0, 0, 14400)
 
     def render_login_form(**extra):
         context = {
@@ -769,10 +810,34 @@ def login():
             'timestamp': timestamp,
             'portal_provider': portal_provider,
             'omada_params': omada_params,
+            'form_disabled': False,
             'csrf_token': generate_csrf_token()
         }
         context.update(extra)
         return render_template('login.html', **context)
+
+    if client_mac and cooldown_minutes > 0:
+        portal_session_state = data_manager.get_portal_session_state(
+            client_mac,
+            portal_provider,
+            controller_site
+        )
+        if portal_session_state.get('blocked'):
+            remaining = format_duration_pt(portal_session_state.get('remaining_seconds', 0))
+            flash(
+                f'Seu tempo de acesso expirou. Aguarde {remaining} para solicitar um novo acesso.',
+                'error'
+            )
+            security_manager.log_security_event('portal_cooldown_blocked', {
+                'client_mac': client_mac,
+                'controller_type': portal_provider,
+                'controller_site': controller_site,
+                'remaining_seconds': portal_session_state.get('remaining_seconds', 0)
+            })
+            return render_login_form(
+                form_disabled=True,
+                cooldown_state=portal_session_state
+            )
     
     if request.method == 'POST':
         nome = security_manager.sanitize_input_advanced(request.form.get('nome', ''))
@@ -816,12 +881,6 @@ def login():
         now = datetime.now()
         data = now.strftime('%Y-%m-%d')
         hora = now.strftime('%H:%M:%S')
-        controller_settings = load_omada_settings() if portal_provider == 'omada' else load_unifi_settings()
-        controller_site = (
-            omada_params.get('site') or controller_settings.get('default_site', 'Default')
-            if portal_provider == 'omada'
-            else controller_settings.get('site', 'default')
-        )
         
         access_data = {
             'nome': nome,
@@ -857,7 +916,6 @@ def login():
             return render_login_form(nome=nome, email=email)
         
         # Autoriza o dispositivo no controlador de origem
-        auth_minutes = controller_settings.get('auth_minutes', 480)
         if client_mac:
             if portal_provider == 'omada':
                 auth_result = authorize_omada_guest(omada_params, minutes=auth_minutes)
@@ -867,6 +925,14 @@ def login():
                 logger.error(f"Failed to authorize MAC {client_mac} on {portal_provider} controller")
                 flash('Não foi possível liberar o acesso à internet. Tente novamente.', 'error')
                 return render_login_form(nome=nome, email=email)
+            data_manager.register_portal_session(
+                mac=client_mac,
+                controller_type=portal_provider,
+                controller_site=controller_site,
+                ssid=ssid,
+                auth_minutes=auth_minutes,
+                cooldown_minutes=cooldown_minutes
+            )
         else:
             logger.warning(f"No client MAC received — cannot authorize on {portal_provider}")
             flash('Dispositivo não identificado. Tente reconectar à rede Wi-Fi.', 'error')
@@ -1022,6 +1088,7 @@ def admin_unifi_settings():
         password = request.form.get('password', '')
         site = sanitize_input(request.form.get('site', '')) or 'default'
         auth_minutes = request.form.get('auth_minutes', '480')
+        cooldown_minutes = request.form.get('cooldown_minutes', '0')
 
         try:
             auth_minutes = int(auth_minutes)
@@ -1029,6 +1096,7 @@ def admin_unifi_settings():
                 auth_minutes = 480
         except ValueError:
             auth_minutes = 480
+        cooldown_minutes = parse_minutes(cooldown_minutes, 0, 0, 14400)
 
         new_settings = {
             'controller_url': controller_url,
@@ -1036,6 +1104,7 @@ def admin_unifi_settings():
             'password': password if password else settings.get('password', ''),
             'site': site,
             'auth_minutes': auth_minutes,
+            'cooldown_minutes': cooldown_minutes,
         }
 
         if action == 'test':
@@ -1128,6 +1197,7 @@ def admin_unifi_settings():
         'username': settings.get('username', ''),
         'site': settings.get('site', 'default'),
         'auth_minutes': settings.get('auth_minutes', 480),
+        'cooldown_minutes': settings.get('cooldown_minutes', 0),
         'has_password': bool(settings.get('password')),
     }
     is_configured = bool(settings.get('controller_url') and settings.get('username') and settings.get('password'))
@@ -1156,6 +1226,7 @@ def admin_omada_settings():
         operator_password = request.form.get('operator_password', '')
         default_site = sanitize_input(request.form.get('default_site', '')) or 'Default'
         auth_minutes = request.form.get('auth_minutes', '480')
+        cooldown_minutes = request.form.get('cooldown_minutes', '0')
         auth_time_unit = normalize_omada_auth_time_unit(
             request.form.get(
                 'auth_time_unit',
@@ -1169,6 +1240,7 @@ def admin_omada_settings():
                 auth_minutes = 480
         except ValueError:
             auth_minutes = 480
+        cooldown_minutes = parse_minutes(cooldown_minutes, 0, 0, 14400)
 
         new_settings = {
             'controller_url': controller_url,
@@ -1177,6 +1249,7 @@ def admin_omada_settings():
             'operator_password': operator_password if operator_password else settings.get('operator_password', ''),
             'default_site': default_site,
             'auth_minutes': auth_minutes,
+            'cooldown_minutes': cooldown_minutes,
             'auth_time_unit': auth_time_unit,
         }
 
@@ -1247,6 +1320,7 @@ def admin_omada_settings():
         'operator_username': settings.get('operator_username', ''),
         'default_site': settings.get('default_site', 'Default'),
         'auth_minutes': display_auth_minutes,
+        'cooldown_minutes': settings.get('cooldown_minutes', 0),
         'auth_time_unit': display_auth_time_unit,
         'auth_time_value': display_auth_time_value,
         'has_password': bool(settings.get('operator_password')),

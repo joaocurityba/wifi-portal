@@ -29,15 +29,17 @@ class EncryptedDataManager:
         self.db = None
         self.User = None
         self.AccessLog = None
+        self.PortalSession = None
         
     def init_app(self, app):
         """Inicializa com a aplicação Flask"""
         self.app = app
         # Importa modelos aqui para evitar importação circular
-        from app.models import db, User, AccessLog
+        from app.models import db, User, AccessLog, PortalSession
         self.db = db
         self.User = User
         self.AccessLog = AccessLog
+        self.PortalSession = PortalSession
         
         # Configura cipher suite para encriptação dos campos
         self._setup_encryption()
@@ -47,7 +49,128 @@ class EncryptedDataManager:
         # A encriptação agora é gerenciada pelo TypeDecorator nos models
         # Mas precisamos garantir que o cipher_suite está disponível
         pass
-        
+
+    def _normalize_mac(self, mac: str) -> str:
+        """Normaliza MAC para consultas de sessao."""
+        if not mac:
+            return ''
+        return str(mac).strip().lower().replace('-', ':').replace('.', ':')
+
+    def get_portal_session_state(
+        self,
+        mac: str,
+        controller_type: str,
+        controller_site: Optional[str] = None,
+        now: Optional[datetime] = None
+    ) -> Dict[str, Any]:
+        """Retorna o estado da ultima sessao autorizada para um MAC."""
+        normalized_mac = self._normalize_mac(mac)
+        if not normalized_mac or not self.PortalSession:
+            return {'status': 'none', 'blocked': False}
+
+        now = now or datetime.utcnow()
+
+        try:
+            mac_hash = self.PortalSession.hash_value(normalized_mac)
+            query = self.PortalSession.query.filter(
+                self.PortalSession.mac_hash == mac_hash,
+                self.PortalSession.controller_type == controller_type
+            )
+
+            if controller_site:
+                query = query.filter(self.PortalSession.controller_site == controller_site)
+
+            portal_session = query.order_by(
+                desc(self.PortalSession.authorized_at),
+                desc(self.PortalSession.id)
+            ).first()
+
+            if not portal_session:
+                return {'status': 'none', 'blocked': False}
+
+            result = portal_session.to_dict()
+            result.update({
+                'blocked': False,
+                'remaining_seconds': 0,
+            })
+
+            if portal_session.expires_at and now < portal_session.expires_at:
+                result['status'] = 'active'
+                result['remaining_seconds'] = int((portal_session.expires_at - now).total_seconds())
+                return result
+
+            if (
+                portal_session.cooldown_minutes
+                and portal_session.cooldown_until
+                and now < portal_session.cooldown_until
+            ):
+                result['status'] = 'cooldown'
+                result['blocked'] = True
+                result['remaining_seconds'] = int((portal_session.cooldown_until - now).total_seconds())
+                return result
+
+            result['status'] = 'expired'
+            return result
+
+        except Exception as e:
+            logger.error(f"Erro ao consultar sessao do portal: {e}")
+            return {'status': 'error', 'blocked': False, 'error': str(e)}
+
+    def register_portal_session(
+        self,
+        mac: str,
+        controller_type: str,
+        controller_site: Optional[str],
+        ssid: Optional[str],
+        auth_minutes: int,
+        cooldown_minutes: int = 0,
+        authorized_at: Optional[datetime] = None
+    ) -> bool:
+        """Registra uma autorizacao bem-sucedida para aplicar cooldown depois."""
+        normalized_mac = self._normalize_mac(mac)
+        if not normalized_mac or not self.PortalSession:
+            return False
+
+        try:
+            auth_minutes = max(int(auth_minutes or 480), 1)
+        except (TypeError, ValueError):
+            auth_minutes = 480
+
+        try:
+            cooldown_minutes = max(int(cooldown_minutes or 0), 0)
+        except (TypeError, ValueError):
+            cooldown_minutes = 0
+
+        authorized_at = authorized_at or datetime.utcnow()
+        expires_at = authorized_at + timedelta(minutes=auth_minutes)
+        cooldown_until = expires_at + timedelta(minutes=cooldown_minutes)
+
+        try:
+            portal_session = self.PortalSession(
+                mac=normalized_mac,
+                mac_hash=self.PortalSession.hash_value(normalized_mac),
+                controller_type=controller_type,
+                controller_site=controller_site,
+                ssid=ssid,
+                auth_minutes=auth_minutes,
+                cooldown_minutes=cooldown_minutes,
+                authorized_at=authorized_at,
+                expires_at=expires_at,
+                cooldown_until=cooldown_until
+            )
+            self.db.session.add(portal_session)
+            self.db.session.commit()
+            logger.info(
+                f"Sessao do portal registrada: {controller_type} {normalized_mac} "
+                f"expira em {expires_at}, cooldown ate {cooldown_until}"
+            )
+            return True
+
+        except Exception as e:
+            logger.error(f"Erro ao registrar sessao do portal: {e}")
+            self.db.session.rollback()
+            return False
+
     def log_access_encrypted(self, data: Dict[str, Any]) -> bool:
         """Registra acesso com criptografia no banco de dados"""
         try:
