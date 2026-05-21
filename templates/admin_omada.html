@@ -235,6 +235,7 @@
                                placeholder="{% if settings.has_password %}••••••••  (deixe em branco para manter){% else %}Digite a senha{% endif %}">
                         <div class="help-text">{% if settings.has_password %}Senha já configurada. Deixe em branco para manter a atual.{% else %}Informe a senha do operador Hotspot.{% endif %}</div>
                     </div>
+
                 </div>
 
                 <div class="settings-section">
@@ -254,6 +255,21 @@
                                value="{{ settings.auth_minutes }}"
                                placeholder="480" min="1" max="14400">
                         <div class="help-text">Tempo que o cliente ficará autorizado após preencher o portal.</div>
+                    </div>
+                    <div class="settings-form-group">
+                        <label for="auth_time_unit">Unidade enviada ao Omada</label>
+                        <select id="auth_time_unit" name="auth_time_unit" class="settings-input">
+                            <option value="milliseconds" {% if settings.auth_time_unit == 'milliseconds' %}selected{% endif %}>
+                                Milissegundos (recomendado para Omada 6.x)
+                            </option>
+                            <option value="microseconds" {% if settings.auth_time_unit == 'microseconds' %}selected{% endif %}>
+                                Microssegundos (documentacao oficial)
+                            </option>
+                        </select>
+                        <div class="help-text">
+                            A aplicacao continua usando minutos; esta opcao altera apenas o valor enviado no campo time.
+                            Valor atual enviado: {{ settings.auth_time_value }}.
+                        </div>
                     </div>
                 </div>
 

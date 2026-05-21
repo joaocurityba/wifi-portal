@@ -81,6 +81,34 @@ app.wsgi_app = ProxyFix(
 
 UNIFI_SETTINGS_FILE = os.path.join('data', 'unifi_settings.json')
 OMADA_SETTINGS_FILE = os.path.join('data', 'omada_settings.json')
+DEFAULT_OMADA_AUTH_TIME_UNIT = 'milliseconds'
+OMADA_AUTH_TIME_UNITS = {
+    'milliseconds': 60 * 1000,
+    'microseconds': 60 * 1000 * 1000,
+}
+
+def normalize_omada_auth_time_unit(unit):
+    """Normaliza a unidade usada no campo time da API Hotspot Omada."""
+    aliases = {
+        'ms': 'milliseconds',
+        'millisecond': 'milliseconds',
+        'milliseconds': 'milliseconds',
+        'milissegundo': 'milliseconds',
+        'milissegundos': 'milliseconds',
+        'us': 'microseconds',
+        'microsecond': 'microseconds',
+        'microseconds': 'microseconds',
+        'microssegundo': 'microseconds',
+        'microssegundos': 'microseconds',
+    }
+    normalized = aliases.get(str(unit or '').strip().lower())
+    return normalized if normalized in OMADA_AUTH_TIME_UNITS else DEFAULT_OMADA_AUTH_TIME_UNIT
+
+def get_omada_auth_time_value(minutes, unit=None):
+    """Converte minutos para o valor enviado no campo time do Omada."""
+    auth_minutes = int(minutes)
+    auth_time_unit = normalize_omada_auth_time_unit(unit)
+    return auth_minutes * OMADA_AUTH_TIME_UNITS[auth_time_unit], auth_time_unit
 
 def load_unifi_settings():
     """Carrega configurações do UniFi do arquivo JSON ou variáveis de ambiente"""
@@ -121,6 +149,7 @@ def load_omada_settings():
         'operator_password': os.getenv('OMADA_OPERATOR_PASSWORD', ''),
         'default_site': os.getenv('OMADA_DEFAULT_SITE', 'Default'),
         'auth_minutes': int(os.getenv('OMADA_AUTH_MINUTES', os.getenv('GUEST_AUTH_MINUTES', '480'))),
+        'auth_time_unit': os.getenv('OMADA_AUTH_TIME_UNIT', DEFAULT_OMADA_AUTH_TIME_UNIT),
     }
     if os.path.exists(OMADA_SETTINGS_FILE):
         try:
@@ -129,6 +158,7 @@ def load_omada_settings():
             settings.update({k: v for k, v in saved.items() if v})
         except Exception as e:
             logger.error(f"Error loading Omada settings: {e}")
+    settings['auth_time_unit'] = normalize_omada_auth_time_unit(settings.get('auth_time_unit'))
     return settings
 
 def save_omada_settings(settings):
@@ -309,6 +339,10 @@ def authorize_omada_guest(omada_params, minutes=480):
     operator_username = settings.get('operator_username', '')
     operator_password = settings.get('operator_password', '')
     default_site = settings.get('default_site', 'Default')
+    auth_time_value, auth_time_unit = get_omada_auth_time_value(
+        minutes,
+        settings.get('auth_time_unit', DEFAULT_OMADA_AUTH_TIME_UNIT)
+    )
 
     if not controller_url or not controller_id or not operator_username or not operator_password:
         logger.error("Omada Controller credentials not configured")
@@ -373,9 +407,12 @@ def authorize_omada_guest(omada_params, minutes=480):
         auth_payload = {
             'clientMac': client_mac,
             'site': site,
-            'time': int(minutes) * 60 * 1000 * 1000,
+            'time': auth_time_value,
             'authType': 4
         }
+        logger.info(
+            f"Omada auth expiration: {int(minutes)} minutes as {auth_time_value} ({auth_time_unit})"
+        )
 
         if is_gateway_auth:
             auth_payload.update({
@@ -1119,6 +1156,12 @@ def admin_omada_settings():
         operator_password = request.form.get('operator_password', '')
         default_site = sanitize_input(request.form.get('default_site', '')) or 'Default'
         auth_minutes = request.form.get('auth_minutes', '480')
+        auth_time_unit = normalize_omada_auth_time_unit(
+            request.form.get(
+                'auth_time_unit',
+                settings.get('auth_time_unit', DEFAULT_OMADA_AUTH_TIME_UNIT)
+            )
+        )
 
         try:
             auth_minutes = int(auth_minutes)
@@ -1134,6 +1177,7 @@ def admin_omada_settings():
             'operator_password': operator_password if operator_password else settings.get('operator_password', ''),
             'default_site': default_site,
             'auth_minutes': auth_minutes,
+            'auth_time_unit': auth_time_unit,
         }
 
         if action == 'test':
@@ -1181,18 +1225,30 @@ def admin_omada_settings():
                 flash('Configurações Omada salvas com sucesso!', 'success')
                 security_manager.log_security_event('omada_settings_updated', {
                     'username': session.get('username'),
-                    'controller_url': controller_url
+                    'controller_url': controller_url,
+                    'auth_time_unit': auth_time_unit
                 })
                 settings = new_settings
             else:
                 flash('Erro ao salvar configurações Omada.', 'error')
+
+    display_auth_minutes = settings.get('auth_minutes', 480)
+    display_auth_time_unit = normalize_omada_auth_time_unit(
+        settings.get('auth_time_unit', DEFAULT_OMADA_AUTH_TIME_UNIT)
+    )
+    display_auth_time_value, display_auth_time_unit = get_omada_auth_time_value(
+        display_auth_minutes,
+        display_auth_time_unit
+    )
 
     display_settings = {
         'controller_url': settings.get('controller_url', ''),
         'controller_id': settings.get('controller_id', ''),
         'operator_username': settings.get('operator_username', ''),
         'default_site': settings.get('default_site', 'Default'),
-        'auth_minutes': settings.get('auth_minutes', 480),
+        'auth_minutes': display_auth_minutes,
+        'auth_time_unit': display_auth_time_unit,
+        'auth_time_value': display_auth_time_value,
         'has_password': bool(settings.get('operator_password')),
     }
     is_configured = bool(
