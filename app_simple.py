@@ -13,6 +13,7 @@ import requests
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 from datetime import datetime, timedelta
+from urllib.parse import urlparse, parse_qs
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask import Flask, request, render_template, redirect, url_for, flash, session
@@ -81,6 +82,8 @@ app.wsgi_app = ProxyFix(
 
 UNIFI_SETTINGS_FILE = os.path.join('data', 'unifi_settings.json')
 OMADA_SETTINGS_FILE = os.path.join('data', 'omada_settings.json')
+PORTAL_CONTEXT_SESSION_KEY = 'portal_context'
+PORTAL_CONTEXT_TTL_SECONDS = 1800
 DEFAULT_OMADA_AUTH_TIME_UNIT = 'milliseconds'
 OMADA_AUTH_TIME_UNITS = {
     'milliseconds': 60 * 1000,
@@ -212,6 +215,16 @@ def normalize_mac(mac):
         return ''
     return str(mac).strip().lower().replace('-', ':').replace('.', ':')
 
+def parse_referer_query():
+    """Extrai parametros da URL de origem do captive browser."""
+    referer = request.headers.get('Referer', '')
+    if not referer:
+        return {}
+    try:
+        return parse_qs(urlparse(referer).query, keep_blank_values=False)
+    except Exception:
+        return {}
+
 def get_request_value(*names):
     """Busca um parametro em GET ou POST e sanitiza o valor."""
     for name in names:
@@ -220,25 +233,127 @@ def get_request_value(*names):
             return security_manager.sanitize_input_advanced(value)
     return ''
 
+def get_referer_value(*names):
+    """Busca um parametro no Referer quando o POST perde campos ocultos."""
+    referer_params = parse_referer_query()
+    for name in names:
+        values = referer_params.get(name) or []
+        if values:
+            return security_manager.sanitize_input_advanced(values[0])
+    return ''
+
+def get_saved_portal_context():
+    """Recupera contexto recente salvo na sessao do captive browser."""
+    saved = session.get(PORTAL_CONTEXT_SESSION_KEY)
+    if not isinstance(saved, dict):
+        return {}
+
+    saved_at = saved.get('saved_at')
+    try:
+        saved_at_dt = datetime.fromisoformat(saved_at)
+    except (TypeError, ValueError):
+        session.pop(PORTAL_CONTEXT_SESSION_KEY, None)
+        return {}
+
+    if datetime.utcnow() - saved_at_dt > timedelta(seconds=PORTAL_CONTEXT_TTL_SECONDS):
+        session.pop(PORTAL_CONTEXT_SESSION_KEY, None)
+        return {}
+
+    return saved
+
+def get_saved_context_value(saved_context, *names):
+    """Busca parametro em contexto de portal previamente salvo."""
+    if not saved_context:
+        return ''
+    for name in names:
+        value = saved_context.get(name, '')
+        if value:
+            return security_manager.sanitize_input_advanced(value)
+    return ''
+
+def remember_portal_context(portal_context):
+    """Salva parametros validos para recuperar POSTs sem campos ocultos."""
+    if not portal_context.get('client_mac'):
+        return
+
+    provider = portal_context.get('provider', 'unifi')
+    omada_params = portal_context.get('omada') or {}
+
+    saved = {
+        'provider': provider,
+        'saved_at': datetime.utcnow().isoformat(),
+        'id': portal_context.get('client_mac') if provider == 'unifi' else '',
+        'ap': portal_context.get('ap_mac') if provider == 'unifi' else '',
+        'url': portal_context.get('redirect_url') if provider == 'unifi' else '',
+        'ssid': portal_context.get('ssid') if provider == 'unifi' else '',
+        't': portal_context.get('timestamp') or '',
+        'clientMac': omada_params.get('clientMac') or '',
+        'apMac': omada_params.get('apMac') or '',
+        'gatewayMac': omada_params.get('gatewayMac') or '',
+        'ssidName': omada_params.get('ssidName') or '',
+        'radioId': omada_params.get('radioId') or '',
+        'site': omada_params.get('site') or '',
+        'redirectUrl': omada_params.get('redirectUrl') or '',
+        'vid': omada_params.get('vid') or '',
+    }
+    session[PORTAL_CONTEXT_SESSION_KEY] = saved
+    session.modified = True
+
+def log_missing_portal_mac(portal_provider):
+    """Registra contexto tecnico quando o formulario chega sem MAC."""
+    referer = request.headers.get('Referer', '')
+    try:
+        referer_path = urlparse(referer).path
+    except Exception:
+        referer_path = ''
+
+    saved_context = get_saved_portal_context()
+    security_manager.log_security_event('portal_client_mac_missing', {
+        'method': request.method,
+        'path': request.path,
+        'portal_provider': portal_provider,
+        'query_has_unifi_id': bool(request.args.get('id')),
+        'form_has_unifi_id': bool(request.form.get('id')),
+        'referer_has_unifi_id': bool(get_referer_value('id')),
+        'session_has_unifi_id': bool(saved_context.get('id')),
+        'query_has_omada_client_mac': bool(request.args.get('clientMac')),
+        'form_has_omada_client_mac': bool(request.form.get('clientMac')),
+        'referer_has_omada_client_mac': bool(get_referer_value('clientMac')),
+        'session_has_omada_client_mac': bool(saved_context.get('clientMac')),
+        'referer_path': referer_path,
+        'user_agent': request.headers.get('User-Agent', 'Unknown')[:120],
+    })
+
 def build_portal_context():
     """Monta parametros de portal para UniFi e Omada."""
-    unifi_client_mac = get_request_value('id')
-    unifi_ap_mac = get_request_value('ap')
-    unifi_redirect_url = get_request_value('url')
-    unifi_ssid = get_request_value('ssid')
+    saved_context = get_saved_portal_context() if request.method == 'POST' else {}
 
-    omada_client_mac = get_request_value('clientMac')
-    omada_ap_mac = get_request_value('apMac')
-    omada_gateway_mac = get_request_value('gatewayMac')
-    omada_ssid = get_request_value('ssidName')
-    omada_radio_id = get_request_value('radioId')
-    omada_site = get_request_value('site')
-    omada_redirect_url = get_request_value('redirectUrl')
-    omada_vid = get_request_value('vid')
+    def portal_value(*names):
+        return (
+            get_request_value(*names)
+            or get_referer_value(*names)
+            or get_saved_context_value(saved_context, *names)
+        )
 
-    provider = 'omada' if omada_client_mac else 'unifi'
+    provider_hint = get_request_value('portal_provider') or get_saved_context_value(saved_context, 'provider')
 
-    return {
+    unifi_client_mac = portal_value('id')
+    unifi_ap_mac = portal_value('ap')
+    unifi_redirect_url = portal_value('url')
+    unifi_ssid = portal_value('ssid')
+
+    omada_client_mac = portal_value('clientMac')
+    omada_ap_mac = portal_value('apMac')
+    omada_gateway_mac = portal_value('gatewayMac')
+    omada_ssid = portal_value('ssidName')
+    omada_radio_id = portal_value('radioId')
+    omada_site = portal_value('site')
+    omada_redirect_url = portal_value('redirectUrl')
+    omada_vid = portal_value('vid')
+
+    provider = 'omada' if omada_client_mac or provider_hint == 'omada' else 'unifi'
+
+    portal_context = {
         'provider': provider,
         'client_mac': omada_client_mac or unifi_client_mac,
         'ap_mac': omada_ap_mac or unifi_ap_mac,
@@ -256,6 +371,8 @@ def build_portal_context():
             'vid': omada_vid,
         }
     }
+    remember_portal_context(portal_context)
+    return portal_context
 
 def authorize_unifi_guest(client_mac, minutes=480, ap_mac=None):
     """Autoriza dispositivo no UniFi Controller"""
@@ -883,6 +1000,8 @@ def login():
         now = datetime.now()
         data = now.strftime('%Y-%m-%d')
         hora = now.strftime('%H:%M:%S')
+        if not client_mac:
+            log_missing_portal_mac(portal_provider)
         
         access_data = {
             'nome': nome,
