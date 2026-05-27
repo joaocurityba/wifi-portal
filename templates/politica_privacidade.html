@@ -63,7 +63,7 @@
 
                 <h2>6. Segurança</h2>
                 <p>A aplicação adota controles técnicos como criptografia dos campos de nome e e-mail no banco de dados, hash para consultas de IP e MAC, controle de acesso administrativo, proteção CSRF, limitação de requisições e cabeçalhos de segurança.</p>
-                <p>O portal cativo pode ser aberto inicialmente em HTTP por funcionamento normal da detecção de redes Wi-Fi. Em produção, o envio do formulário deve ser configurado para HTTPS sempre que o controlador e a lista de acesso permitirem.</p>
+                <p>O portal cativo pode ser aberto inicialmente em HTTP por funcionamento normal da detecção de redes Wi-Fi. O acesso administrativo e demais páginas públicas devem ser publicados por HTTPS no proxy de produção.</p>
 
                 <h2>7. Retenção</h2>
                 <p>Os registros são mantidos apenas pelo tempo necessário às finalidades descritas nesta política:</p>

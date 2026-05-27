@@ -89,16 +89,6 @@ OMADA_AUTH_TIME_UNITS = {
     'milliseconds': 60 * 1000,
     'microseconds': 60 * 1000 * 1000,
 }
-app.config['SESSION_COOKIE_HTTPONLY'] = True
-app.config['SESSION_COOKIE_SAMESITE'] = os.getenv('SESSION_COOKIE_SAMESITE', 'Lax')
-app.config['SESSION_COOKIE_SECURE'] = os.getenv('SESSION_COOKIE_SECURE', 'False').lower() == 'true'
-
-def env_bool(name, default=False):
-    value = os.getenv(name)
-    if value is None:
-        return default
-    return str(value).strip().lower() in {'1', 'true', 'yes', 'sim', 'on'}
-
 def parse_days(value, default, minimum=1, maximum=3650):
     try:
         parsed = int(value)
@@ -115,23 +105,6 @@ def get_privacy_settings():
         'portal_session_retention_days': parse_days(os.getenv('PORTAL_SESSION_RETENTION_DAYS'), 365, 1, 3650),
         'last_updated': os.getenv('PRIVACY_POLICY_UPDATED_AT', '27/05/2026'),
     }
-
-def build_login_form_action():
-    if not env_bool('FORCE_HTTPS_LOGIN_FORM', False):
-        return url_for('login')
-
-    public_portal_url = os.getenv('PUBLIC_PORTAL_URL', '').strip().rstrip('/')
-    if public_portal_url:
-        parsed_url = urlparse(public_portal_url)
-        if parsed_url.scheme == 'https' and parsed_url.netloc:
-            return f"{public_portal_url}{url_for('login')}"
-
-    host = request.host or ''
-    local_hosts = ('localhost', '127.0.0.1', '[::1]')
-    if host and not any(host.startswith(local_host) for local_host in local_hosts):
-        return url_for('login', _external=True, _scheme='https')
-
-    return url_for('login')
 
 def normalize_omada_auth_time_unit(unit):
     """Normaliza a unidade usada no campo time da API Hotspot Omada."""
@@ -971,7 +944,6 @@ def login():
             'portal_provider': portal_provider,
             'omada_params': omada_params,
             'form_disabled': False,
-            'login_form_action': build_login_form_action(),
             'csrf_token': generate_csrf_token()
         }
         context.update(extra)

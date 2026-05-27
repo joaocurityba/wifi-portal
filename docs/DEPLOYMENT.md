@@ -147,8 +147,6 @@ openssl s_client -connect seu-dominio.com:443 -servername seu-dominio.com </dev/
 Configure no `.env.local` de produção:
 
 ```env
-PUBLIC_PORTAL_URL=https://praca.patydoalferes.rj.gov.br
-FORCE_HTTPS_LOGIN_FORM=True
 PRIVACY_CONTROLLER_NAME=Prefeitura Municipal de Paty do Alferes
 PRIVACY_CONTACT_EMAIL=
 PRIVACY_CONTACT_URL=
@@ -156,7 +154,7 @@ ACCESS_LOG_RETENTION_DAYS=180
 PORTAL_SESSION_RETENTION_DAYS=365
 ```
 
-O captive portal pode abrir a primeira tela em HTTP por exigência de detecção da rede. Com `FORCE_HTTPS_LOGIN_FORM=True`, o envio do cadastro é direcionado para HTTPS, desde que o domínio esteja liberado no controlador antes da autenticação.
+O captive portal pode abrir a primeira tela em HTTP por exigencia de deteccao da rede. Esta etapa nao altera o fluxo de autenticacao do UniFi ou Omada.
 
 Para verificar registros fora da política de retenção:
 

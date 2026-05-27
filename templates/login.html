@@ -27,7 +27,7 @@
             </div>
 
             <div class="form-section">
-                <form method="POST" action="{{ login_form_action }}" novalidate>
+                <form method="POST" action="{{ url_for('login') }}" novalidate>
                     <!-- CSRF Token -->
                     <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                     <!-- Campos ocultos para parâmetros dos controladores -->
