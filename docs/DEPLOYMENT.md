@@ -142,7 +142,43 @@ openssl s_client -connect seu-dominio.com:443 -servername seu-dominio.com </dev/
 
 ---
 
-## 10) Operação diária
+## 10) Privacidade e retenção
+
+Configure no `.env.local` de produção:
+
+```env
+PUBLIC_PORTAL_URL=https://praca.patydoalferes.rj.gov.br
+FORCE_HTTPS_LOGIN_FORM=True
+PRIVACY_CONTROLLER_NAME=Prefeitura Municipal de Paty do Alferes
+PRIVACY_CONTACT_EMAIL=
+PRIVACY_CONTACT_URL=
+ACCESS_LOG_RETENTION_DAYS=180
+PORTAL_SESSION_RETENTION_DAYS=365
+```
+
+O captive portal pode abrir a primeira tela em HTTP por exigência de detecção da rede. Com `FORCE_HTTPS_LOGIN_FORM=True`, o envio do cadastro é direcionado para HTTPS, desde que o domínio esteja liberado no controlador antes da autenticação.
+
+Para verificar registros fora da política de retenção:
+
+```bash
+docker compose -f docker-compose.prod.yml exec app flask --app wsgi:app privacy-cleanup
+```
+
+Para aplicar a limpeza:
+
+```bash
+docker compose -f docker-compose.prod.yml exec app flask --app wsgi:app privacy-cleanup-apply
+```
+
+Exemplo de agendamento diário:
+
+```cron
+30 2 * * * cd /opt/wifi-portal && docker compose -f docker-compose.prod.yml exec -T app flask --app wsgi:app privacy-cleanup-apply >> /var/log/wifi-portal-privacy-cleanup.log 2>&1
+```
+
+---
+
+## 11) Operação diária
 
 ### Logs e status
 
@@ -172,7 +208,7 @@ curl -f http://localhost/healthz
 
 ---
 
-## 11) Backup e restore
+## 12) Backup e restore
 
 ### Backup (Linux)
 
@@ -201,7 +237,7 @@ Exemplo diário às 02:00:
 
 ---
 
-## 12) Hardening mínimo recomendado
+## 13) Hardening mínimo recomendado
 
 - Bloquear acesso externo às portas de banco/redis via firewall
 - Manter apenas `22`, `80`, `443` expostas no host
@@ -211,7 +247,7 @@ Exemplo diário às 02:00:
 
 ---
 
-## 13) Comandos rápidos de diagnóstico
+## 14) Comandos rápidos de diagnóstico
 
 ```bash
 docker compose -f docker-compose.prod.yml config

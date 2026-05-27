@@ -13,8 +13,8 @@
         <div class="container-terms">
             <div class="logo-section">
                 <div class="logo">
-                    <img 
-                        src="{{ url_for('static', filename='images/logo.svg') }}" 
+                    <img
+                        src="{{ url_for('static', filename='images/logo.svg') }}"
                         alt="Logo Wi-Fi Público Municipal"
                         width="160"
                         height="auto"
@@ -25,90 +25,73 @@
             </div>
 
             <div class="terms-content">
-                <h2>1. Introdução</h2>
-                <p>Esta Política de Privacidade descreve como os dados pessoais dos usuários são coletados, utilizados, protegidos e gerenciados pela Prefeitura através do serviço Wi-Fi Público Municipal.</p>
+                <p><strong>Última atualização:</strong> {{ last_updated }}</p>
 
-                <h2>2. Dados Coletados</h2>
-                <p>Coletamos os seguintes tipos de dados durante o uso do serviço:</p>
+                <h2>1. Controlador</h2>
+                <p>O controlador dos dados pessoais tratados neste portal é {{ controller_name }}, responsável pela oferta e operação do serviço de Wi-Fi Público Municipal.</p>
+
+                <h2>2. Dados coletados</h2>
+                <p>Para liberar e administrar o acesso ao Wi-Fi, este portal coleta os seguintes dados:</p>
                 <ul>
-                    <li><strong>Dados de Identificação:</strong> Nome completo, CPF (opcional), e-mail e número de telefone fornecidos durante o cadastro</li>
-                    <li><strong>Dados de Conexão:</strong> Endereço IP, endereço MAC do dispositivo, data e hora de acesso, e duração da sessão</li>
-                    <li><strong>Dados de Navegação:</strong> Informações sobre sites visitados e atividades gerais de internet (apenas metadados)</li>
-                    <li><strong>Dados de Localização:</strong> Ponto de acesso Wi-Fi utilizado para conectar</li>
-                    <li><strong>Informações do Dispositivo:</strong> Tipo de dispositivo, navegador e sistema operacional</li>
+                    <li><strong>Dados informados no cadastro:</strong> nome completo, e-mail e aceite dos Termos de Uso e desta Política de Privacidade.</li>
+                    <li><strong>Dados técnicos de conexão:</strong> endereço IP, endereço MAC do dispositivo, ponto de acesso, SSID, controlador utilizado, data e hora do acesso e identificadores técnicos enviados pelo UniFi ou Omada.</li>
+                    <li><strong>Dados do navegador:</strong> user-agent, sistema operacional e navegador informados automaticamente pelo dispositivo.</li>
+                    <li><strong>Dados de sessão:</strong> horário de autorização, prazo de expiração do acesso e eventual intervalo para novo acesso.</li>
+                </ul>
+                <p>Este portal não solicita CPF, telefone, senha pessoal do usuário nem registra o conteúdo acessado, mensagens, arquivos ou histórico detalhado de navegação.</p>
+
+                <h2>3. Finalidades</h2>
+                <p>Os dados são tratados para:</p>
+                <ul>
+                    <li>identificar o dispositivo e liberar o acesso à internet;</li>
+                    <li>controlar tempo de uso, expiração e intervalo entre acessos;</li>
+                    <li>manter registros mínimos de auditoria, segurança e prevenção de abuso da rede;</li>
+                    <li>acompanhar o funcionamento do serviço e planejar melhorias de infraestrutura;</li>
+                    <li>cumprir obrigações legais, regulatórias ou solicitações de autoridade competente, quando aplicável.</li>
                 </ul>
 
-                <h2>3. Finalidade da Coleta</h2>
-                <p>Os dados coletados são utilizados para:</p>
+                <h2>4. Base legal</h2>
+                <p>O tratamento é realizado para execução de serviço público, atendimento a obrigações legais ou regulatórias e proteção da segurança da rede e dos usuários. Quando houver uso de consentimento para alguma finalidade específica, ele será solicitado de forma destacada.</p>
+
+                <h2>5. Compartilhamento</h2>
+                <p>Os dados não são vendidos. Podem ser compartilhados apenas quando necessário para:</p>
                 <ul>
-                    <li>Autenticar usuários e gerenciar acesso ao serviço</li>
-                    <li>Recuperação de contas através de reset de senha</li>
-                    <li>Melhorar a qualidade e confiabilidade do serviço</li>
-                    <li>Monitorar e prevenir atividades ilegais ou abusivas</li>
-                    <li>Análise de uso para planejamento de infraestrutura</li>
-                    <li>Conformidade com obrigações legais e regulatórias</li>
-                    <li>Comunicações importantes sobre o serviço</li>
+                    <li>operação técnica do Wi-Fi, incluindo controladores UniFi, Omada, banco de dados, hospedagem, backup e serviços de segurança;</li>
+                    <li>cumprimento de obrigação legal, ordem judicial ou requisição de autoridade competente;</li>
+                    <li>apuração de incidentes, uso indevido ou proteção da segurança da rede.</li>
                 </ul>
 
-                <h2>4. Proteção de Dados</h2>
-                <p>Utilizamos as seguintes medidas para proteger seus dados:</p>
+                <h2>6. Segurança</h2>
+                <p>A aplicação adota controles técnicos como criptografia dos campos de nome e e-mail no banco de dados, hash para consultas de IP e MAC, controle de acesso administrativo, proteção CSRF, limitação de requisições e cabeçalhos de segurança.</p>
+                <p>O portal cativo pode ser aberto inicialmente em HTTP por funcionamento normal da detecção de redes Wi-Fi. Em produção, o envio do formulário deve ser configurado para HTTPS sempre que o controlador e a lista de acesso permitirem.</p>
+
+                <h2>7. Retenção</h2>
+                <p>Os registros são mantidos apenas pelo tempo necessário às finalidades descritas nesta política:</p>
                 <ul>
-                    <li>Criptografia de senhas implementada com algoritmos de hash seguro (bcrypt)</li>
-                    <li>Transmissão segura usando HTTPS/TLS quando disponível</li>
-                    <li>Controle de acesso restrito aos dados pessoais</li>
-                    <li>Monitoramento regular de segurança</li>
-                    <li>Armazenamento seguro em servidores protegidos</li>
+                    <li><strong>Registros de acesso:</strong> até {{ access_log_retention_days }} dias, salvo obrigação legal ou necessidade de preservação para investigação de incidente.</li>
+                    <li><strong>Registros técnicos de sessão e intervalo:</strong> até {{ portal_session_retention_days }} dias.</li>
+                    <li><strong>Logs de segurança:</strong> pelo prazo operacional definido pela administração do serviço e pela política de backup do ambiente.</li>
                 </ul>
+                <p>Após o término do prazo aplicável, os dados devem ser eliminados ou anonimizados por rotina de retenção.</p>
 
-                <h2>5. Retenção de Dados</h2>
-                <p>Os dados pessoais são retidos pelos seguintes períodos:</p>
-                <ul>
-                    <li><strong>Dados de Cadastro:</strong> Enquanto a conta estiver ativa, e 90 dias após exclusão da conta</li>
-                    <li><strong>Registros de Acesso:</strong> Até 180 dias para fins de segurança e auditoria</li>
-                    <li><strong>Registros de Login:</strong> Até 365 dias para fins de investigação de incidentes</li>
-                    <li>Dados podem ser retidos por mais tempo quando exigido por lei</li>
-                </ul>
+                <h2>8. Cookies e sessão</h2>
+                <p>O portal utiliza cookies técnicos de sessão para manter a segurança do formulário, validar o envio e preservar temporariamente os parâmetros recebidos do controlador. Esses cookies são necessários para o funcionamento do portal e não são usados para publicidade.</p>
 
-                <h2>6. Compartilhamento de Dados</h2>
-                <p>Seus dados não são vendidos, alugados ou compartilhados com terceiros, exceto:</p>
-                <ul>
-                    <li>Com autoridades legais quando obrigado por lei ou processo judicial</li>
-                    <li>Com prestadores de serviço que auxiliam na operação do sistema (sob acordos de confidencialidade)</li>
-                    <li>Para fins de segurança pública quando necessário</li>
-                </ul>
+                <h2>9. Direitos do titular</h2>
+                <p>O usuário pode solicitar confirmação de tratamento, acesso, correção, informações sobre compartilhamento, anonimização, bloqueio ou eliminação de dados quando aplicável, observados os prazos legais e as hipóteses de retenção obrigatória.</p>
 
-                <h2>7. Direitos do Usuário</h2>
-                <p>Você possui os seguintes direitos sobre seus dados:</p>
-                <ul>
-                    <li>Direito de acessar seus dados pessoais armazenados</li>
-                    <li>Direito de corrigi-los se estiverem incorretos</li>
-                    <li>Direito de solicitar a exclusão de sua conta e dados</li>
-                    <li>Direito de porta bilidade de dados em formato estruturado</li>
-                    <li>Direito de se opor ao processamento de dados para fins específicos</li>
-                </ul>
+                <h2>10. Contato</h2>
+                <p>Solicitações sobre privacidade e proteção de dados devem ser encaminhadas pelos canais oficiais de atendimento de {{ controller_name }}.</p>
+                {% if privacy_contact_email %}
+                    <p><strong>E-mail para privacidade:</strong> {{ privacy_contact_email }}</p>
+                {% endif %}
+                {% if privacy_contact_url %}
+                    <p><strong>Canal de atendimento:</strong> <a href="{{ privacy_contact_url }}" target="_blank" rel="noopener">{{ privacy_contact_url }}</a></p>
+                {% endif %}
+                <p>O titular também pode apresentar reclamação à Autoridade Nacional de Proteção de Dados, quando cabível.</p>
 
-                <h2>8. Cookies</h2>
-                <p>O portal utiliza cookies para:</p>
-                <ul>
-                    <li>Manter você autenticado na sessão</li>
-                    <li>Armazenar preferências do usuário</li>
-                    <li>Análise de uso do serviço</li>
-                </ul>
-                <p>Você pode desabilitar cookies em seu navegador, mas isso pode afetar a funcionalidade do serviço.</p>
-
-                <h2>9. Contato e Reclamações</h2>
-                <p>Para questões sobre privacidade, acesso aos dados, ou para registrar uma reclamação:</p>
-                <ul>
-                    <li>Entre em contato com a Prefeitura através dos canais de atendimento disponíveis no portal</li>
-                    <li>Envie um e-mail para o departamento responsável pelo Wi-Fi Público</li>
-                    <li>Você também pode registrar uma reclamação junto à autoridade de proteção de dados competente</li>
-                </ul>
-
-                <h2>10. Alterações nesta Política</h2>
-                <p>Esta Política de Privacidade pode ser atualizada periodicamente. Qualquer mudança significativa será comunicada aos usuários através do portal ou por e-mail.</p>
-
-                <h2>11. Lei Aplicável</h2>
-                <p>Esta Política de Privacidade está sujeita à Lei Geral de Proteção de Dados (LGPD) e às leis municipais aplicáveis.</p>
+                <h2>11. Alterações</h2>
+                <p>Esta política pode ser atualizada para refletir mudanças no serviço, nos controles de segurança ou em exigências legais. A versão vigente estará disponível neste portal.</p>
 
                 <div class="terms-actions">
                     <a href="{{ url_for('termos') }}" class="btn-secondary">Termos de Uso</a>

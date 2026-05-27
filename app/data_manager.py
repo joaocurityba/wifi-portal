@@ -207,6 +207,52 @@ class EncryptedDataManager:
             logger.error(f"Erro ao registrar acesso: {e}")
             self.db.session.rollback()
             return False
+
+    def cleanup_expired_privacy_records(
+        self,
+        access_log_retention_days: int = 180,
+        portal_session_retention_days: int = 365,
+        apply_changes: bool = False,
+        now: Optional[datetime] = None
+    ) -> Dict[str, Any]:
+        """Conta ou remove registros fora da politica de retencao."""
+        result = {
+            'applied': apply_changes,
+            'access_log_retention_days': access_log_retention_days,
+            'portal_session_retention_days': portal_session_retention_days,
+            'access_logs': 0,
+            'portal_sessions': 0,
+        }
+
+        now = now or datetime.utcnow()
+
+        try:
+            if access_log_retention_days > 0:
+                access_cutoff = now - timedelta(days=access_log_retention_days)
+                access_query = self.AccessLog.query.filter(self.AccessLog.timestamp < access_cutoff)
+                result['access_logs'] = access_query.count()
+                if apply_changes and result['access_logs']:
+                    access_query.delete(synchronize_session=False)
+
+            if portal_session_retention_days > 0 and self.PortalSession:
+                session_cutoff = now - timedelta(days=portal_session_retention_days)
+                session_query = self.PortalSession.query.filter(
+                    self.PortalSession.cooldown_until < session_cutoff
+                )
+                result['portal_sessions'] = session_query.count()
+                if apply_changes and result['portal_sessions']:
+                    session_query.delete(synchronize_session=False)
+
+            if apply_changes:
+                self.db.session.commit()
+
+            return result
+
+        except Exception as e:
+            logger.error(f"Erro ao limpar dados expirados pela politica de retencao: {e}")
+            self.db.session.rollback()
+            result['error'] = str(e)
+            return result
             
     def get_access_logs(self, limit: int = 1000) -> List[Dict[str, Any]]:
         """Obtém logs de acesso do banco de dados"""
